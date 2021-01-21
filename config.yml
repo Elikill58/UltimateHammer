@@ -1,0 +1,82 @@
+# Destroy 3x3x1 according to your vision
+hammer:
+  enable: true
+  # Set "" if you want to disable it
+  message: "&eThis is the &cHammer &e!"
+  # permission to use it. Set "" to allow everyone to use it
+  permission: "ultimatehammer.hammer"
+  material: "DIAMOND_PICKAXE"
+  # Optional. Default: 1
+  amount: 1
+  # Optional. Default: basic MC name
+  name: "-"
+  # Optional. Default: nothing
+  lore:
+  - ""
+  # Optional. Default: any
+  enchant:
+  - "DAMAGE_ALL"
+  - "PROTECTION_ENVIRONMENTAL:2"
+  # All blocks that will NOT be destroyed by the hammer
+  blacklist:
+  - "MOB_SPAWNER"
+  - "CHEST"
+
+# Destroy all of a tree
+axe:
+  enable: true
+  message: "&eThis is the &cAxe &e!"
+  permission: "ultimatehammer.axe"
+  material: "DIAMOND_AXE"
+
+# Automatic plant a seed which is on your inventory
+hoe:
+  enable: true
+  message: "&eThis is the &cHoe &e!"
+  permission: "ultimatehammer.hoe"
+  material: "DIAMOND_HOE"
+  name: "&cThe ultimate HOE"
+  disabled: []
+  # In comment are all items available for disabling
+  # Now (with default config) only the nether wart will be disabled.
+  #- "SEEDS"
+  #- "PUMPKIN_SEEDS"
+  #- "MELON_SEEDS"
+  #- "POTATO"
+  #- "CARROT"
+  #- "NETHER_WARTS"
+
+# Keep on inventory on death
+sword:
+  enable: true
+  message: "&eThis is the &cHoe &e!"
+  permission: "ultimatehammer.hoe"
+  material: "DIAMOND_SWORD"
+  name: "&cThe infinite sword"
+
+region-bypass:
+  enabled: false
+  1:
+    # You need WorldGuard for the region
+    regions:
+    - "spawn"
+    # Default worlds names (or Multiverse names)
+    worlds:
+    - "world_the_end"
+    # the feature disabled (sword/hoe...)
+    features:
+    - "hoe"
+
+messages:
+  help:
+  - "/uh hammer: Get the 3x3x1 pickaxe"
+  - "/uh axe: Drop tree"
+  - "/uh hoe: Plant seed"
+  - "/uh sword: Keep it at your death"
+  not_found: "&cCannot find &e%arg% &c!"
+  no_perm: "&cYou are not permitted to get it."
+  give_other: "&eItem given to %name% !"
+  no_player: "&c%arg% isn't a valid player"
+  not_enabled: "&cThis tool isn't enabled."
+  console_cannot: "&cYou cannot give item to yourself"
+  well_reloaded: "&eUltimateHammer &ais now reloaded !"
