@@ -1,0 +1,92 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources.srcDirs = ['resources']
+    }
+}
+
+repositories {
+    maven {
+        name 'sonatype'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
+        name 'spigot'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+configurations {
+    spigot
+    compileClasspath.extendsFrom spigot
+}
+
+dependencies {
+    api project(':common')
+
+    spigot fileTree(dir: "spigotJars", includes: ['*.jar'])
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties(props)
+    // Do not try to expand service files, they may contain a dollar sign to mark inner classes
+    filesNotMatching('META-INF/services/*') {
+        expand(props)
+    }
+}
+
+compileJava.javaCompiler.set(
+        javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(8) }
+)
+
+shadowJar {
+    archiveBaseName.set('ultimatehammer')
+    archiveAppendix.set('spigot')
+    archiveClassifier.set(null)
+
+    relocate('org.bstats', 'com.elikill58.ultimatehammer')
+
+    mergeServiceFiles()
+    from(project(':common').tasks.shadowJar)
+}
+
+build.dependsOn shadowJar
+
+parent.tasks.named('shadowJar', ShadowJar) {
+    it.from(shadowJar.outputs)
+}
+
+task prepareServer(type: Copy) {
+    from shadowJar
+    rename { 'ultimatehammer.jar' }
+    def pluginDir = System.getProperty('plugins.dir')
+    if (pluginDir == null) {
+        enabled(false)
+    } else {
+        into pluginDir
+    }
+}
+
+subprojects {
+    repositories {
+        mavenLocal {
+            metadataSources {
+                mavenPom()
+                artifact()
+            }
+            content {
+                includeGroup('org.spigotmc')
+            }
+        }
+    }
+    java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+}

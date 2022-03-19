@@ -1,0 +1,17 @@
+/*
+
+!/.gitignore
+
+!/build.gradle
+
+!/src/
+!/resources/
+!/spigot17/
+!/spigot18/
+!/spigot182/
+
+!/integrations/
+/integrations/*/*
+!/integrations/*/src
+!/integrations/*/resources
+!/integrations/*/build.gradle

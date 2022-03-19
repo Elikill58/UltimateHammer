@@ -1,0 +1,27 @@
+package com.elikill58.ultimatehammer.universal.utils;
+
+public class Maths {
+	
+	public static int floor(double num) {
+		int floor = (int) num;
+		return floor == num ? floor : floor - (int) (Double.doubleToRawLongBits(num) >>> 63);
+	}
+
+	public static int round(double num) {
+		return floor(num + 0.5d);
+	}
+
+	public static int roundLoc(double num) {
+		return (int) Math.round(num - 0.5d);
+	}
+
+	public static double square(double num) {
+		return num * num;
+	}
+    
+    public static double getGcd(double a, double b) {
+    	if(a < b)
+    		return getGcd(b, a);
+    	return Math.abs(b) < 0.001 ? a : getGcd(b, a - Math.floor(a / b) * b);
+    }
+}

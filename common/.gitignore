@@ -1,0 +1,16 @@
+/*
+
+!/.gitignore
+
+!/build.gradle
+
+!/src/
+!/resources/
+!/testSrc/
+!/testResources/
+
+!/integrations/
+/integrations/*/*
+!/integrations/*/src
+!/integrations/*/resources
+!/integrations/*/build.gradle

@@ -1,0 +1,3 @@
+rootProject.name = 'UltimateHammerV2'
+
+include 'common', 'spigot', 'spigot:spigot17', 'spigot:spigot18', 'spigot:spigot182'
