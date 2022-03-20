@@ -63,6 +63,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				z2++;
 			}
 			int bonusLevel = inHand.hasEnchant(Enchantment.LUCK) ? inHand.getEnchantLevel(Enchantment.LUCK) : 1;
+	        int next = inHand.getDurability();
 			World w = loc.getWorld();
 			for (int x = x1; x <= x2; x++) {
 				for (int y = y1; y <= y2; y++) {
@@ -80,13 +81,15 @@ public class HammerManager extends UltimateToolType implements Listeners {
 						if (xp > 0)
 							w.spawnExperienceOrb(b.getLocation(), xp);
 						b.breakNaturally(inHand);
-						if (inHand.getDurability() <= 0) {
-							p.setItemInHand(null);
-							return;
-						}
+			            if(next > inHand.getType().getMaxDurability()) {
+			            	p.setItemInHand(null);
+			            	return;
+			            }
+			            next++;
 					}
 				}
 			}
+	        inHand.addDamage((short) next);
 		});
 	}
 }
