@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import com.elikill58.ultimatehammer.api.item.Material;
 
+@SuppressWarnings("deprecation")
 public class SpigotMaterial extends Material {
 
 	private final org.bukkit.Material type;
@@ -149,8 +150,12 @@ public class SpigotMaterial extends Material {
 	public String getId() {
 		return type.name();
 	}
+	
+	@Override
+	public int getIdInt() {
+		return type.getId();
+	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isTransparent() {
 		return type.isTransparent();
@@ -163,6 +168,11 @@ public class SpigotMaterial extends Material {
 	 */
 	public byte getDamage() {
 		return damage;
+	}
+	
+	@Override
+	public int getMaxDurability() {
+		return type.getMaxDurability();
 	}
 
 	@Override

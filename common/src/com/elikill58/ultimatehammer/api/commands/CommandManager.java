@@ -16,8 +16,8 @@ public class CommandManager implements Listeners {
 	
 	public CommandManager() {
 		UltimateHammerCommand negativity = new UltimateHammerCommand();
-		commands.put("negativity", negativity);
-		tabs.put("negativity", negativity);
+		commands.put("ultimatehammer", negativity);
+		tabs.put("ultimatehammer", negativity);
 	}
 	
 	@EventListener

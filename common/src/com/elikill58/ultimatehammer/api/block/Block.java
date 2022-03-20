@@ -1,10 +1,13 @@
 package com.elikill58.ultimatehammer.api.block;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
+import com.elikill58.ultimatehammer.api.location.World;
 
 public abstract class Block implements UltimateHammerObject {
 
@@ -24,6 +27,22 @@ public abstract class Block implements UltimateHammerObject {
 	
 	public abstract boolean isWaterLogged();
 	
+	public abstract World getWorld();
+	
+	public void breakNaturally() {
+		breakNaturally(null);
+	}
+
+	public abstract void breakNaturally(ItemStack item);
+
+	public List<ItemStack> getDrops() {
+		return getDrops(null);
+	}
+
+	public abstract List<ItemStack> getDrops(ItemStack item);
+
+	public abstract byte getData();
+	
 	@Override
 	public boolean equals(Object obj) {
 		Objects.requireNonNull(obj);
@@ -37,4 +56,5 @@ public abstract class Block implements UltimateHammerObject {
 	public String toString() {
 		return "Block{type=" + getType().getId() + ",x=" + getX() + ",y=" + getY() + ",z=" + getZ() + "}";
 	}
+
 }

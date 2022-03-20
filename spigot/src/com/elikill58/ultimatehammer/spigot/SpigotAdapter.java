@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerPlayer;
+import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.OfflinePlayer;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.inventory.Inventory;
@@ -34,8 +38,8 @@ import com.elikill58.ultimatehammer.universal.Scheduler;
 import com.elikill58.ultimatehammer.universal.Version;
 import com.elikill58.ultimatehammer.universal.logger.JavaLoggerAdapter;
 import com.elikill58.ultimatehammer.universal.logger.LoggerAdapter;
-import com.elikill58.ultimatehammer.universal.translation.UltimateHammerTranslationProviderFactory;
 import com.elikill58.ultimatehammer.universal.translation.TranslationProviderFactory;
+import com.elikill58.ultimatehammer.universal.translation.UltimateHammerTranslationProviderFactory;
 import com.elikill58.ultimatehammer.universal.utils.UniversalUtils;
 
 public class SpigotAdapter extends Adapter {
@@ -52,7 +56,7 @@ public class SpigotAdapter extends Adapter {
 		this.pl = pl;
 		this.config = UniversalUtils.loadConfig(new File(pl.getDataFolder(), "config.yml"), "config.yml");
 		this.translationProviderFactory = new UltimateHammerTranslationProviderFactory(
-				pl.getDataFolder().toPath().resolve("lang"), "Negativity", "CheatHover");
+				pl.getDataFolder().toPath().resolve("lang"), "UltimateHammer");
 		this.logger = new JavaLoggerAdapter(pl.getLogger());
 		this.itemRegistrar = new SpigotItemRegistrar();
 		this.serverVersion = Version.getVersion(getVersion());
@@ -226,5 +230,22 @@ public class SpigotAdapter extends Adapter {
 	@Override
 	public VersionAdapter<?> getVersionAdapter() {
 		return SpigotVersionAdapter.getVersionAdapter();
+	}
+
+	@Override
+	public boolean callBreakEvent(Block b, Player p) {
+		org.bukkit.block.Block spigot = (org.bukkit.block.Block) b.getDefault();
+		spigot.setMetadata(SpigotUltimateHammer.BLOCK_METADATA, new FixedMetadataValue(pl, true));
+		BlockBreakEvent event = new BlockBreakEvent(spigot, (org.bukkit.entity.Player) p.getDefault());
+		Bukkit.getPluginManager().callEvent(event);
+		spigot.removeMetadata(SpigotUltimateHammer.BLOCK_METADATA, pl); // now remove metadata
+		return event.isCancelled();
+	}
+	
+	@Override
+	public boolean callLeavesDecayEvent(Block b) {
+		LeavesDecayEvent event = new LeavesDecayEvent((org.bukkit.block.Block) b.getDefault());
+		Bukkit.getPluginManager().callEvent(event);
+		return event.isCancelled();
 	}
 }

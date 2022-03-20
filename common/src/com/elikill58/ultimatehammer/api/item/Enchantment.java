@@ -6,7 +6,9 @@ public enum Enchantment {
 	DEPTH_STRIDER("minecraft:depth_strider"),
 	THORNS("minecraft:thorns"),
 	UNBREAKING("minecraft:unbreaking"),
-	SOUL_SPEED("minecraft:soul_speed");
+	SOUL_SPEED("minecraft:soul_speed"),
+	DURABILITY("minecraft:durability"),
+	LUCK("minecraft:fortune");
 	
 	private final String id;
 	

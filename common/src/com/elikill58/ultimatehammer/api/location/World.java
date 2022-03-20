@@ -2,6 +2,7 @@ package com.elikill58.ultimatehammer.api.location;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
 import com.elikill58.ultimatehammer.api.block.Block;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 
 public abstract class World implements UltimateHammerObject {
 
@@ -80,4 +81,8 @@ public abstract class World implements UltimateHammerObject {
 	 * @return the min height
 	 */
 	public abstract int getMinHeight();
+
+	public abstract void dropItemNaturally(Location location, ItemStack item);
+	
+	public abstract void spawnExperienceOrb(Location loc, int xp);
 }

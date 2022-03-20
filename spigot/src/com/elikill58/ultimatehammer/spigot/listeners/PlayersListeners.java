@@ -1,5 +1,7 @@
 package com.elikill58.ultimatehammer.spigot.listeners;
 
+import java.util.stream.Collectors;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +35,7 @@ import com.elikill58.ultimatehammer.api.events.player.PlayerTeleportEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerToggleActionEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerToggleActionEvent.ToggleAction;
 import com.elikill58.ultimatehammer.spigot.SpigotUltimateHammer;
+import com.elikill58.ultimatehammer.spigot.impl.block.SpigotBlock;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotEntityManager;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotPlayer;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
@@ -87,12 +90,12 @@ public class PlayersListeners implements Listener {
 	public void onDeath(PlayerDeathEvent e) {
 		if(e.getEntity().hasMetadata("NPC"))
 			return;
-		EventManager.callEvent(new com.elikill58.ultimatehammer.api.events.player.PlayerDeathEvent(SpigotEntityManager.getPlayer(e.getEntity())));
+		EventManager.callEvent(new com.elikill58.ultimatehammer.api.events.player.PlayerDeathEvent(SpigotEntityManager.getPlayer(e.getEntity()), e.getDrops().stream().map(SpigotItemStack::new).collect(Collectors.toList())));
 	}
 	
 	@EventHandler
 	public void onInteract(org.bukkit.event.player.PlayerInteractEvent e) {
-		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()));
+		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()), e.getClickedBlock() != null ? new SpigotBlock(e.getClickedBlock()) : null);
 		EventManager.callEvent(event);
 		if(event.isCancelled())
 			e.setCancelled(event.isCancelled());

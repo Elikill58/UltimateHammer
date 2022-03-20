@@ -17,6 +17,10 @@ public class SpigotEnchants {
 			return Enchantment.DURABILITY;
 		case DEPTH_STRIDER:
 			return Enchantment.DEPTH_STRIDER;
+		case LUCK:
+			return Enchantment.LUCK;
+		case DURABILITY:
+			return Enchantment.DURABILITY;
 		}
 		return null;
 	}

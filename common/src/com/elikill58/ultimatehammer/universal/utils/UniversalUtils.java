@@ -208,7 +208,8 @@ public class UniversalUtils {
 		
 		SemVer latestVersion = getLatestVersion().orElse(null);
 		if (latestVersion != null  && latestVersion.isNewerThan(currentVersion)) {
-			return latestVersion;
+			// TODO fix version checker
+			//return latestVersion;
 		}
 		
 		return null;

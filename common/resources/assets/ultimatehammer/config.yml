@@ -1,7 +1,6 @@
 ###################################################################
 #                                                                 #
-#                            Negativity                           #
-#                      AntiCheat by Elikill58                     #
+#                  UltimateHammer by Elikill58                    #
 #                                                                 #
 #              If you have a problem or a suggestion,             #
 #                    You can contact me on:                       #
@@ -13,34 +12,129 @@
 #                                                                 #
 ###################################################################
 
-log_alerts: true
-log_alerts_in_console: true
-tps_alert_stop: 19 # if you get less TPS then this value, all alert will be disabled
-# Don't send ping message to proxy, just let say there is Negativity on proxy
-use-proxy-force: false
+items:
+  # This is an example of an item
+  example-item:
+    enable: false
+    available-types:
+    - "hammer: Destroy 3x3x1 according to your vision"
+    - "axe: Destroy a complete tree"
+    - "hoe: automatically plant seed from your inventory"
+    - "infinite: An infinite item which stay on your inventory, even after a death"
+    type:
+    - "hammer"
+    # Set "" if you want to disable it
+    message: "&eThis is the &cHammer &e!"
+    # permission to use it. Set "" to allow everyone to use it
+    permission: "ultimatehammer.hammer"
+    material: "DIAMOND_PICKAXE"
+    # Optional. Default: 1
+    amount: 1
+    # Optional. Default: basic MC name
+    name: "-"
+    # Optional. Default: nothing
+    lore:
+    - ""
+    # Optional. Default: any
+    enchant:
+    - "DAMAGE_ALL"
+    - "PROTECTION_ENVIRONMENTAL:2"
+    # All blocks that will NOT be destroyed by the hammer
+    blacklist:
+    - "MOB_SPAWNER"
+    - "CHEST"
 
-commands:
-  # Options to enable or disable commands
-  # Manage /nreport (Alias: /report)
-  report: true
-  # Manage Mod command :
-  # Manage /nkick (Alias: /kick)
-  kick: true
-  # Manage /nmod (Alias: /mod)
-  mod: true
-  # Manage /nlang (Alias: /lang)
-  lang: true
-  # Manage all commands about chat
-  chat:
-    # Enable the /clearchat command
-    clear: true
-    # Enable the /lockchat command
-    lock: true
+  # Destroy 3x3x1 according to your vision
+  hammer:
+    enable: true
+    type:
+    - "hammer"
+    message: "&eThis is the &cHammer &e!"
+    permission: "ultimatehammer.hammer"
+    material: "DIAMOND_PICKAXE"
+    amount: 1
+    name: "&b&k-&r &cHammer &b&k-"
+    hammer:
+      blacklist:
+      - "MOB_SPAWNER"
+      - "CHEST"
 
-# The time between 2 /report
-# in milliseconds
-# -1 to disable
-time_between_report: 1000
+  # Destroy all of a tree
+  axe:
+    enable: true
+    type:
+    - "axe"
+    message: "&eThis is the &cAxe &e!"
+    permission: "ultimatehammer.axe"
+    material: "DIAMOND_AXE"
+
+  # Automatic plant a seed which is on your inventory
+  hoe:
+    enable: true
+    type:
+    - "hoe"
+    message: "&eThis is the &cHoe &e!"
+    permission: "ultimatehammer.hoe"
+    material: "DIAMOND_HOE"
+    name: "&cThe ultimate HOE"
+    hoe:
+      size: 3
+
+  # Keep on inventory on death
+  sword:
+    enable: true
+    type:
+    - "infinite"
+    message: "&eThis is the &cHoe &e!"
+    permission: "ultimatehammer.hoe"
+    material: "DIAMOND_SWORD"
+    name: "&cThe infinite sword"
+
+  all:
+    enable: true
+    type:
+    - "hammer"
+    - "hoe"
+    - "axe"
+    - "infinite"
+    message: "&4&l>> &6Ultimate &lHammer &7:&cCan do EVERYTHING &4&l<<"
+    permission: "ultimatehammer.all"
+    material: "STICK"
+    name: "&cThe &4Ultimate &lHammer"
+    lore:
+    - "&6Waw !"
+    - "&7This stick can:"
+    - "Break 3x3"
+    - "Destroy tree"
+    - "Plant seed"
+    - "Stay with you after respawn"
+
+region-bypass:
+  enabled: false
+  1:
+    # You need WorldGuard for the region
+    regions:
+    - "spawn"
+    # Default worlds names (or Multiverse names)
+    worlds:
+    - "world_the_end"
+    # the feature disabled (sword/hoe...)
+    features:
+    - "hoe"
+
+messages:
+  help:
+  - "/uh hammer: Get the 3x3x1 pickaxe"
+  - "/uh axe: Drop tree"
+  - "/uh hoe: Plant seed"
+  - "/uh sword: Keep it at your death"
+  not_found: "&cCannot find &e%arg% &c!"
+  no_perm: "&cYou are not permitted to get it."
+  give_other: "&eItem given to %name% !"
+  no_player: "&c%arg% isn't a valid player"
+  not_enabled: "&cThis tool isn't enabled."
+  console_cannot: "&cYou cannot give item to yourself"
+  well_reloaded: "&eUltimateHammer &ais now reloaded !"
 
 Database:
   isActive: false
@@ -52,30 +146,6 @@ Database:
   password: "myPassword"
   type: "mysql"
 
-inventory:
-  alerts:
-    no_started_verif_cheat: false # Don't see if the player isn't analyse for this cheat
-    only_cheat_active: true # The cheat with an active detection
-  inv_freeze_active: true
-
-# Bypass when you add effects
-#
-items:
-  #ITEM_NAME:
-  # when: WHEN_DISABLE_DETECTION
-  # cheats: CHEATS_DETECTION_DISABLED (it's the ID of the cheats like fly, speed)
-  #
-  # when available:
-  # always : disable when the player get it in their hand
-  # right_click : disable when the player right click
-  # left_click : disable when the player left click
-  # looking : disable when the player is looking a specific type
-  # below : disable according to the block below the player
-  #
-  COMPASS:
-    when: always
-    cheats: speed,fly
-
 # Configuration of the permissions subsystem. For more information
 # see https://github.com/Elikill58/Negativity/wiki/Permissions
 Permissions:
@@ -84,100 +154,6 @@ Permissions:
   checker: platform
   check:
     default: "negativity.check"
-  showAlert:
-    default: "negativity.alert"
-  showReport:
-    default: "negativity.seereport"
-  verif:
-    default: "negativity.verif"
-  manageCheat:
-    default: "negativity.managecheat"
-  reload:
-    default: "negativity.reload"
-  report_wait:
-    default: "negativity.reportwait"
-  report:
-    default: "negativity.report"
-  ban:
-    default: "negativity.ban"
-  unban:
-    default: "negativity.unban"
-  mod:
-    default: "negativity.mod"
-  lang:
-    default: "negativity.lang"
-  chat:
-    clear:
-      default: "negativity.chat.cleat"
-    lock:
-      default: "negativity.chat.lock"
-    lock_bypass:
-      default: "negativity.chat.lock_bypass"
-  bypass:
-    active: false
-    ban:
-      # Bypass ban (auto and /nban)
-      default: "negativity.bypass.ban"
-    all:
-      default: "negativity.bypass.all"
-    forcefield:
-      default: "negativity.bypass.forcefield"
-    fastplace:
-      default: "negativity.bypass.fastplace"
-    speed:
-      default: "negativity.bypass.speed"
-    autoclick:
-      default: "negativity.bypass.autoclick"
-    fly:
-      default: "negativity.bypass.fly"
-    antipotion:
-      default: "negativity.bypass.antipotion"
-    fasteat:
-      default: "negativity.bypass.fasteat"
-    regen:
-      default: "negativity.bypass.regen"
-    antiknockback:
-      default: "negativity.bypass.antiknockback"
-    jesus:
-      default: "negativity.bypass.jesus"
-    nofall:
-      default: "negativity.bypass.nofall"
-    blink:
-      default: "negativity.bypass.blink"
-    spider:
-      default: "negativity.bypass.spider"
-    fastbow:
-      default: "negativity.bypass.fastbow"
-    scaffold:
-      default: "negativity.bypass.scaffold"
-    step:
-      default: "negativity.bypass.step"
-    noslowdown:
-      default: "negativity.bypass.noslowdown"
-    fastladder:
-      default: "negativity.bypass.fastladder"
-    phase:
-      default: "negativity.bypass.phase"
-    autosteal:
-      default: "negativity.bypass.autosteal"
-    nuker:
-      default: "negativity.bypass.nuker"
-    airjump:
-      default: "negativity.bypass.airjump"
-    chat:
-      default: "negativity.bypass.chat"
-    noweb:
-      default: "negativity.bypass.noweb"
-    critical:
-      default: "negativity.bypass.critical"
-    inventorymove:
-      default: "negativity.bypass.inventorymove"
-    faststairs:
-      default: "negativity.bypass.faststairs"
-    nopitchlimit:
-      default: "negativity.bypass.nopitchlimit"
-    timer:
-      default: "negativity.bypass.timer"
 
 Translation:
   active: false # enable or disable the translation
@@ -205,103 +181,6 @@ Translation:
   # The only one available out-of-the-box is "platform".
   provider: platform
 
-report:
-  spam:
-    # Name of report (which is also used as reason)
-    name: "&6Spam/Link"
-    # the material in inventory
-    material: YELLOW_BANNER
-    # the slot of item in inventory
-    slot: 0
-    # the message sent to player when report player
-    message: "&6%name% &ahave been reported for %reason%"
-    # "permission" is not necessary. If you don't set it, everyone will be able to use it.
-  insult:
-    name: "&cInsult"
-    material: RED_BANNER
-    slot: 1
-    message: "&6%name% &ahave been reported for %reason%"
-    permission: "negativity.report.insult"
-  racism:
-    name: "&cRacism"
-    material: RED_BANNER
-    slot: 2
-    message: "&6%name% &ahave been reported for %reason%"
-    permission: "negativity.report.racism"
-  high_ping:
-    name: "&4High ping"
-    material: BLACK_BANNER
-    slot: 9
-    message: "&6%name% &ahave been reported for %reason%"
-    permission: "negativity.report.ping"
-  wrong_name:
-    name: "&4Wrong name"
-    material: BLACK_BANNER
-    slot: 10
-    message: "&6%name% &ahave been reported for %reason%"
-    permission: "negativity.report.name"
-  cheat:
-    name: "&4Cheat"
-    material: BLACK_BANNER
-    slot: 11
-    message: "&6%name% &ahave been reported for %reason%"
-    permission: "negativity.report.cheat"
-
-
-kicks:
-  spam:
-    # Name of report (which is also used as reason)
-    name: "&6Spam/Link"
-    # the material in inventory
-    material: YELLOW_BANNER
-    # the slot of item in inventory
-    slot: 0
-    # the message sent to player which use the inventory
-    message: "&6%name% &ahave been kicked for %reason%"
-    # the command to run when mod click on the item
-    command: "nkick %name% Spam"
-    # "permission" is not necessary. If you don't set it, everyone will be able to use it.
-  insult:
-    name: "&cInsult"
-    material: ORANGE_BANNER
-    slot: 1
-    message: "&6%name% &ahave been kicked for %reason%"
-    command: "nkick %name% Insult"
-    permission: "negativity.report.insult"
-  invalid_name:
-    name: "&cInvalid Name"
-    material: RED_BANNER
-    slot: 2
-    message: "&6%name% &ahave been kicked for %reason%"
-    command: "nkick %name% Invalid Name"
-    permission: "negativity.report.insult"
-
-alert:
-  show:
-    # Available types :
-    # instant: instantly send alerts
-    # time: the value (in milliseconds) corresponds to the time between 2 alerts. Use '-1' to send messages instantly
-    # amount: the value is the amount of required alerts of one cheat to send the message.
-    type: "time"
-    # The value according to the type.
-    value: 1000
-  
-  # To run command when someone get alert
-  command:
-    active: false
-    # Reliability need to run command
-    reliability_need: 80
-    # Available arguments:
-    # %name% : Name of player who cheat
-    # %uuid% : UUID of player who cheat
-    # %report_type% : Type of detected cheat (Know if Negativity consider it as Warning or Violation)
-    # %cheat_key% : Cheat key (like "nofall") : You cannot edit it
-    # %cheat_name% : Cheat name (like "NoFall") : You can edit it just below
-    # %reliability% : Reliability of the alert
-    run:
-    - "mycommand %name% %cheat_key% %reliability%"
-
-
 # Accounts hold player-specific data of the plugin, like their language and alerts count.
 accounts:
   storage:
@@ -309,23 +188,6 @@ accounts:
     #
     # The following are available out-of-the-box:
     # - file : stored in files under ./plugins/Negativity/user/
-    # - database : uses a database
-    # Defaults to "file"
-    id: "file"
-
-# A verification is used to monitor a player's activity.
-verif:
-  # The default duration of a verification, in ticks (20 ticks = 1 second)
-  time: 200
-  # If true, mutes alerts a player generates when it is being verified
-  # Alerts for a specific cheat can be forcibly muted by setting cheats.<cheat>.check_in_verif to false
-  disable_alert_on_verif: false
-
-  storage:
-    # The ID of the storage to use.
-    #
-    # The following are available out-of-the-box:
-    # - file : stored in files under ./plugins/Negativity/verif/
     # - database : uses a database
     # Defaults to "file"
     id: "file"
@@ -342,242 +204,3 @@ region-bypass:
     # the cheats keys
     cheats:
     - "fly"
-
-# Manage webhook
-webhooks:
-  enable: false
-  hook:
-    discord-example:
-      type: "discord"
-      # register the webhook URL used by Negativity
-      url: "https://discord.com/api/webhooks/theRestOfDiscordUrl"
-      # Configure messages presentation
-      # If you don't set one of them, it will get the default configuration
-      #
-      # Placeholders available everywhere :
-      # %name% : Name of the player which procude the message
-      # %uuid% : UUID of the player which procude the message
-      # %ip% : IP of the player which produce the message
-      # %date% : Date when the player procude the message
-      # %sender% : The sender of the message (such as banner or reporter)
-      # %ping% : The ping of the player
-      # %world% : The world of the player
-      # %server_name% : The name of the server where the player is
-      # %server_version% : Version of the server
-      # %player_version% : Version of the player
-      # %tps% : Actual server TPS
-      # 
-      messages:
-        # Configure discord webhook message for ban.
-        #
-        # Placeholders available :
-        # %cheat% : the cheat name
-        # %amount% : Amount of alert made by player
-        # %reliability% : Reliability of the cheat
-        alert:
-          enabled: true
-          # The name which will send the message
-          username: "Negativity Alert"
-          # The content of the message
-          content: ""
-          # The URL of the message avatar
-          avatar_url: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-          # Now let's configure embed message (the section with black background)
-          embed:
-            # Color of the embed (used with the line on the left)
-            # More informations: https://docs.oracle.com/javase/7/docs/api/java/awt/Color.html
-            color: "65280"
-            # The embed title
-            title: "Negativity Alert"
-            # Main description
-            description: "%name% seems to use %cheat% %amount%x (Reliability: %reliability%%)"
-            # All fields.
-            # There is 3 fields per line MAX.
-            # Else, they will automatically be on the next line.
-            fields:
-              1:
-                # The key which will be at top of field (and bold)
-                key: "Player Name"
-                # The value of the field
-                value: "%name%"
-                # If the field is inline
-                inline: true
-              2:
-                key: "Ping"
-                value: "%ping% ms"
-                inline: true
-              3:
-                key: "Version"
-                value: "%player_version%"
-                inline: true
-              4:
-                key: "World"
-                value: "%world%"
-                inline: true
-              5:
-                key: "Server Name"
-                value: "%server_name%"
-                inline: true
-              6:
-                key: "Server TPS"
-                value: "%tps%"
-                inline: true
-              7:
-                key: "Player UUID"
-                value: "%uuid%"
-                inline: false
-            # Thumbnail of the message
-            thumbnail: ""
-            # The footer of the message
-            footer:
-              name: "Negativity - %date%"
-              link: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # Author details of the message
-            author:
-              name: ""
-              link: "https://github.com/Elikill58/Negativity"
-              icon: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-        # Configure discord webhook message for ban.
-        #
-        # Placeholders available :
-        # %name% : Name of the banned player
-        # %uuid% : UUID of the banned player
-        # %date% : Date when the player have been banned
-        ban:
-          enabled: true
-          # The name which will send the message
-          username: "Negativity"
-          # The content of the message
-          content: ""
-          # The URL of the message avatar
-          avatar_url: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-          # Now let's configure embed message (the section with black background)
-          embed:
-            # Color of the embed (used with the line on the left)
-            color: "red"
-            # The embed title
-            title: "Ban"
-            # Main description
-            description: "%name% have been banned by %sender% for %reason%"
-            # All fields.
-            # There is 3 fields per line MAX.
-            # Else, they will automatically be on the next line.
-            fields:
-              1:
-                # The key which will be at top of field (and bold)
-                key: "Player name"
-                # The value of the field
-                value: "%name%"
-                # If the field is inline
-                inline: true
-              2:
-                key: "Player UUID"
-                value: "%uuid%"
-                inline: true
-            # Thumbnail of the message
-            thumbnail: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # The footer of the message
-            footer:
-              name: "Negativity - %date%"
-              link: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # Author details of the message
-            author:
-              name: "Negativity"
-              link: "https://github.com/Elikill58/Negativity"
-              icon: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-        # Configure discord webhook message for ban.
-        #
-        # Placeholders available :
-        # %reason% : Name of the banned player
-        kick:
-          enabled: true
-          # The name which will send the message
-          username: "Negativity"
-          # The content of the message
-          content: ""
-          # The URL of the message avatar
-          avatar_url: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-          # Now let's configure embed message (the section with black background)
-          embed:
-            # Color of the embed (used with the line on the left)
-            color: "blue"
-            # The embed title
-            title: "Kick"
-            # Main description
-            description: "%name% have been kicked by %sender% for %reason%"
-            # All fields.
-            # There is 3 fields per line MAX.
-            # Else, they will automatically be on the next line.
-            fields:
-              1:
-                # The key which will be at top of field (and bold)
-                key: "Player name"
-                # The value of the field
-                value: "%name%"
-                # If the field is inline
-                inline: true
-              2:
-                key: "Player UUID"
-                value: "%uuid%"
-                inline: true
-            # Thumbnail of the message
-            thumbnail: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # The footer of the message
-            footer:
-              name: "Negativity - %date%"
-              link: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # Author details of the message
-            author:
-              name: "Negativity"
-              link: "https://github.com/Elikill58/Negativity"
-              icon: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-        # Configure discord webhook message for ban.
-        #
-        # Placeholders available :
-        # %reason% : Name of the banned player
-        report:
-          enabled: true
-          # The name which will send the message
-          username: "Negativity"
-          # The content of the message
-          content: ""
-          # The URL of the message avatar
-          avatar_url: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-          # Now let's configure embed message (the section with black background)
-          embed:
-            # Color of the embed (used with the line on the left)
-            color: "red"
-            # The embed title
-            title: "Report"
-            # Main description
-            description: "%name% have been reported by %sender% for %reason%"
-            # All fields.
-            # There is 3 fields per line MAX.
-            # Else, they will automatically be on the next line.
-            fields:
-              1:
-                # The key which will be at top of field (and bold)
-                key: "Player name"
-                # The value of the field
-                value: "%name%"
-                # If the field is inline
-                inline: true
-              2:
-                key: "Player UUID"
-                value: "%uuid%"
-                inline: true
-            # Thumbnail of the message
-            thumbnail: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # The footer of the message
-            footer:
-              name: "Negativity - %date%"
-              link: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-            # Author details of the message
-            author:
-              name: "Negativity"
-              link: "https://github.com/Elikill58/Negativity"
-              icon: "https://www.spigotmc.org/data/resource_icons/86/86874.jpg"
-
-    discord-another-example:
-      type: "discord"
-      url: "https://discord.com/api/webhooks/theRestOfSecondDiscordUrl"

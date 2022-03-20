@@ -1,0 +1,11 @@
+name: UltimateHammerV2
+main: com.elikill58.ultimatehammer.spigot.SpigotUltimateHammer
+version: 2.0
+author: Elikill58
+api-version: 1.13
+
+softdepend: [WorldGuard, Factions]
+
+commands:
+  ultimatehammer:
+    aliases: [hammer, uh]

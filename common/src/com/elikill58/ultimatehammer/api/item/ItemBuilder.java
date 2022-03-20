@@ -56,6 +56,16 @@ public abstract class ItemBuilder {
 	 */
     public abstract ItemBuilder unsafeEnchant(Enchantment enchantment, int level);
 
+	/**
+	 * Add enchant to item without checking if it exist
+	 * As essentials, this method allow you to add enchant with level at more than max allowed by default
+	 * 
+	 * @param enchantment the enchant name
+	 * @param level the level of the enchant
+	 * @return this builder
+	 */
+    public abstract ItemBuilder unsafeEnchant(String enchantment, int level);
+
     /**
      * Set the amount of the item.
      * Default: 1
@@ -97,6 +107,8 @@ public abstract class ItemBuilder {
 	 * @return this builder
 	 */
     public abstract ItemBuilder addToLore(String... loreToAdd);
+
+    public abstract void unbreakable(boolean breakable);
 
     /**
      * Build the item.

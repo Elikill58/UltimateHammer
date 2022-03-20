@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.OfflinePlayer;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.inventory.Inventory;
@@ -265,4 +266,21 @@ public abstract class Adapter {
 	 * @return the version adapter
 	 */
 	public abstract VersionAdapter<?> getVersionAdapter();
+	
+	/**
+	 * Call plateform break event to prevent not allowed area
+	 * 
+	 * @param b the block that should be breaked
+	 * @param p the player
+	 * @return true if event cancelled
+	 */
+	public abstract boolean callBreakEvent(Block b, Player p);
+	
+	/**
+	 * Call plateform break event to prevent not allowed area
+	 * 
+	 * @param b the block that should be breaked
+	 * @return true if event cancelled
+	 */
+	public abstract boolean callLeavesDecayEvent(Block b);
 }

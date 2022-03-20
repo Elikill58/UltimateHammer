@@ -15,6 +15,13 @@ import com.elikill58.ultimatehammer.universal.Messages;
 
 public abstract class Inventory implements UltimateHammerObject {
 
+	public ItemStack[] getContents() {
+		ItemStack[] items = new ItemStack[getSize()];
+		for(int i = 0; i < getSize(); i++)
+			items[i] = get(i);
+		return items;
+	}
+	
 	/**
 	 * Get the inventory type
 	 * 

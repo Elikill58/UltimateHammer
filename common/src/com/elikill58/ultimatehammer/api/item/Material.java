@@ -30,6 +30,16 @@ public abstract class Material implements UltimateHammerObject {
 	public abstract String getId();
 
 	/**
+	 * Get the material main ID
+	 * (the official platform's id)
+	 * 
+	 * @return the material type id
+	 */
+	public abstract int getIdInt();
+
+	public abstract int getMaxDurability();
+
+	/**
 	 * Check if an item is consumable
 	 * Warn: it's a manual check, on a generic one for all material.
 	 * An item are return false but be consumable.

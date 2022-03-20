@@ -9,7 +9,10 @@ import java.util.Map.Entry;
 
 import com.elikill58.ultimatehammer.api.commands.CommandManager;
 import com.elikill58.ultimatehammer.api.inventory.InventoryManager;
-import com.elikill58.ultimatehammer.common.ConnectionManager;
+import com.elikill58.ultimatehammer.common.tools.AxeManager;
+import com.elikill58.ultimatehammer.common.tools.HammerManager;
+import com.elikill58.ultimatehammer.common.tools.HoeManager;
+import com.elikill58.ultimatehammer.common.tools.InfiniteManager;
 import com.elikill58.ultimatehammer.universal.Adapter;
 
 public class EventManager {
@@ -21,7 +24,10 @@ public class EventManager {
 		
 		registerEvent(new CommandManager());
 		registerEvent(new InventoryManager());
-		registerEvent(new ConnectionManager());
+		registerEvent(new AxeManager());
+		registerEvent(new HammerManager());
+		registerEvent(new HoeManager());
+		registerEvent(new InfiniteManager());
 	}
 	
 	/**

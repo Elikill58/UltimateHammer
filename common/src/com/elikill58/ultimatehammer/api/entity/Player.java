@@ -31,6 +31,10 @@ public interface Player extends OfflinePlayer {
 	 * @return true if the player is dead
 	 */
 	boolean isDead();
+
+	default boolean isValid() {
+		return !isDead() && isOnline();
+	}
 	
 	/**
 	 * Know if the player is sleeping
@@ -211,6 +215,7 @@ public interface Player extends OfflinePlayer {
 	 * @return the item in hand
 	 */
 	ItemStack getItemInHand();
+	void setItemInHand(ItemStack item);
 	
 	/**
 	 * Get the item in second hand
@@ -249,4 +254,6 @@ public interface Player extends OfflinePlayer {
 	static boolean isSamePlayer(Player player1, Player player2) {
 		return player1.getUniqueId().equals(player2.getUniqueId());
 	}
+
+	void giveExp(int i);
 }

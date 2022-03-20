@@ -1,6 +1,10 @@
 package com.elikill58.ultimatehammer.spigot.impl.location;
 
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
+
 import com.elikill58.ultimatehammer.api.block.Block;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.location.Difficulty;
 import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.api.location.World;
@@ -48,5 +52,15 @@ public class SpigotWorld extends World {
 	@Override
 	public Object getDefault() {
 		return w;
+	}
+
+	@Override
+	public void dropItemNaturally(Location location, ItemStack item) {
+		w.dropItemNaturally(SpigotLocation.fromCommon(location), (org.bukkit.inventory.ItemStack) item.getDefault());
+	}
+
+	@Override
+	public void spawnExperienceOrb(Location loc, int xp) {
+		((ExperienceOrb) w.spawnEntity(SpigotLocation.fromCommon(loc), EntityType.EXPERIENCE_ORB)).setExperience(xp);
 	}
 }

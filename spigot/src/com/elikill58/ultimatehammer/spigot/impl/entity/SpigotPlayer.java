@@ -334,4 +334,14 @@ public class SpigotPlayer extends SpigotEntity<org.bukkit.entity.Player> impleme
 		}
 		return Player.isSamePlayer(this, (Player) obj);
 	}
+
+	@Override
+	public void setItemInHand(ItemStack item) {
+		entity.setItemInHand((org.bukkit.inventory.ItemStack) item.getDefault());
+	}
+
+	@Override
+	public void giveExp(int i) {
+		entity.giveExp(i);
+	}
 }

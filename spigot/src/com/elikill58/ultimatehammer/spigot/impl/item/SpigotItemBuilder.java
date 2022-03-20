@@ -1,5 +1,6 @@
 package com.elikill58.ultimatehammer.spigot.impl.item;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +24,12 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+@SuppressWarnings("deprecation")
 public class SpigotItemBuilder extends ItemBuilder {
 
     private ItemStack itemStack;
     private ItemMeta itemMeta;
 
-    @SuppressWarnings("deprecation")
 	public SpigotItemBuilder(Material type) {
     	this.itemStack = new ItemStack((org.bukkit.Material) type.getDefault());
     	byte damage = ((SpigotMaterial) type).getDamage();
@@ -41,7 +42,6 @@ public class SpigotItemBuilder extends ItemBuilder {
     	}
     }
 
-    @SuppressWarnings("deprecation")
 	public SpigotItemBuilder(com.elikill58.ultimatehammer.api.item.ItemStack item) {
     	this.itemStack = (ItemStack) item.getDefault();
     	byte damage = ((SpigotMaterial) item.getType()).getDamage();
@@ -59,7 +59,6 @@ public class SpigotItemBuilder extends ItemBuilder {
     	this.itemMeta = (itemStack.hasItemMeta() ? itemStack.getItemMeta() : Bukkit.getItemFactory().getItemMeta(itemStack.getType()));
     }
 
-    @SuppressWarnings("deprecation")
 	public SpigotItemBuilder(OfflinePlayer owner) {
     	this.itemStack = new ItemStack((org.bukkit.Material) Materials.PLAYER_HEAD.getDefault(), 1, (byte) 3);
     	SkullMeta skullmeta = (SkullMeta) (itemStack.hasItemMeta() ? itemStack.getItemMeta() : Bukkit.getItemFactory().getItemMeta(itemStack.getType()));
@@ -100,6 +99,12 @@ public class SpigotItemBuilder extends ItemBuilder {
 			this.itemMeta.addEnchant(en, level, true);
         return this;
     }
+    
+	@Override
+    public ItemBuilder unsafeEnchant(String enchantment, int level) {
+    	itemMeta.addEnchant(org.bukkit.enchantments.Enchantment.getByName(enchantment), level, true);
+    	return this;
+    }
 
     @Override
     public ItemBuilder amount(int amount) {
@@ -107,7 +112,27 @@ public class SpigotItemBuilder extends ItemBuilder {
         return this;
     }
     
-	@SuppressWarnings("deprecation")
+    @Override
+    public void unbreakable(boolean unbreakable) {
+    	Object objToUnbreak = this.itemMeta;
+    	if(!Version.getVersion().isNewerThan(Version.V1_13)) {
+	    	try {
+	    		Method m = this.itemMeta.getClass().getDeclaredMethod("spigot");
+	    		m.setAccessible(true);
+	    		objToUnbreak = m.invoke(this.itemMeta);
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+    	}
+    	try {
+    		Method m = objToUnbreak.getClass().getDeclaredMethod("setUnbreakable", boolean.class);
+    		m.setAccessible(true);
+    		m.invoke(objToUnbreak, unbreakable);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+    
     @Override
 	public ItemBuilder color(DyeColor color) {
 		itemStack.setDurability(color.getColorFor(new SpigotMaterial(itemStack.getType())));

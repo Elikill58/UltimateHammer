@@ -27,6 +27,8 @@ import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountS
 
 public class SpigotUltimateHammer extends JavaPlugin {
 
+
+	public static final String BLOCK_METADATA = "ultimate-hammer-skip";
 	private static SpigotUltimateHammer INSTANCE;
 	public static boolean isCraftBukkit = false;
 		
@@ -63,7 +65,7 @@ public class SpigotUltimateHammer extends JavaPlugin {
 		} catch (ClassNotFoundException e) {
 			isCraftBukkit = true;
 		}
-		UltimateHammer.loadNegativity();
+		UltimateHammer.loadUltimateHammer();
 
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new PlayersListeners(), this);
@@ -72,20 +74,14 @@ public class SpigotUltimateHammer extends JavaPlugin {
 		pm.registerEvents(new EntityListeners(), this);
 		pm.registerEvents(new CommandsListeners(), this);
 
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		
-		loadCommand();
+		CommandsListeners command = new CommandsListeners();
+		PluginCommand negativity = getCommand("ultimatehammer");
+		negativity.setExecutor(command);
+		negativity.setTabCompleter(command);
 		
 		Stats.sendStartupStats(Bukkit.getServer().getPort());
 		
 		UltimateHammerAccountStorage.setDefaultStorage("file");
-	}
-
-	private void loadCommand() {
-		CommandsListeners command = new CommandsListeners();
-		PluginCommand negativity = getCommand("negativity");
-		negativity.setExecutor(command);
-		negativity.setTabCompleter(command);
 	}
 
 	@Override

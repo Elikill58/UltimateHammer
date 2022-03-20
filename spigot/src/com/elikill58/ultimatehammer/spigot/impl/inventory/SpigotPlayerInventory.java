@@ -30,7 +30,10 @@ public class SpigotPlayerInventory extends PlayerInventory {
 
 	@Override
 	public void set(int slot, ItemStack item) {
-		inv.setItem(slot, (org.bukkit.inventory.ItemStack) item.getDefault());
+		if(item == null)
+			inv.setItem(slot, null);
+		else
+			inv.setItem(slot, (org.bukkit.inventory.ItemStack) item.getDefault());
 	}
 
 	@Override

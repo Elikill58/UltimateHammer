@@ -14,7 +14,7 @@ import com.elikill58.ultimatehammer.universal.translation.TranslationProviderFac
 
 public class TranslatedMessages {
 
-	public static final String PLATFORM_PROVIDER_ID = "platform", DEFAULT_PREFIX = "&a[&2Negativity&a]";
+	public static final String PLATFORM_PROVIDER_ID = "platform", DEFAULT_PREFIX = "&a[&aUltimateHammer&a]";
 
 	public static String DEFAULT_LANG = Adapter.getAdapter().getConfig().getString("Translation.default");
 	public static List<String> LANGS = Adapter.getAdapter().getConfig().getStringList("Translation.lang_available");
