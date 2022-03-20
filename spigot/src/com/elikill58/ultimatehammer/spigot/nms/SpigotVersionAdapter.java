@@ -111,7 +111,7 @@ public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 	@Override
 	public int getXpToDrop(Block b, int bonusLevel, ItemStack item) {
 		try {
-			Object nmsBlock = getNMSBlockMethod.invoke(b);
+			Object nmsBlock = getNMSBlockMethod.invoke(b.getDefault());
 			Object blockData = PacketUtils.getMethodThatReturn(nmsBlock, PacketUtils.getNmsClass("IBlockData", "world.level.block.state."), 0).invoke(nmsBlock);
 			Object nmsWorld = craftWorldClass.getMethod("getHandle").invoke(craftWorldClass.cast(((org.bukkit.block.Block) b.getDefault()).getWorld()));
 			return (int) getExpDropMethod.invoke(nmsBlock, nmsWorld, blockData, bonusLevel);

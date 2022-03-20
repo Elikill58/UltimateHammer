@@ -60,8 +60,8 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 	public List<String> onTabComplete(CommandSender sender, String[] arg, String prefix) {
 		List<String> list = new ArrayList<>();
 		if(arg.length == 1) {
-			UltimateHammer.getAlltools().keySet().forEach((key) -> {
-				if(prefix.isEmpty() || key.startsWith(prefix))
+			UltimateHammer.getAlltools().forEach((key, tool) -> {
+				if((prefix.isEmpty() || key.startsWith(prefix)) && !tool.isEnabled())
 					list.add(key);
 			});
 		} else {

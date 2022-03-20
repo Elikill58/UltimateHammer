@@ -31,35 +31,38 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			return;
 		Player p = e.getPlayer();
 		getToolForHand(p, getKey()).forEach((tool) -> {
+			p.sendMessage("Tool founded for axe");
 			if(WorldRegionBypass.cannotBuild(p, tool, e.getBlock().getLocation()))
 				return;
-			logDetele(tool, e);
+	        p.giveExp(10);
+	        List<Block> blist = new ArrayList<>();
+	        checkLeaves(tool, p, e.getBlock());
+	        blist.add(e.getBlock());
+	        
+	        int max = p.getItemInHand().getDurability();
+	        int next = max;
+	        while(!blist.isEmpty()) {
+	            Block b = blist.get(0);
+	            if (b.getType().getId().contains("LOG")) {
+	                for (ItemStack item : b.getDrops(tool.getItem()))
+	                    b.getWorld().dropItemNaturally(b.getLocation(), item);
+
+	                b.setType(Materials.AIR);
+	                checkLeaves(tool, p, b);
+	                next--;
+	            }
+	            for (BlockFace face : BlockFace.values()) {
+	                if (b.getRelative(face).getType().getId().contains("LOG"))
+	                    blist.add(b.getRelative(face));
+	            }
+	            if(next <= 0) {
+	            	p.setItemInHand(null);
+	            	return;
+	            }
+	        }
+	        p.getItemInHand().addDamage((short) (max - next));
 		});
 	}
-
-	
-	private void logDetele(UltimateTool tool, BlockBreakEvent e) {
-		Player p = e.getPlayer();
-        p.giveExp(10);
-        List<Block> blist = new ArrayList<>();
-        checkLeaves(tool, p, e.getBlock());
-        blist.add(e.getBlock());
-
-        for (int i = 0; i < blist.size(); i++) {
-            Block b = blist.get(i);
-            if (b.getType().getId().contains("LOG")) {
-                for (ItemStack item : b.getDrops(tool.getItem()))
-                    b.getWorld().dropItemNaturally(b.getLocation(), item);
-
-                b.setType(Materials.AIR);
-                checkLeaves(tool, p, b);
-            }
-            for (BlockFace face : BlockFace.values()) {
-                if (b.getRelative(face).getType().getId().contains("LOG"))
-                    blist.add(b.getRelative(face));
-            }
-        }
-    }
 
     private void breakLeaf(UltimateTool tool, Player p, World world, int x, int y, int z) {
         Block block = world.getBlockAt(x, y, z);

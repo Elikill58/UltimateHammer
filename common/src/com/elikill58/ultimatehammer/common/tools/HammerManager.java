@@ -68,9 +68,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				for (int y = y1; y <= y2; y++) {
 					for (int z = z1; z <= z2; z++) {
 						Block b = w.getBlockAt(x, y, z);
-						if (b.getType().getId().contains("AIR"))
-							continue;
-						if (list.contains(b.getType()) || b.getType().getId().contains("WATER")
+						if (b.getType().getId().contains("AIR") || list.contains(b.getType()) || b.getType().getId().contains("WATER")
 								|| b.getType().getId().contains("LAVA"))
 							continue;
 						if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))

@@ -19,6 +19,7 @@ import com.elikill58.ultimatehammer.common.UltimateToolType;
 import com.elikill58.ultimatehammer.common.tools.hoe.Plantable;
 import com.elikill58.ultimatehammer.common.tools.hoe.Plantable.PlantableType;
 import com.elikill58.ultimatehammer.common.tools.hoe.pickup.LocationActions;
+import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Scheduler;
 import com.elikill58.ultimatehammer.universal.bypass.WorldRegionBypass;
 
@@ -58,7 +59,6 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					p.getInventory().set(slot, inHand);
 			}
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
-			
 		});
 	}
 
@@ -84,16 +84,17 @@ public class HoeManager extends UltimateToolType implements Listeners {
 	}
 	
 	public static int manageAllPlant(Player p, Block baseBlock, UltimateTool tool, int size, boolean keepEmpty, boolean fromBreak) {
-		Material m = baseBlock.getType();
-		if(m == Materials.AIR) {
+		if(baseBlock.getType() == Materials.AIR) {
 			baseBlock = baseBlock.getLocation().sub(0, 1, 0).getBlock();
-			m = baseBlock.getType();
 		}
+		Material m = baseBlock.getType();
 		PlantableType plantableType = PlantableType.getPlantageType(m);
 		if (plantableType == null) {
-			plantableType = PlantableType.getPlantageType(baseBlock.getLocation().sub(0, 1, 0).getBlock().getType());
-			if(plantableType == null)
+			plantableType = PlantableType.getPlantageType(baseBlock.getLocation().clone().sub(0, 1, 0).getBlock().getType());
+			if(plantableType == null) {
+				Adapter.getAdapter().getLogger().warn("No plantable type founded for " + baseBlock.getLocation().clone().sub(0, 1, 0).getBlock().getType().getId());
 				return 0;
+			}
 		}
 		ItemStack inHand = p.getItemInHand();
 		int slot = p.getInventory().getHeldItemSlot();
@@ -120,7 +121,8 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					continue;
 				}
 				Block upperDirt = dirt.getLocation().add(0, 1, 0).getBlock();
-				if(/*upperDirt.getLightFromSky() <= 7 || */(dirt.getType().equals(Materials.SOIL) && dirt.getData() < 7)) {
+				if(dirt.getType().equals(Materials.SOIL) && dirt.getData() < 7) {
+					Adapter.getAdapter().getLogger().warn("Not folly done: " + dirt.getData());
 					continue;
 				}
 				boolean needNewPlant = upperDirt.getType() == Materials.AIR;
