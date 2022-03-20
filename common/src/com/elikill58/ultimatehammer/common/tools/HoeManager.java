@@ -29,7 +29,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 
 	public HoeManager() {
 		super(KEY);
-		add(PlantableType.BASIC, Materials.CROPS, Materials.SEED, (byte) 7);
+		add(PlantableType.BASIC, Materials.SEED, Materials.CROPS, (byte) 7);
 		add(PlantableType.BASIC, Materials.POTATO_ITEM, Materials.POTATO, (byte) 7);
 		add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
 		add(PlantableType.NETHER, Materials.NETHER_WART_ITEM, Materials.NETHER_WART, (byte) 3);
@@ -51,12 +51,14 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				return;
 			int slot = p.getInventory().getHeldItemSlot();
 			e.setCancelled(true);
-			manageAllPlant(p, baseBlock.getLocation().add(0, 1, 0).getBlock(), tool, tool.getConfigSection().getInt("hoe.size", 3), e.getAction().name().contains("RIGHT"), false);
+			int nbChange = manageAllPlant(p, baseBlock, tool, false);
+			if(nbChange <= 0)
+				return;
 			if(inHand != null) {
-				if(ItemUtils.getUseAmount(p, inHand) <= 0)
+				if(inHand.getType().getMaxDurability() < inHand.getDurability() + nbChange)
 					p.getInventory().set(slot, null);
 				else
-					p.getInventory().set(slot, inHand);
+					inHand.addDamage((short) nbChange);
 			}
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
 		});
@@ -71,7 +73,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 			if(WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
 			e.setCancelled(true);
-			manageAllPlant(p, baseBlock, tool, tool.getConfigSection().getInt("hoe.size", 3), true, true);
+			manageAllPlant(p, baseBlock, tool, true);
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
 		});
 	}
@@ -83,8 +85,9 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		}
 	}
 	
-	public static int manageAllPlant(Player p, Block baseBlock, UltimateTool tool, int size, boolean keepEmpty, boolean fromBreak) {
-		if(baseBlock.getType() == Materials.AIR) {
+	public static int manageAllPlant(Player p, Block baseBlock, UltimateTool tool, boolean fromBreak) {
+		Adapter log = Adapter.getAdapter();
+		if(baseBlock.getType().equals(Materials.AIR)) {
 			baseBlock = baseBlock.getLocation().sub(0, 1, 0).getBlock();
 		}
 		Material m = baseBlock.getType();
@@ -92,7 +95,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		if (plantableType == null) {
 			plantableType = PlantableType.getPlantageType(baseBlock.getLocation().clone().sub(0, 1, 0).getBlock().getType());
 			if(plantableType == null) {
-				Adapter.getAdapter().getLogger().warn("No plantable type founded for " + baseBlock.getLocation().clone().sub(0, 1, 0).getBlock().getType().getId());
+				log.debug("No plantable type founded for " + baseBlock.getLocation().clone().sub(0, 1, 0).getBlock().getType().getId());
 				return 0;
 			}
 		}
@@ -100,7 +103,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		int slot = p.getInventory().getHeldItemSlot();
 		World w = baseBlock.getWorld();
 		int count = 0;
-		int amount = (size - 1) / 2;
+		int amount = (tool.getHoeSize() - 1) / 2;
 		int x = baseBlock.getX(), y = baseBlock.getY(), z = baseBlock.getZ();
 		for (int xx = (x - amount); xx <= (x + amount); xx++) {
 			for (int zz = (z - amount); zz <= (z + amount); zz++) {
@@ -115,22 +118,23 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					if(up.getType().getId().contains("GRASS"))
 						up.setType(Materials.AIR);
 					continue;
-				} else if(dirt.getType().equals(Materials.SOIL) && dirt.getData() < 7)
+				} else if(dirt.getType().equals(Materials.SOIL) && dirt.getData() < 7) {
+					log.debug("Wrong data for soil " + dirt.getData());
 					continue;
+				}
 				if (!plantableType.getMaterial().contains(dirt.getType())) {
+					log.debug("Type: " + plantableType + " not containing " + dirt.getType().getId());
 					continue;
 				}
 				Block upperDirt = dirt.getLocation().add(0, 1, 0).getBlock();
-				if(dirt.getType().equals(Materials.SOIL) && dirt.getData() < 7) {
-					Adapter.getAdapter().getLogger().warn("Not folly done: " + dirt.getData());
-					continue;
-				}
-				boolean needNewPlant = upperDirt.getType() == Materials.AIR;
+				boolean needNewPlant = upperDirt.getType().equals(Materials.AIR);
 				Plantable plant = PlantableType.getPlantage(blockMaterial);
 				if(plant == null) {
 					for(ItemStack temp : p.getInventory().getContents()) {
 						if(temp != null) {
 							plant = plantableType.getPlantageHasInventoryItem(temp.getType());
+							if(plant != null)
+								log.debug("Plant " + temp.getType().getId() + " > " + plant);
 							if(plant != null && (needNewPlant || plant.getNextItem() == upperDirt.getType()))
 								break;
 						}
@@ -138,8 +142,10 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				}
 				if (plant == null) {
 					plant = PlantableType.getPlantage(upperDirt.getType());
-					if(plant == null)
+					if(plant == null) {
+						log.debug("Failed to find plant: " + upperDirt.getType().getId() + " (old: " + blockMaterial.getId() + ")");
 						continue;
+					}
 				}
 				if(plant.getNextItem() != upperDirt.getType()) {
 					Plantable pl = PlantableType.getPlantage(upperDirt.getType());
@@ -147,15 +153,16 @@ public class HoeManager extends UltimateToolType implements Listeners {
 						plant = pl;
 				}
 				Material value = plant.getNextItem();
-				if ((value == upperDirt.getType() && (plant.getNeededDataToGet() == -1 || plant.getNeededDataToGet() == upperDirt.getData())) || (needNewPlant && keepEmpty && upperDirt.getType() == Materials.AIR)) {
+				if ((value.equals(upperDirt.getType()) && (plant.getNeededDataToGet() == -1 || plant.getNeededDataToGet() == upperDirt.getData())) || (needNewPlant && !fromBreak && upperDirt.getType().equals(Materials.AIR))) {
 					tool.used(p, "BREAK", b);
 					count++;
 					boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
 					LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
 					upperDirt.breakNaturally(inHand);
 					upperDirt.setType(plant.getNextItem());
-					//p.sendMessage("Block " + b.getType().name() + " : " + needNewPlant + ", " + keepEmpty + " > " + upperDirt.getType().name() +" / " + value.name() +" > " + plant.getNeededDataToGet() + " ! " + plant.getInventoryItem().name());
-				}
+					//p.sendMessage("Block " + b.getType().getId() + " : " + needNewPlant + ", " + fromBreak + " > " + upperDirt.getType().getId() +" / " + value.getId() +" > " + plant.getNeededDataToGet() + " ! " + plant.getInventoryItem().getId());
+				} //else
+					//p.sendMessage("Block not used " + b.getType().getId() + " : " + needNewPlant + ", " + fromBreak + " > " + upperDirt.getType().getId() +" / " + value.getId() +" > " + plant.getNeededDataToGet() + " ! " + plant.getInventoryItem().getId() + " up data: " + upperDirt.getData());
 			}
 		}
 		int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 4));

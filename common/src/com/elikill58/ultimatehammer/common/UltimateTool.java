@@ -1,6 +1,5 @@
 package com.elikill58.ultimatehammer.common;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,6 @@ import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
-import com.elikill58.ultimatehammer.universal.Adapter;
 
 public class UltimateTool {
 
@@ -22,25 +20,27 @@ public class UltimateTool {
 	private String message, permission;
 	private boolean isEnabled = false;
 	private ItemStack item, defaultItem;
-	private final List<Material> blacklistHammer = new ArrayList<>();
+	// hammer config
+	private final List<Material> blacklistHammer;
+	// hoe config
+	private final int hoeSize;
 	
 	public UltimateTool(Configuration section, String key) {
 		this.key = key;
 		this.section = section;
-		if(this.section == null) {
-			Adapter.getAdapter().getLogger().error("Cannot find '" + key + "' section in config !");
-		} else {
-			this.isEnabled = section.getBoolean("enable");
-			this.message = Utils.coloredMessage(section.getString("message", ""));
-			this.permission = section.getString("permission");
-			this.types = section.getStringList("type");
-			if(section.contains("hammer.blacklist"))
-				blacklistHammer.addAll(section.getStringList("hammer.blacklist").stream().map(s -> ItemRegistrar.getInstance().get(s)).collect(Collectors.toList()));
-			blacklistHammer.add(Materials.BEDROCK);
-			if(isEnabled) {
-				this.item = ItemStack.getItem(section);
-				this.defaultItem = item.clone();
-			}
+		this.isEnabled = section.getBoolean("enable");
+		this.message = Utils.coloredMessage(section.getString("message", ""));
+		this.permission = section.getString("permission");
+		this.types = section.getStringList("type");
+		
+		blacklistHammer = section.getStringList("hammer.blacklist").stream().map(s -> ItemRegistrar.getInstance().get(s)).collect(Collectors.toList());
+		blacklistHammer.add(Materials.BEDROCK);
+		
+		this.hoeSize = section.getInt("hoe.size", 3);
+		
+		if(isEnabled) {
+			this.item = ItemStack.getItem(section);
+			this.defaultItem = item.clone();
 		}
 	}
 	
@@ -66,9 +66,10 @@ public class UltimateTool {
 		return item.clone().isSimilarExceptDamage(inHand);
 	}
 
-	public void used(Player p, String string, Block b) {
-		
-		
+	public void used(Player p, String string, Block b) {}
+	
+	public int getHoeSize() {
+		return hoeSize;
 	}
 	
 	public void sendMessage(Player p) {

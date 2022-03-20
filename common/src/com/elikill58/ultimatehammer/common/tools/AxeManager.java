@@ -14,6 +14,7 @@ import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
 import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.api.location.World;
+import com.elikill58.ultimatehammer.api.utils.ItemUtils;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -40,9 +41,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	        blist.add(e.getBlock());
 	        
 	        ItemStack inHand = p.getItemInHand();
-	        int max = inHand.getDurability();
-	        int next = max;
-	        p.sendMessage("Begin with " + max + " > " + next + " dura");
+	        int next = 0;
 	        while(!blist.isEmpty()) {
 	            Block b = blist.remove(0);
 	            if (b.getType().getId().contains("LOG")) {
@@ -51,7 +50,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 
 	                b.setType(Materials.AIR);
 	                checkLeaves(tool, p, b);
-	                next--;
+	                next++;
 	            }
 	            for (BlockFace face : BlockFace.values()) {
 	                if (b.getRelative(face).getType().getId().contains("LOG"))
@@ -62,7 +61,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	            	return;
 	            }
 	        }
-	        inHand.addDamage((short) (max - next));
+			ItemUtils.damage(tool, p, inHand, -1, next);
 		});
 	}
 

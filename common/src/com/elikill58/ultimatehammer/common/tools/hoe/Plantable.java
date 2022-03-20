@@ -59,7 +59,7 @@ public class Plantable {
 		}
 		
 		public Plantable getPlantageHasInventoryItem(Material m) {
-			return plantage.stream().filter((pl) -> pl.getInventoryItem() == m).findFirst().orElse(null);
+			return plantage.stream().filter((pl) -> pl.getInventoryItem().equals(m)).findFirst().orElse(null);
 		}
 		
 		public static PlantableType getPlantageType(Material m) {
@@ -73,7 +73,7 @@ public class Plantable {
 		public static Plantable getPlantage(Material m) {
 			for(PlantableType type : Arrays.asList(values()))
 				for(Plantable pl : type.getPlantage())
-					if(pl.getNextItem() == m)
+					if(pl.getNextItem().equals(m))
 						return pl;
 			return null;
 		}

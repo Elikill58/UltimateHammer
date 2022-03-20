@@ -89,7 +89,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 					}
 				}
 			}
-	        inHand.addDamage((short) next);
+			ItemUtils.damage(tool, p, inHand, -1, next);
 		});
 	}
 }
