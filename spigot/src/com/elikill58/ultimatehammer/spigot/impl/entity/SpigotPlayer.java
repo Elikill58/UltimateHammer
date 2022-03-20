@@ -337,7 +337,10 @@ public class SpigotPlayer extends SpigotEntity<org.bukkit.entity.Player> impleme
 
 	@Override
 	public void setItemInHand(ItemStack item) {
-		entity.setItemInHand((org.bukkit.inventory.ItemStack) item.getDefault());
+		if(item == null)
+			entity.setItemInHand(null);
+		else
+			entity.setItemInHand((org.bukkit.inventory.ItemStack) item.getDefault());
 	}
 
 	@Override

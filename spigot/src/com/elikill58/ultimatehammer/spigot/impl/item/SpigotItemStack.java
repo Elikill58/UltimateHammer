@@ -139,6 +139,11 @@ public class SpigotItemStack extends ItemStack {
 
 	@Override
 	public void addDamage(short d) {
-		item.setDurability((short) (item.getDurability() - d));
+        Integer durability = item.getDurability() + d;
+        if (item.getType().getMaxDurability() < durability) {
+        	item.setAmount(0);
+            return;
+        }
+        item.setDurability(durability.shortValue());
 	}
 }

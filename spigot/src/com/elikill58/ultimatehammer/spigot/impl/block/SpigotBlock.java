@@ -82,7 +82,10 @@ public class SpigotBlock extends Block {
 
 	@Override
 	public void breakNaturally(ItemStack item) {
-		block.breakNaturally((org.bukkit.inventory.ItemStack) item.getDefault());
+		if(item == null)
+			block.breakNaturally(null);
+		else
+			block.breakNaturally((org.bukkit.inventory.ItemStack) item.getDefault());
 	}
 
 	@Override

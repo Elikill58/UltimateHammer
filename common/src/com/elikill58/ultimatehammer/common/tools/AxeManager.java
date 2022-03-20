@@ -32,17 +32,19 @@ public class AxeManager extends UltimateToolType implements Listeners {
 		Player p = e.getPlayer();
 		getToolForHand(p, getKey()).forEach((tool) -> {
 			p.sendMessage("Tool founded for axe");
-			if(WorldRegionBypass.cannotBuild(p, tool, e.getBlock().getLocation()))
+			if(WorldRegionBypass.cannotBuild(p, tool, e.getBlock().getLocation()) || !e.getBlock().getType().getId().contains("LOG"))
 				return;
 	        p.giveExp(10);
 	        List<Block> blist = new ArrayList<>();
 	        checkLeaves(tool, p, e.getBlock());
 	        blist.add(e.getBlock());
 	        
-	        int max = p.getItemInHand().getDurability();
+	        ItemStack inHand = p.getItemInHand();
+	        int max = inHand.getDurability();
 	        int next = max;
+	        p.sendMessage("Begin with " + max + " > " + next + " dura");
 	        while(!blist.isEmpty()) {
-	            Block b = blist.get(0);
+	            Block b = blist.remove(0);
 	            if (b.getType().getId().contains("LOG")) {
 	                for (ItemStack item : b.getDrops(tool.getItem()))
 	                    b.getWorld().dropItemNaturally(b.getLocation(), item);
@@ -55,12 +57,12 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	                if (b.getRelative(face).getType().getId().contains("LOG"))
 	                    blist.add(b.getRelative(face));
 	            }
-	            if(next <= 0) {
+	            if(next > inHand.getType().getMaxDurability()) {
 	            	p.setItemInHand(null);
 	            	return;
 	            }
 	        }
-	        p.getItemInHand().addDamage((short) (max - next));
+	        inHand.addDamage((short) (max - next));
 		});
 	}
 
