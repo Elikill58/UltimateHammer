@@ -57,7 +57,7 @@ public enum Version {
 	}
 	
 	public static Version getVersion() {
-		return getVersion(Utils.VERSION);
+		return getVersion(PacketUtils.VERSION);
 	}
 	
 	public static Version getVersion(String version) {

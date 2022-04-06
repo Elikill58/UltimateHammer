@@ -1,27 +1,18 @@
 package com.elikill58.ultimatehammer.utils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 @SuppressWarnings("deprecation")
 public class Utils {
-
-	static final String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",")
-			.split(",")[3];
 
 	public static String coloredMessage(String msg) {
 		return msg.replaceAll("&0", String.valueOf(ChatColor.BLACK))
@@ -146,57 +137,6 @@ public class Utils {
 			((Damageable) meta).setDamage(((Damageable) meta).getDamage() + durability);
 			item.setItemMeta(meta);
 		}
-	}
-	
-	public static boolean itemIsSimilar(ItemStack source, ItemStack compare) {
-		if(!Version.getVersion().isNewerOrEquals(Version.V1_13)) {
-			ItemStack copiedCompare = compare.clone();
-			copiedCompare.setDurability(source.getDurability());
-			return source.isSimilar(copiedCompare);
-		}
-		// checking type
-		if(source.getType() != compare.getType())
-			return false;
-		// checking quantity
-		if(source.getAmount() != compare.getAmount())
-			return false;
-		// if both exist and are the same of if both are null
-		if(!((source.getData() != null && compare.getData() != null && source.getData().equals(compare.getData())) || (source.getData() == null && compare.getData() == null)))
-			return false;
-		// checking enchant
-		Map<Enchantment, Integer> mapEnchantSource = source.getEnchantments();
-		Map<Enchantment, Integer> mapEnchantCompare = compare.getEnchantments();
-		if(mapEnchantSource.size() != mapEnchantCompare.size())
-			return false;
-		for(Entry<Enchantment, Integer> entries : mapEnchantSource.entrySet()){
-			Enchantment enchant = entries.getKey();
-			if(!mapEnchantCompare.containsKey(enchant))
-				return false;
-			if(mapEnchantCompare.get(enchant) != entries.getValue())
-				return false;
-		}
-		// checking item meta
-		if(source.hasItemMeta()) {
-			if(!compare.hasItemMeta())
-				return false;
-			ItemMeta metaSource = source.getItemMeta();
-			ItemMeta metaCompare = compare.getItemMeta();
-			if(metaSource.hasDisplayName() != metaCompare.hasDisplayName())
-				return false;
-			if(metaSource.hasDisplayName() && !metaSource.getDisplayName().equals(metaCompare.getDisplayName()))
-				return false;
-			List<String> loreSource = metaSource.hasLore() ? metaSource.getLore() : new ArrayList<>();
-			List<String> loreCompare = metaCompare.hasLore() ? metaCompare.getLore() : new ArrayList<>();
-			for(String lore : loreSource)
-				if(!loreCompare.contains(lore))
-					return false;
-			Set<ItemFlag> flagSource = metaSource.getItemFlags();
-			Set<ItemFlag> flagCompare = metaCompare.getItemFlags();
-			for(ItemFlag flag : flagSource)
-				if(!flagCompare.contains(flag))
-					return false;
-		}
-		return true;
 	}
 	
 	public static ItemStack getItemInHand(Player p) {
