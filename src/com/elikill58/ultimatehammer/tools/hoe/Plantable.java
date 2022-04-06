@@ -37,7 +37,7 @@ public class Plantable {
 	}
 	
 	public static enum PlantableType {
-		BASIC(Material.DIRT, Material.GRASS, ItemUtils.SOIL),
+		BASIC(Material.DIRT, ItemUtils.GRASS, ItemUtils.SOIL),
 		NETHER(Material.SOUL_SAND);
 		
 		private final List<Material> material;

@@ -9,7 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import com.elikill58.ultimatehammer.UltimateTool;
 
 public class ItemUtils {
-	
+
+	public static final Material GRASS = getMaterialWithCompatibility("GRASS_BLOCK", "GRASS");
 	public static final Material POTATO_ITEM = getMaterialWithCompatibility("POTATO_ITEM", "POTATOES");
 	public static final Material CARROT_ITEM = getMaterialWithCompatibility("CARROT_ITEM", "CARROTS");
 	public static final Material NETHER_WARTS = getMaterialWithCompatibility("NETHER_WARTS", "NETHER_WART");

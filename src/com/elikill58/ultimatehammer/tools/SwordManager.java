@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import com.elikill58.ultimatehammer.UltimateHammer;
 import com.elikill58.ultimatehammer.UltimateTool;
 import com.elikill58.ultimatehammer.WorldRegionBypass;
-import com.elikill58.ultimatehammer.utils.Utils;
 
 public class SwordManager extends UltimateTool implements Listener {
 
@@ -34,11 +33,10 @@ public class SwordManager extends UltimateTool implements Listener {
 			return;
 		List<ItemStack> toRemove = new ArrayList<>();
 		for(ItemStack it : e.getDrops())
-			if(it.getType() == item.getType() && Utils.itemIsSimilar(it, item))
+			if(it != null && isItem(it))
 				toRemove.add(it);
 		
-		if(toRemove != null)
-			e.getDrops().removeAll(toRemove);
+		e.getDrops().removeAll(toRemove);
 		
 		respawn.put(p.getUniqueId(), toRemove);
 	}

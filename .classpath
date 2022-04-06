@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Elikill58/Documents/Minecraft/Plugins/APIs/spigot-1.15.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Elikill58/Documents/Minecraft/Plugins/APIs/worldguard-6.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Elikill58/Documents/Minecraft/Plugins/APIs/worldedit-bukkit-6.1-1.8.8.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Elikill58/Documents/Minecraft/Plugins/APIs/FactionsUUID 1.6.9.5-U0.5.13-b230.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Elikill58/Documents/Minecraft/Plugins/APIs/spigot-1.16.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

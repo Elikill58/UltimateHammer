@@ -129,7 +129,7 @@ public class HoeManager extends UltimateTool implements Listener {
 					continue;
 				Material blockMaterial = b.getType();
 				Block dirt = plantableType.getMaterial().contains(blockMaterial) ? b : w.getBlockAt(xx, y - 1, zz);
-				if (dirt.getType().equals(Material.GRASS) || dirt.getType().equals(Material.DIRT)) {
+				if (dirt.getType().equals(ItemUtils.GRASS) || dirt.getType().equals(Material.DIRT)) {
 					dirt.setType(ItemUtils.SOIL);
 					Block up = dirt.getLocation().add(0, 1, 0).getBlock();
 					if (up.getType().name().contains("GRASS"))

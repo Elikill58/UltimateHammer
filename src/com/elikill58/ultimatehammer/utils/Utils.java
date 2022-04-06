@@ -160,7 +160,8 @@ public class Utils {
 		// checking quantity
 		if(source.getAmount() != compare.getAmount())
 			return false;
-		if(source.getData().getData() != compare.getData().getData())
+		// if both exist and are the same of if both are null
+		if(!((source.getData() != null && compare.getData() != null && source.getData().equals(compare.getData())) || (source.getData() == null && compare.getData() == null)))
 			return false;
 		// checking enchant
 		Map<Enchantment, Integer> mapEnchantSource = source.getEnchantments();
