@@ -10,12 +10,18 @@ import org.bukkit.Material;
 import com.elikill58.ultimatehammer.utils.ItemUtils;
 
 public class Plantable {
-	
+
 	private final Material inventoryItem, nextItem;
+	private final byte neededDataToGet;
 	
 	public Plantable(Material inventoryItem, Material nextItem) {
+		this(inventoryItem, nextItem, (byte) -1);
+	}
+	
+	public Plantable(Material inventoryItem, Material nextItem, byte neededDataToGet) {
 		this.inventoryItem = inventoryItem;
 		this.nextItem = nextItem;
+		this.neededDataToGet = neededDataToGet;
 	}
 
 	public Material getInventoryItem() {
@@ -24,6 +30,10 @@ public class Plantable {
 
 	public Material getNextItem() {
 		return nextItem;
+	}
+	
+	public byte getNeededDataToGet() {
+		return neededDataToGet;
 	}
 	
 	public static enum PlantableType {
