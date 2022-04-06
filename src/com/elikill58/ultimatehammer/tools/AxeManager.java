@@ -1,14 +1,9 @@
 package com.elikill58.ultimatehammer.tools;
 
-import static com.elikill58.ultimatehammer.utils.ItemUtils.LEAVES;
-import static com.elikill58.ultimatehammer.utils.ItemUtils.LOG;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -107,9 +102,9 @@ public class AxeManager extends UltimateTool implements Listener {
                     for (offZ = -range; offZ <= range; offZ++) {
                         Material mat = world.getBlockAt(x + offX, y + offY, z + offZ).getType();
                         if (mat.name().contains("LEAVES"))
-                            type = LEAVES.getId();
+                            type = mat.getId();
                         else if (mat.name().contains("LOG"))
-                            type = LOG.getId();
+                            type = mat.getId();
                         blocks[(offX + div) * mul + (offY + div) * max + offZ + div]
                         		= (mat.name().contains("LOG") ? 0  : (mat.name().contains("LEAVES") ? -2 : -1));
                     }
@@ -148,10 +143,6 @@ public class AxeManager extends UltimateTool implements Listener {
             if(WorldRegionBypass.cannotBuild(p, this, block.getLocation()))
             	return;
             block.breakNaturally();
-
-            if (10 > new Random().nextInt(100)) {
-                world.playEffect(block.getLocation(), Effect.STEP_SOUND, LEAVES.getId());
-            }
         }
     }
 

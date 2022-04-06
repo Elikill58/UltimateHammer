@@ -31,7 +31,11 @@ public class HammerManager extends UltimateTool implements Listener {
 		super(pl, "hammer");
 		List<String> list = getConfigSection().getStringList("blacklist");
 		for(String s : list) {
-			BLACKLIST.add(Utils.getItemFromString(s).getType());
+			ItemStack item = Utils.getItemFromString(s);
+			if(item != null)
+				BLACKLIST.add(item.getType());
+			else
+				pl.getLogger().warning("Failed to find item from: " + s);
 		}
 		if(BLACKLIST.size() > 0)
 			pl.getLogger().info("Loaded " + BLACKLIST.size() + " blocked items for hammer.");

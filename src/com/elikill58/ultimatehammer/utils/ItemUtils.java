@@ -9,18 +9,15 @@ import org.bukkit.inventory.ItemStack;
 import com.elikill58.ultimatehammer.UltimateTool;
 
 public class ItemUtils {
+	
+	public static final Material POTATO_ITEM = getMaterialWithCompatibility("POTATO_ITEM", "POTATOES");
+	public static final Material CARROT_ITEM = getMaterialWithCompatibility("CARROT_ITEM", "CARROTS");
+	public static final Material NETHER_WARTS = getMaterialWithCompatibility("NETHER_WARTS", "NETHER_WART");
+	public static final Material SEEDS = getMaterialWithCompatibility("SEEDS", "WHEAT_SEEDS");
+	public static final Material CROPS = getMaterialWithCompatibility("CROPS", "WHEAT");
 
-	public static final Material LOG = Utils.getMaterialWith1_15_Compatibility("LOG", "LEGACY_LOG");
-	public static final Material LEAVES = Utils.getMaterialWith1_15_Compatibility("LEAVES", "LEGACY_LEAVES");
-
-	public static final Material POTATO_ITEM = Utils.getMaterialWith1_15_Compatibility("POTATO_ITEM", "LEGACY_POTATO_ITEM");
-	public static final Material CARROT_ITEM = Utils.getMaterialWith1_15_Compatibility("CARROT_ITEM", "LEGACY_CARROT_ITEM");
-	public static final Material NETHER_WARTS = Utils.getMaterialWith1_15_Compatibility("NETHER_WARTS", "LEGACY_NETHER_WARTS");
-	public static final Material SEEDS = Utils.getMaterialWith1_15_Compatibility("SEEDS", "LEGACY_SEEDS");
-	public static final Material CROPS = Utils.getMaterialWith1_15_Compatibility("CROPS", "LEGACY_CROPS");
-
-	public static final Material SOIL = Utils.getMaterialWith1_15_Compatibility("SOIL", "LEGACY_SOIL");
-	public static final Material NETHER_STALK = Utils.getMaterialWith1_15_Compatibility("NETHER_STALK", "LEGACY_NETHER_STALK");
+	public static final Material SOIL = getMaterialWithCompatibility("SOIL", "FARMLAND");
+	public static final Material NETHER_STALK = getMaterialWithCompatibility("NETHER_STALK", "NETHER_WART");
 
 
 	public static void damage(UltimateTool tool, Player p, ItemStack inHand, int slot) {
@@ -74,5 +71,25 @@ public class ItemUtils {
 			}
 		}
 		return time;
+	}
+
+	public static Material getMaterialWithCompatibility(String... tempMat) {
+		for(String s : tempMat) {
+			try {
+				Material m = Material.getMaterial(s);
+				if(m != null)
+					return m;
+				m = (Material) Material.class.getField(s).get(Material.class);
+				if(m != null)
+					return m;
+			} catch (IllegalArgumentException | IllegalAccessException | SecurityException e2) {
+				e2.printStackTrace();
+			} catch (NoSuchFieldException e) {}
+		}
+		String temp = "";
+		for(String s : tempMat)
+			temp = temp + (temp.equalsIgnoreCase("") ? "" : ", ") + s;
+		Utils.error("Failed to find Material " + temp);
+		return null;
 	}
 }

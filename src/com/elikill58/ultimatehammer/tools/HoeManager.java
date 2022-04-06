@@ -25,6 +25,7 @@ import com.elikill58.ultimatehammer.tools.hoe.Plantable;
 import com.elikill58.ultimatehammer.tools.hoe.Plantable.PlantableType;
 import com.elikill58.ultimatehammer.utils.ItemUtils;
 import com.elikill58.ultimatehammer.utils.Utils;
+import com.elikill58.ultimatehammer.utils.Version;
 
 public class HoeManager extends UltimateTool implements Listener {
 
@@ -39,6 +40,8 @@ public class HoeManager extends UltimateTool implements Listener {
 		add(PlantableType.BASIC, ItemUtils.POTATO_ITEM, Material.POTATO, (byte) 7);
 		add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
 		add(PlantableType.NETHER, ItemUtils.NETHER_STALK, ItemUtils.NETHER_WARTS, (byte) 3);
+		if(Version.getVersion().isNewerOrEquals(Version.V1_9))
+			add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
 		if (nbBlocked > 0)
 			pl.getLogger().info("Loaded " + nbBlocked + " disabled items for hoe.");
 	}
@@ -132,8 +135,9 @@ public class HoeManager extends UltimateTool implements Listener {
 					if (up.getType().name().contains("GRASS"))
 						up.setType(Material.AIR);
 					continue;
-				} else if (dirt.getType().equals(ItemUtils.SOIL) && dirt.getData() < 7)
+				} else if (dirt.getType().equals(ItemUtils.SOIL) && dirt.getData() < 7) {
 					continue;
+				}
 				if (!plantableType.getMaterial().contains(dirt.getType())) {
 					continue;
 				}

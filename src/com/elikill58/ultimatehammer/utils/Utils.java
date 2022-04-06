@@ -112,23 +112,6 @@ public class Utils {
 				return m;
 		return null;
 	}
-
-	public static Material getMaterialWith1_15_Compatibility(String... tempMat) {
-		for(String s : tempMat) {
-			try {
-				Material m = (Material) Material.class.getField(s).get(Material.class);
-				if(m != null)
-					return m;
-			} catch (IllegalArgumentException | IllegalAccessException | SecurityException e2) {
-				e2.printStackTrace();
-			} catch (NoSuchFieldException e) {}
-		}
-		String temp = "";
-		for(String s : tempMat)
-			temp = temp + (temp.equalsIgnoreCase("") ? "" : ", ") + s;
-		error("Failed to find Material " + temp);
-		return null;
-	}
 	
 	public static boolean isInteger(String s) {
 		try {
@@ -219,11 +202,11 @@ public class Utils {
 		return p.getItemInHand();
 	}
 	
-	private static void warn(String msg) {
+	public static void warn(String msg) {
 		log("WARN", msg);
 	}
 	
-	private static void error(String msg) {
+	public static void error(String msg) {
 		log("ERROR", msg);
 	}
 	
