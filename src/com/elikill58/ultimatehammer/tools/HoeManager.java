@@ -129,20 +129,21 @@ public class HoeManager extends UltimateTool implements Listener {
 					continue;
 				Material blockMaterial = b.getType();
 				Block dirt = plantableType.getMaterial().contains(blockMaterial) ? b : w.getBlockAt(xx, y - 1, zz);
+				p.sendMessage("Type: " + dirt.getType().name() + ", humidity: " + dirt.getHumidity());
 				if (dirt.getType().equals(ItemUtils.GRASS) || dirt.getType().equals(Material.DIRT)) {
 					dirt.setType(ItemUtils.SOIL);
 					Block up = dirt.getLocation().add(0, 1, 0).getBlock();
 					if (up.getType().name().contains("GRASS"))
 						up.setType(Material.AIR);
 					continue;
-				} else if (dirt.getType().equals(ItemUtils.SOIL) && dirt.getData() < 7) {
+				} else if (dirt.getType().equals(ItemUtils.SOIL) && dirt.getState().getLightLevel() < 7) {
 					continue;
 				}
 				if (!plantableType.getMaterial().contains(dirt.getType())) {
 					continue;
 				}
 				Block upperDirt = dirt.getLocation().add(0, 1, 0).getBlock();
-				if ((dirt.getType().equals(ItemUtils.SOIL) && dirt.getData() < 7)) {
+				if ((dirt.getType().equals(ItemUtils.SOIL) && dirt.getHumidity() < 7)) {
 					continue;
 				}
 				boolean needNewPlant = upperDirt.getType() == Material.AIR;

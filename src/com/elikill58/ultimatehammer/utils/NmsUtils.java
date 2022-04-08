@@ -27,10 +27,10 @@ public class NmsUtils {
 	public static boolean hasNbtTag(ItemStack item, String searchedVal) {
 		try {
 			Object nbtTag = getNBTTagCompound(item);
-			if ((boolean) NBT_TAB_CLASS.getDeclaredMethod("hasKey", String.class).invoke(nbtTag, NBT_TAG_KEY)) {
+			if (nbtTag != null && (boolean) NBT_TAB_CLASS.getDeclaredMethod("hasKey", String.class).invoke(nbtTag, NBT_TAG_KEY)) {
 				String val = (String) NBT_TAB_CLASS.getDeclaredMethod("getString", String.class).invoke(nbtTag, NBT_TAG_KEY);
 				UltimateHammer.getInstance().getLogger().info("Tag: " + val + " / " + searchedVal);
-				return val.equals(searchedVal);
+				return val.equalsIgnoreCase(searchedVal);
 			}
 		} catch (Exception e) {
 			UltimateHammer.getInstance().getLogger().info("Error " + NBT_TAG_KEY + " / " + searchedVal);
@@ -45,8 +45,8 @@ public class NmsUtils {
 
 	private static Object getNBTTagCompoundFromNMSItem(Object nmsItem) throws Exception {
 		Class<?> c = nmsItem.getClass();
-		return (boolean) c.getMethod("hasTag").invoke(nmsItem) ? c.getDeclaredMethod("getTag").invoke(nmsItem)
-				: NBT_TAB_CLASS.getConstructor().newInstance();
+		return c == null ? null : ((boolean) c.getMethod("hasTag").invoke(nmsItem) ? c.getDeclaredMethod("getTag").invoke(nmsItem)
+				: NBT_TAB_CLASS.getConstructor().newInstance());
 	}
 
 	private static Object toNMSItem(ItemStack item) throws Exception {
