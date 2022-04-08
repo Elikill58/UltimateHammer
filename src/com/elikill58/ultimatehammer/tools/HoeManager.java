@@ -23,6 +23,7 @@ import com.elikill58.ultimatehammer.WorldRegionBypass;
 import com.elikill58.ultimatehammer.tools.hoe.LocationActions;
 import com.elikill58.ultimatehammer.tools.hoe.Plantable;
 import com.elikill58.ultimatehammer.tools.hoe.Plantable.PlantableType;
+import com.elikill58.ultimatehammer.utils.HumidityChecker;
 import com.elikill58.ultimatehammer.utils.ItemUtils;
 import com.elikill58.ultimatehammer.utils.Utils;
 import com.elikill58.ultimatehammer.utils.Version;
@@ -136,16 +137,13 @@ public class HoeManager extends UltimateTool implements Listener {
 					if (up.getType().name().contains("GRASS"))
 						up.setType(Material.AIR);
 					continue;
-				} else if (dirt.getType().equals(ItemUtils.SOIL) && dirt.getState().getLightLevel() < 7) {
+				} else if (dirt.getType().equals(ItemUtils.SOIL) && !HumidityChecker.hasHumidity(dirt)) {
 					continue;
 				}
 				if (!plantableType.getMaterial().contains(dirt.getType())) {
 					continue;
 				}
 				Block upperDirt = dirt.getLocation().add(0, 1, 0).getBlock();
-				if ((dirt.getType().equals(ItemUtils.SOIL) && dirt.getHumidity() < 7)) {
-					continue;
-				}
 				boolean needNewPlant = upperDirt.getType() == Material.AIR;
 				Plantable plant = PlantableType.getPlantage(blockMaterial);
 				if (plant == null) {
