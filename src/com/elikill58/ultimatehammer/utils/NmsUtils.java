@@ -44,8 +44,7 @@ public class NmsUtils {
 	}
 
 	private static Object getNBTTagCompoundFromNMSItem(Object nmsItem) throws Exception {
-		Class<?> c = nmsItem.getClass();
-		return c == null ? null : ((boolean) c.getMethod("hasTag").invoke(nmsItem) ? c.getDeclaredMethod("getTag").invoke(nmsItem)
+		return nmsItem == null ? null : ((boolean) nmsItem.getClass().getMethod("hasTag").invoke(nmsItem) ? nmsItem.getClass().getDeclaredMethod("getTag").invoke(nmsItem)
 				: NBT_TAB_CLASS.getConstructor().newInstance());
 	}
 
