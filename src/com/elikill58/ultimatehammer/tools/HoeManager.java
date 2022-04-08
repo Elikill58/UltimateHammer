@@ -23,7 +23,7 @@ import com.elikill58.ultimatehammer.WorldRegionBypass;
 import com.elikill58.ultimatehammer.tools.hoe.LocationActions;
 import com.elikill58.ultimatehammer.tools.hoe.Plantable;
 import com.elikill58.ultimatehammer.tools.hoe.Plantable.PlantableType;
-import com.elikill58.ultimatehammer.utils.HumidityChecker;
+import com.elikill58.ultimatehammer.utils.HoeStateChecker;
 import com.elikill58.ultimatehammer.utils.ItemUtils;
 import com.elikill58.ultimatehammer.utils.Utils;
 import com.elikill58.ultimatehammer.utils.Version;
@@ -102,7 +102,6 @@ public class HoeManager extends UltimateTool implements Listener {
 		Bukkit.getScheduler().runTaskLater(getPlugin(), p::updateInventory, 2);
 	}
 
-	@SuppressWarnings("deprecation")
 	public static int manageAllPlant(Player p, Block baseBlock, UltimateTool tool, boolean keepEmpty,
 			boolean fromBreak) {
 		Material m = baseBlock.getType();
@@ -130,14 +129,13 @@ public class HoeManager extends UltimateTool implements Listener {
 					continue;
 				Material blockMaterial = b.getType();
 				Block dirt = plantableType.getMaterial().contains(blockMaterial) ? b : w.getBlockAt(xx, y - 1, zz);
-				p.sendMessage("Type: " + dirt.getType().name() + ", humidity: " + dirt.getHumidity());
 				if (dirt.getType().equals(ItemUtils.GRASS) || dirt.getType().equals(Material.DIRT)) {
 					dirt.setType(ItemUtils.SOIL);
 					Block up = dirt.getLocation().add(0, 1, 0).getBlock();
 					if (up.getType().name().contains("GRASS"))
 						up.setType(Material.AIR);
 					continue;
-				} else if (dirt.getType().equals(ItemUtils.SOIL) && !HumidityChecker.hasHumidity(dirt)) {
+				} else if (dirt.getType().equals(ItemUtils.SOIL) && !HoeStateChecker.hasHumidity(dirt)) {
 					continue;
 				}
 				if (!plantableType.getMaterial().contains(dirt.getType())) {
@@ -167,7 +165,7 @@ public class HoeManager extends UltimateTool implements Listener {
 				}
 				Material value = plant.getNextItem();
 				if ((value == upperDirt.getType()
-						&& (plant.getNeededDataToGet() == -1 || plant.getNeededDataToGet() == upperDirt.getData()))
+						&& (plant.getNeededDataToGet() == -1 || HoeStateChecker.hasReachAge(upperDirt, plant.getNeededDataToGet())))
 						|| (needNewPlant && keepEmpty && upperDirt.getType() == Material.AIR)) {
 					boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
 					LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
