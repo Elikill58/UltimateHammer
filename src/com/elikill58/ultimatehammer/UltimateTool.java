@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import com.elikill58.ultimatehammer.utils.NmsUtils;
+import com.elikill58.ultimatehammer.nms.NMS;
 import com.elikill58.ultimatehammer.utils.Utils;
 
 public abstract class UltimateTool implements Listener {
@@ -30,7 +30,7 @@ public abstract class UltimateTool implements Listener {
 		} else {
 			isEnabled = section.getBoolean("enable");
 			if(isEnabled) {
-				item = NmsUtils.addNbtTag(Utils.getItem(section), key);
+				item = NMS.getNMS().addNbtTag(Utils.getItem(section), key);
 				defaultItem = item.clone();
 				pl.getLogger().info("Enabled " + key + " !");
 			}
@@ -54,7 +54,7 @@ public abstract class UltimateTool implements Listener {
 	}
 	
 	public boolean isItem(ItemStack inHand) {
-		return inHand != null && NmsUtils.hasNbtTag(inHand, key);
+		return inHand != null && NMS.getNMS().hasNbtTag(inHand, key);
 	}
 	
 	public void sendMessage(Player p) {

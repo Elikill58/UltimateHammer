@@ -35,13 +35,20 @@ public class HoeManager extends UltimateTool implements Listener {
 	public HoeManager(UltimateHammer pl) {
 		super(pl, "hoe");
 		nbBlocked = 0;
+		Version v = Version.getVersion();
 		add(PlantableType.BASIC, ItemUtils.SEEDS, ItemUtils.CROPS, (byte) 7);
 		add(PlantableType.BASIC, Material.PUMPKIN_SEEDS, Material.PUMPKIN_STEM, (byte) -1);
 		add(PlantableType.BASIC, Material.MELON_SEEDS, Material.MELON_STEM, (byte) -1);
-		add(PlantableType.BASIC, ItemUtils.POTATO_ITEM, Material.POTATO, (byte) 7);
-		add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
+
+		if(v.isNewerOrEquals(Version.V1_18)) {
+			add(PlantableType.BASIC, Material.valueOf("POTATO"), Material.valueOf("POTATOES"), (byte) 7);
+			add(PlantableType.BASIC, Material.valueOf("CARROT"), Material.valueOf("CARROTS"), (byte) 7);
+		} else {
+			add(PlantableType.BASIC, ItemUtils.POTATO_ITEM, Material.POTATO, (byte) 7);
+			add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
+		}
 		add(PlantableType.NETHER, ItemUtils.NETHER_STALK, ItemUtils.NETHER_WARTS, (byte) 3);
-		if(Version.getVersion().isNewerOrEquals(Version.V1_9))
+		if(v.isNewerOrEquals(Version.V1_9))
 			add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
 		if (nbBlocked > 0)
 			pl.getLogger().info("Loaded " + nbBlocked + " disabled items for hoe.");
