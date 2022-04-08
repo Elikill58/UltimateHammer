@@ -117,7 +117,7 @@ public class HoeManager extends UltimateTool implements Listener {
 			if (plantableType == null)
 				return 0;
 		}
-		ItemStack inHand = p.getItemInHand();
+		ItemStack inHand = Utils.getItemInHand(p);
 		int slot = p.getInventory().getHeldItemSlot();
 		World w = baseBlock.getWorld();
 		int count = 0;

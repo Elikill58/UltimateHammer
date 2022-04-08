@@ -28,9 +28,7 @@ public class NmsUtils {
 		try {
 			Object nbtTag = getNBTTagCompound(item);
 			if (nbtTag != null && (boolean) NBT_TAB_CLASS.getDeclaredMethod("hasKey", String.class).invoke(nbtTag, NBT_TAG_KEY)) {
-				String val = (String) NBT_TAB_CLASS.getDeclaredMethod("getString", String.class).invoke(nbtTag, NBT_TAG_KEY);
-				UltimateHammer.getInstance().getLogger().info("Tag: " + val + " / " + searchedVal);
-				return val.equalsIgnoreCase(searchedVal);
+				return ((String) NBT_TAB_CLASS.getDeclaredMethod("getString", String.class).invoke(nbtTag, NBT_TAG_KEY)).equalsIgnoreCase(searchedVal);
 			}
 		} catch (Exception e) {
 			UltimateHammer.getInstance().getLogger().info("Error " + NBT_TAG_KEY + " / " + searchedVal);
