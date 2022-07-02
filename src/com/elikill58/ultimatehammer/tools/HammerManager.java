@@ -20,6 +20,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import com.elikill58.ultimatehammer.UltimateHammer;
 import com.elikill58.ultimatehammer.UltimateTool;
 import com.elikill58.ultimatehammer.WorldRegionBypass;
+import com.elikill58.ultimatehammer.utils.ItemUtils;
 import com.elikill58.ultimatehammer.utils.Utils;
 
 public class HammerManager extends UltimateTool implements Listener {
@@ -31,7 +32,7 @@ public class HammerManager extends UltimateTool implements Listener {
 		super(pl, "hammer");
 		List<String> list = getConfigSection().getStringList("blacklist");
 		for(String s : list) {
-			ItemStack item = Utils.getItemFromString(s);
+			ItemStack item = s.equalsIgnoreCase("MOB_SPAWNER") ? new ItemStack(ItemUtils.getMaterialWithCompatibility("MOB_SPAWNER", "SPAWNER")) : Utils.getItemFromString(s);
 			if(item != null)
 				BLACKLIST.add(item.getType());
 			else

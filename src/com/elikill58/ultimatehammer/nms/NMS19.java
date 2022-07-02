@@ -2,7 +2,7 @@ package com.elikill58.ultimatehammer.nms;
 
 import org.bukkit.inventory.ItemStack;
 
-public class NMS18 extends NMS {
+public class NMS19 extends NMS {
 
 	@Override
 	public ItemStack addNbtTag(ItemStack item, String tagVal) {
@@ -42,7 +42,7 @@ public class NMS18 extends NMS {
 		if (nmsItem == null)
 			return null;
 		Class<?> c = nmsItem.getClass();
-		return ((boolean) c.getMethod("r").invoke(nmsItem) ? c.getDeclaredMethod("s").invoke(nmsItem)
+		return ((boolean) c.getMethod("t").invoke(nmsItem) ? c.getDeclaredMethod("u").invoke(nmsItem)
 				: NBT_TAB_CLASS.getConstructor().newInstance());
 	}
 

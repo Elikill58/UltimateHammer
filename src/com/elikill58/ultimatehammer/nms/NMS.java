@@ -15,7 +15,13 @@ public abstract class NMS {
 	
 	public static NMS getNMS() {
 		if(nms == null) {
-			nms = Version.getVersion().isNewerOrEquals(Version.V1_18) ? new NMS18() : new NMSDefault();
+			Version v = Version.getVersion();
+			if(v.isNewerOrEquals(Version.V1_19))
+				nms = new NMS19();
+			else if(v.isNewerOrEquals(Version.V1_18))
+				nms = new NMS18();
+			else
+				nms = new NMSDefault();
 		}
 		return nms;
 	}
