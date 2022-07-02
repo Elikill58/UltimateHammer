@@ -1,15 +1,10 @@
 package com.elikill58.ultimatehammer;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
-import com.elikill58.ultimatehammer.tools.AxeManager;
 
 public class UltimateHammerCommand implements CommandExecutor {
 
@@ -26,12 +21,6 @@ public class UltimateHammerCommand implements CommandExecutor {
 		} else if(arg[0].equalsIgnoreCase("reload") && sender.hasPermission("ultimatehammer.reload")) {
 			pl.loadData();
 			pl.sendMessageTo(sender, "well_reloaded");
-		} else if(arg[0].equalsIgnoreCase("test") && sender.hasPermission("ultimatehammer.reload")) {
-			Block b = ((Player) sender).getEyeLocation().getBlock();
-			for(Vector v : AxeManager.CHECKING_VECTORS) {
-				Block faceBlock = b.getRelative(v.getBlockX(), v.getBlockY(), v.getBlockZ());
-				faceBlock.setType(Material.DIAMOND_BLOCK);
-			}
 		} else {
 			String key = arg[0].toLowerCase();
 			if(pl.allTools.containsKey(key)) {
