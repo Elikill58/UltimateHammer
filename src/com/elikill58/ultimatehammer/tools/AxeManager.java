@@ -62,7 +62,7 @@ public class AxeManager extends UltimateTool implements Listener {
 			@Override
 			public void run() {
 				for (int i = 0; i < blist.size(); i++) {
-					Block b = blist.get(i);
+					Block b = blist.remove(0);
 					if (b.getType().equals(originType)) {
 						b.breakNaturally(Utils.getItemInHand(p));
 						checkLeaves(p, b, range.get());
@@ -72,8 +72,6 @@ public class AxeManager extends UltimateTool implements Listener {
 						if (faceBlock.getType().equals(originType))
 							blist.add(faceBlock);
 					}
-
-					blist.remove(b);
 
 					if (blist.size() == 0) {
 						cancel();
