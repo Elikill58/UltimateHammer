@@ -23,12 +23,6 @@ public class Materials {
     public static final Material NETHER_WART = ItemRegistrar.getInstance().get("nether_warts", "nether_wart");
     public static final Material NETHER_WART_ITEM = ItemRegistrar.getInstance().get("nether_stalk", "nether_wart");
 
-	public static final Material PUMPKIN_SEEDS = ItemRegistrar.getInstance().get("pumpkin_seeds");
-	public static final Material MELON_SEEDS = ItemRegistrar.getInstance().get("melon_seeds");
-
-	public static final Material PUMPKIN = ItemRegistrar.getInstance().get("pumpkin_stem");
-	public static final Material MELON = ItemRegistrar.getInstance().get("melin_stem");
-
     public static final Material PLAYER_HEAD = ItemRegistrar.getInstance().get("player_head", "skull_item", "skull");
     
     /* STAINED MATERIALS */
