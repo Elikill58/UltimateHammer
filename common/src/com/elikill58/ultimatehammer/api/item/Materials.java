@@ -11,8 +11,8 @@ public class Materials {
     public static final Material SOIL = ItemRegistrar.getInstance().get("soil");
     public static final Material SOUL_SAND = ItemRegistrar.getInstance().get("soul_sand");
 
-    public static final Material SEED = ItemRegistrar.getInstance().get("seeds");
-    public static final Material CROPS = ItemRegistrar.getInstance().get("crops", "seeds");
+    public static final Material SEED = ItemRegistrar.getInstance().get("seeds", "wheat_seeds");
+    public static final Material CROPS = ItemRegistrar.getInstance().get("crops", "seeds", "wheat_seeds");
     
     public static final Material CARROT = ItemRegistrar.getInstance().get("carrot");
     public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot_item", "carrot");
@@ -20,8 +20,8 @@ public class Materials {
     public static final Material POTATO = ItemRegistrar.getInstance().get("potato");
     public static final Material POTATO_ITEM = ItemRegistrar.getInstance().get("potato_item", "potato");
     
-    public static final Material NETHER_WART = ItemRegistrar.getInstance().get("nether_warts");
-    public static final Material NETHER_WART_ITEM = ItemRegistrar.getInstance().get("nether_stalk");
+    public static final Material NETHER_WART = ItemRegistrar.getInstance().get("nether_warts", "nether_wart");
+    public static final Material NETHER_WART_ITEM = ItemRegistrar.getInstance().get("nether_stalk", "nether_wart");
 
     public static final Material PLAYER_HEAD = ItemRegistrar.getInstance().get("player_head", "skull_item", "skull");
     
@@ -39,5 +39,4 @@ public class Materials {
     public static final Material LOG = ItemRegistrar.getInstance().get("log", "oak_log");
     
     /* END OF STAINED MATERIALS */
-    
 }

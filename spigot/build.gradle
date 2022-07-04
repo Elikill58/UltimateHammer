@@ -53,8 +53,6 @@ shadowJar {
     archiveAppendix.set('spigot')
     archiveClassifier.set(null)
 
-    relocate('org.bstats', 'com.elikill58.ultimatehammer')
-
     mergeServiceFiles()
     from(project(':common').tasks.shadowJar)
 }
