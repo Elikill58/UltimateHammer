@@ -21,6 +21,7 @@ import com.elikill58.ultimatehammer.common.tools.hoe.Plantable.PlantableType;
 import com.elikill58.ultimatehammer.common.tools.hoe.pickup.LocationActions;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Scheduler;
+import com.elikill58.ultimatehammer.universal.Version;
 import com.elikill58.ultimatehammer.universal.bypass.WorldRegionBypass;
 
 public class HoeManager extends UltimateToolType implements Listeners {
@@ -29,10 +30,22 @@ public class HoeManager extends UltimateToolType implements Listeners {
 
 	public HoeManager() {
 		super(KEY);
-		add(PlantableType.BASIC, Materials.SEED, Materials.CROPS, (byte) 7);
+		add(PlantableType.BASIC, Materials.SEEDS, Materials.CROPS, (byte) 7);
 		add(PlantableType.BASIC, Materials.POTATO_ITEM, Materials.POTATO, (byte) 7);
 		add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
 		add(PlantableType.NETHER, Materials.NETHER_WART_ITEM, Materials.NETHER_WART, (byte) 3);
+
+		Version v = Version.getVersion();
+		add(PlantableType.BASIC, Materials.SEEDS, Materials.CROPS, (byte) 7);
+		add(PlantableType.BASIC, Materials.PUMPKIN_SEEDS, Materials.PUMPKIN, (byte) -1);
+		add(PlantableType.BASIC, Materials.MELON_SEEDS, Materials.MELON, (byte) -1);
+
+		add(PlantableType.BASIC, Materials.POTATO_ITEM, Materials.POTATO, (byte) 7);
+		add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
+			
+		add(PlantableType.NETHER, Materials.NETHER_WART_ITEM, Materials.NETHER_WART, (byte) 3);
+		if(v.isNewerOrEquals(Version.V1_9))
+			add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
 	}
 	
 	private void add(PlantableType type, Material invItem, Material nextItem, byte neededDataToGet) {
