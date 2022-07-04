@@ -49,7 +49,7 @@ public class HoeManager extends UltimateTool implements Listener {
 		}
 		add(PlantableType.NETHER, ItemUtils.NETHER_STALK, ItemUtils.NETHER_WARTS, (byte) 3);
 		if(v.isNewerOrEquals(Version.V1_9))
-			add(PlantableType.BASIC, ItemUtils.CARROT_ITEM, Material.CARROT, (byte) 7);
+			add(PlantableType.BASIC, Material.BEETROOT_SEEDS, Material.BEETROOTS, (byte) 7);
 		if (nbBlocked > 0)
 			pl.getLogger().info("Loaded " + nbBlocked + " disabled items for hoe.");
 	}
