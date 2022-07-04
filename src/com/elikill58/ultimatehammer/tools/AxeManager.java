@@ -50,12 +50,14 @@ public class AxeManager extends UltimateTool implements Listener {
 	}
 
 	private void logDetele(BlockBreakEvent e) {
+		List<Vector> checkedPos = new ArrayList<>();
+		List<Block> blist = new ArrayList<>();
 		Block originBlock = e.getBlock();
 		Material originType = originBlock.getType();
 		Player p = e.getPlayer();
 		p.giveExp(10);
-		List<Block> blist = new ArrayList<>();
-		checkLeaves(p, originBlock, RANGE);
+		checkedPos.add(originBlock.getLocation().toVector());
+		checkLeaves(p, originBlock, RANGE, checkedPos);
 		blist.add(originBlock);
 		AtomicInteger range = new AtomicInteger(RANGE);
 		new BukkitRunnable() {
@@ -65,9 +67,11 @@ public class AxeManager extends UltimateTool implements Listener {
 					Block b = blist.remove(0);
 					if (b.getType().equals(originType)) {
 						b.breakNaturally(Utils.getItemInHand(p));
-						checkLeaves(p, b, range.get());
+						checkLeaves(p, b, range.get(), checkedPos);
 					}
 					for (Vector v : new ArrayList<>(CHECKING_VECTORS)) {
+						if(checkedPos.contains(b.getLocation().clone().add(v).toVector()))
+							continue;
 						Block faceBlock = b.getRelative(v.getBlockX(), v.getBlockY(), v.getBlockZ());
 						if (faceBlock.getType().equals(originType))
 							blist.add(faceBlock);
@@ -84,7 +88,7 @@ public class AxeManager extends UltimateTool implements Listener {
 		}.runTaskTimer(getPlugin(), 0, 1);
 	}
 
-	private void checkLeaves(Player p, Block block, int range) {
+	private void checkLeaves(Player p, Block block, int range, List<Vector> checked) {
 		Location loc = block.getLocation();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX(), y = loc.getBlockY(), z = loc.getBlockZ();
@@ -97,6 +101,8 @@ public class AxeManager extends UltimateTool implements Listener {
 		for (int offX = -range; offX <= range; offX++) {
 			for (int offY = -range - 1; offY <= range + 1; offY++) { // make the Y move easier (instead of X/Z one
 				for (int offZ = -range; offZ <= range; offZ++) {
+					if(checked.contains(new Vector(x + offX, y + offY, z + offZ)))
+						continue;
 					Block offBlock = world.getBlockAt(x + offX, y + offY, z + offZ);
 					if (offBlock.getType().name().contains("LEAVES")) {
 						if (leavesType == null || offBlock.getType().equals(leavesType)) {
