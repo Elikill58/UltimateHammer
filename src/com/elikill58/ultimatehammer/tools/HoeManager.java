@@ -37,8 +37,6 @@ public class HoeManager extends UltimateTool implements Listener {
 		nbBlocked = 0;
 		Version v = Version.getVersion();
 		add(PlantableType.BASIC, ItemUtils.SEEDS, ItemUtils.CROPS, (byte) 7);
-		add(PlantableType.BASIC, Material.PUMPKIN_SEEDS, Material.PUMPKIN_STEM, (byte) -1);
-		add(PlantableType.BASIC, Material.MELON_SEEDS, Material.MELON_STEM, (byte) -1);
 
 		if(v.isNewerOrEquals(Version.V1_18)) {
 			add(PlantableType.BASIC, Material.valueOf("POTATO"), Material.valueOf("POTATOES"), (byte) 7);
