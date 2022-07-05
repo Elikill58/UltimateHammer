@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -63,6 +64,11 @@ public class ItemStackBuilder {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+        return this;
+    }
+
+    public ItemStackBuilder flag(ItemFlag flag) {
+        this.itemMeta.addItemFlags(flag);
         return this;
     }
 

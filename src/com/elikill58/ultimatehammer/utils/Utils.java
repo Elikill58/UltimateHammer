@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -49,6 +50,15 @@ public class Utils {
 		}
 		builder.amount(sec.getInt("amount", 1));
 		builder.unbreakable(sec.getBoolean("unbreakable", false));
+		if(sec.contains("flags")) {
+			for(String flag : sec.getStringList("flags")) {
+				try {
+					builder.flag(ItemFlag.valueOf(flag));
+				} catch (Exception e) {
+					warn("Failed to find item flag " + flag + ".");
+				}
+			}
+		}
 		if(sec.contains("enchant")) {
 			for(String s : sec.getStringList("enchant")) {
 				Enchantment enchant;
