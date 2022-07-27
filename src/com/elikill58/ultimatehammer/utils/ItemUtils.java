@@ -1,5 +1,7 @@
 package com.elikill58.ultimatehammer.utils;
 
+import java.lang.reflect.Method;
+
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -26,7 +28,7 @@ public class ItemUtils {
 	}
 
 	public static void damage(UltimateTool tool, Player p, ItemStack inHand, int slot, int amount) {
-		if(tool.getConfigSection().getBoolean("infinity", false))
+		if(tool.getConfigSection().getBoolean("infinity", false) || isUnbreakable(inHand))
 			return;
 		short dam = 0;
 		for(int i = 0; i < amount; i++) {
@@ -92,5 +94,26 @@ public class ItemUtils {
 			temp = temp + (temp.equalsIgnoreCase("") ? "" : ", ") + s;
 		Utils.error("Failed to find Material " + temp);
 		return null;
+	}
+	
+	public static boolean isUnbreakable(ItemStack item) {
+		Object meta = item.getItemMeta();
+    	if(!Version.getVersion().isNewerThan(Version.V1_13)) {
+	    	try {
+	    		Method m = meta.getClass().getDeclaredMethod("spigot");
+	    		m.setAccessible(true);
+	    		meta = m.invoke(meta);
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+    	}
+    	try {
+    		Method m = meta.getClass().getDeclaredMethod("isUnbreakable", boolean.class);
+    		m.setAccessible(true);
+    		return (boolean) m.invoke(meta);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return false;
 	}
 }
