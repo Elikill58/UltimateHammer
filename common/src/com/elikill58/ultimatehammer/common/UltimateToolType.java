@@ -20,11 +20,11 @@ public abstract class UltimateToolType {
 		return key;
 	}
 	
-	public List<UltimateTool> getTool(Player p, String key) {
+	public List<UltimateTool> getTool(Player p) {
 		return UltimateHammer.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key)).collect(Collectors.toList());
 	}
 	
-	public List<UltimateTool> getToolForHand(Player p, String key) {
+	public List<UltimateTool> getToolForHand(Player p) {
 		return UltimateHammer.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key) && u.isItem(p.getItemInHand())).collect(Collectors.toList());
 	}
 }

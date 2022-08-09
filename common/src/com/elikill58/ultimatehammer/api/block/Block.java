@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
+import com.elikill58.ultimatehammer.api.block.data.BlockData;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
@@ -18,8 +19,11 @@ public abstract class Block implements UltimateHammerObject {
 	public abstract int getX();
 	public abstract int getY();
 	public abstract int getZ();
-	
-	public abstract Block getRelative(BlockFace blockFace);
+
+	public Block getRelative(BlockFace blockFace) {
+		return getRelative(blockFace.getModX(), blockFace.getModY(), blockFace.getModY());
+	}
+	public abstract Block getRelative(int x, int y, int z);
 
 	public abstract boolean isLiquid();
 
@@ -42,6 +46,8 @@ public abstract class Block implements UltimateHammerObject {
 	public abstract List<ItemStack> getDrops(ItemStack item);
 
 	public abstract byte getData();
+	
+	public abstract BlockData getBlockData();
 	
 	@Override
 	public boolean equals(Object obj) {

@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.block.data.Waterlogged;
+import org.bukkit.block.data.type.Leaves;
 
 import com.elikill58.ultimatehammer.api.block.Block;
-import com.elikill58.ultimatehammer.api.block.BlockFace;
+import com.elikill58.ultimatehammer.api.block.data.BlockData;
+import com.elikill58.ultimatehammer.api.block.data.EmptyData;
 import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.api.location.World;
+import com.elikill58.ultimatehammer.spigot.impl.block.data.SpigotLeavesData;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotLocation;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotWorld;
@@ -43,11 +46,6 @@ public class SpigotBlock extends Block {
 	@Override
 	public int getZ() {
 		return block.getZ();
-	}
-
-	@Override
-	public Block getRelative(BlockFace blockFace) {
-		return new SpigotBlock(block.getRelative(org.bukkit.block.BlockFace.valueOf(blockFace.name())));
 	}
 
 	@Override
@@ -97,5 +95,17 @@ public class SpigotBlock extends Block {
 	@Override
 	public byte getData() {
 		return block.getData();
+	}
+
+	@Override
+	public Block getRelative(int x, int y, int z) {
+		return new SpigotBlock(block.getRelative(x, y, z));
+	}
+
+	@Override
+	public BlockData getBlockData() {
+		if(block.getBlockData() instanceof Leaves)
+			return new SpigotLeavesData((Leaves) block.getBlockData());
+		return new EmptyData();
 	}
 }

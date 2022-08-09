@@ -138,6 +138,16 @@ public class SpigotItemStack extends ItemStack {
 	}
 
 	@Override
+	public void setDurability(int s) {
+		item.setDurability((short) s);
+	}
+
+	@Override
+	public boolean isUnbreakable() {
+		return item.getItemMeta().isUnbreakable();
+	}
+
+	@Override
 	public void addDamage(short d) {
         Integer durability = item.getDurability() + d;
         if (item.getType().getMaxDurability() < durability) {

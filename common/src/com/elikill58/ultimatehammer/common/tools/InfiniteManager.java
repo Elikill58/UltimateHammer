@@ -26,7 +26,7 @@ public class InfiniteManager extends UltimateToolType implements Listeners {
 	@EventListener
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getPlayer();
-		getTool(p, getKey()).forEach((tool) -> {
+		getTool(p).forEach((tool) -> {
 			if(WorldRegionBypass.cannotBuild(p, tool, p.getLocation()))
 				return;
 			List<ItemStack> toRemove = e.getDrops().stream().filter(tool::isItem).collect(Collectors.toList());

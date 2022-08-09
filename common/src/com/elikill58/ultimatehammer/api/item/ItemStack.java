@@ -47,8 +47,11 @@ public abstract class ItemStack implements UltimateHammerObject {
 	public abstract boolean isSimilarExceptDamage(ItemStack compare);
 
 	public abstract int getDurability();
+	public abstract void setDurability(int s);
 
 	public abstract void addDamage(short d);
+
+	public abstract boolean isUnbreakable();
 
 	@Override
 	public String toString() {

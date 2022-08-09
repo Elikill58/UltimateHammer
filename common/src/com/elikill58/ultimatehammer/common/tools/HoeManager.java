@@ -37,7 +37,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 			
 		add(PlantableType.NETHER, Materials.NETHER_WART_ITEM, Materials.NETHER_WART, (byte) 3);
 		if(Version.getVersion().isNewerOrEquals(Version.V1_9))
-			add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
+			add(PlantableType.BASIC, Materials.BEETROOT_SEEDS, Materials.BEETROOTS, (byte) 7);
 	}
 	
 	private void add(PlantableType type, Material invItem, Material nextItem, byte neededDataToGet) {
@@ -51,7 +51,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		Player p = e.getPlayer();
 		Block baseBlock = e.getBlock();
 		ItemStack inHand = p.getItemInHand();
-		getToolForHand(p, getKey()).forEach((tool) -> {
+		getToolForHand(p).forEach((tool) -> {
 			if (WorldRegionBypass.cannotBuild(p, tool, baseBlock.getLocation()))
 				return;
 			int slot = p.getInventory().getHeldItemSlot();
@@ -73,7 +73,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 	public void onBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
 		Block baseBlock = e.getBlock();
-		getToolForHand(p, getKey()).forEach((tool) -> {
+		getToolForHand(p).forEach((tool) -> {
 			Block b = e.getBlock();
 			if(WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
