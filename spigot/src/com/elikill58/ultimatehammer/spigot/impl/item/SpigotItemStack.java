@@ -94,8 +94,6 @@ public class SpigotItemStack extends ItemStack {
 		// checking quantity
 		if(item.getAmount() != compare.getAmount())
 			return false;
-		if(item.getData().getData() != compare.getData().getData())
-			return false;
 		// checking enchant
 		Map<org.bukkit.enchantments.Enchantment, Integer> mapEnchantSource = item.getEnchantments();
 		Map<org.bukkit.enchantments.Enchantment, Integer> mapEnchantCompare = compare.getEnchantments();

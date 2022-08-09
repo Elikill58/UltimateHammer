@@ -30,15 +30,14 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	
 	@EventListener
 	public void onBlockBreak(BlockBreakEvent e) {
-		if (!e.isCancelled())
+		if (e.isCancelled())
 			return;
 		Player p = e.getPlayer();
-		ItemStack item = p.getItemInHand();
 		getToolForHand(p).forEach(tool -> {
 			Block b = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
-			if (!fellTree(b, p, item))
+			if (!fellTree(b, p, p.getItemInHand()))
 				e.setCancelled(true);
 		});
 	}
