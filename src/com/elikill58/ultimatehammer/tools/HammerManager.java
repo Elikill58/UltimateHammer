@@ -98,7 +98,7 @@ public class HammerManager extends UltimateTool implements Listener {
 					BlockBreakEvent breakEvent = new BlockBreakEvent(b, p);
 					Bukkit.getPluginManager().callEvent(breakEvent);
 					if(!breakEvent.isCancelled())
-						b.breakNaturally();
+						b.breakNaturally(inHand);
 				}
 	}
 }
