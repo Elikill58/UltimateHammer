@@ -15,7 +15,7 @@ public class Spigot_UnknowVersion extends SpigotVersionAdapter {
 	}
 
 	@Override
-	public ItemStack addNbtTag(ItemStack item, String tagVal) {
+	public ItemStack setNbtTag(ItemStack item, String tagVal) {
 		try {
 			Object nmsItem = toNMSItem(item);
 			Object comp = getNBTTagCompoundFromNMSItem(nmsItem);

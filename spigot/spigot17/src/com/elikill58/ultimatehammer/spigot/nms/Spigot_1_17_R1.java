@@ -6,9 +6,6 @@ import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 
 public class Spigot_1_17_R1 extends SpigotVersionAdapter {
 
@@ -17,14 +14,12 @@ public class Spigot_1_17_R1 extends SpigotVersionAdapter {
 	}
 
 	@Override
-	public ItemStack addNbtTag(ItemStack item, String tagVal) {
+	public ItemStack setNbtTag(ItemStack item, String tagVal) {
 		net.minecraft.world.item.ItemStack nmsItem = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item.getDefault());
 		CompoundTag comp = nmsItem.getTag();
 		if(comp == null)
 			return null;
-		ListTag list = comp.getList(NBT_TAG_KEY, 10);
-		list.add(StringTag.valueOf(tagVal));
-		comp.put(NBT_TAG_KEY, list);
+		comp.putString(NBT_TAG_KEY, tagVal);
 		nmsItem.setTag(comp);
 		return new SpigotItemStack(CraftItemStack.asBukkitCopy(nmsItem));
 	}
@@ -35,10 +30,7 @@ public class Spigot_1_17_R1 extends SpigotVersionAdapter {
 		CompoundTag comp = nmsItem.getTag();
 		if(comp == null)
 			return false;
-		ListTag list = comp.getList(NBT_TAG_KEY, 10);
-		for(Tag st : list)
-			if(st.getAsString().equalsIgnoreCase(searchedVal))
-				return true;
-		return false;
+		String tag = comp.getString(NBT_TAG_KEY);
+		return tag != null && searchedVal.equalsIgnoreCase(tag);
 	}
 }

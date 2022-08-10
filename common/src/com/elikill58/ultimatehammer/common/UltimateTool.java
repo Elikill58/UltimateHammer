@@ -11,7 +11,6 @@ import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
-import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -76,10 +75,7 @@ public class UltimateTool {
 		this.hoeSize = section.getInt("hoe.size", 3);
 		
 		if(isEnabled) {
-			VersionAdapter<?> ada = Adapter.getAdapter().getVersionAdapter();
-			ItemStack basicItem = ItemStack.getItem(section);
-			for(String type : types)
-				basicItem = ada.addNbtTag(basicItem, type);
+			ItemStack basicItem = Adapter.getAdapter().getVersionAdapter().setNbtTag(ItemStack.getItem(section), key);
 			this.item = basicItem;
 			this.defaultItem = basicItem.clone();
 		}
