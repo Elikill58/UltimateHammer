@@ -108,7 +108,21 @@ public abstract class ItemBuilder {
 	 */
     public abstract ItemBuilder addToLore(String... loreToAdd);
 
-    public abstract void unbreakable(boolean breakable);
+    /**
+     * Make the item unbreakable
+     * 
+     * @param breakable true if not breakable
+	 * @return this builder
+     */
+    public abstract ItemBuilder unbreakable(boolean breakable);
+	
+    /**
+     * Change the custom model data of item
+     * 
+     * @param data the data
+	 * @return this builder
+     */
+	public abstract ItemBuilder setCustomModelData(int data);
 
     /**
      * Build the item.

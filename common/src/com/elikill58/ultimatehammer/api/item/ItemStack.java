@@ -50,6 +50,8 @@ public abstract class ItemStack implements UltimateHammerObject {
 	public abstract void addDamage(short d);
 
 	public abstract boolean isUnbreakable();
+	
+	public abstract void setCustomModelData(int data);
 
 	@Override
 	public String toString() {
@@ -70,6 +72,8 @@ public abstract class ItemStack implements UltimateHammerObject {
 					builder.lore(s);
 			}
 		}
+		if(sec.contains("custom_model_data"))
+			builder.setCustomModelData(sec.getInt("custom_model_data"));
 		builder.amount(sec.getInt("amount", 1));
 		builder.unbreakable(sec.getBoolean("unbreakable", false));
 		if(sec.contains("enchant")) {

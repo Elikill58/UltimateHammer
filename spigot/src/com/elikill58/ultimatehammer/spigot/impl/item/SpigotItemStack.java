@@ -1,9 +1,12 @@
 package com.elikill58.ultimatehammer.spigot.impl.item;
 
+import org.bukkit.inventory.meta.ItemMeta;
+
 import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.universal.Adapter;
+import com.elikill58.ultimatehammer.universal.Version;
 
 @SuppressWarnings("deprecation")
 public class SpigotItemStack extends ItemStack {
@@ -83,6 +86,19 @@ public class SpigotItemStack extends ItemStack {
 	@Override
 	public boolean isUnbreakable() {
 		return item.getItemMeta().isUnbreakable();
+	}
+	
+	@Override
+	public void setCustomModelData(int data) {
+		if(Version.getVersion().isNewerOrEquals(Version.V1_14)) {
+			ItemMeta meta = item.getItemMeta();
+			try {
+				meta.getClass().getDeclaredMethod("setCustomModelData", int.class).invoke(meta, data);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			item.setItemMeta(meta);
+		}
 	}
 
 	@Override

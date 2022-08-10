@@ -113,7 +113,7 @@ public class SpigotItemBuilder extends ItemBuilder {
     }
     
     @Override
-    public void unbreakable(boolean unbreakable) {
+    public ItemBuilder unbreakable(boolean unbreakable) {
     	Object objToUnbreak = this.itemMeta;
     	if(!Version.getVersion().isNewerThan(Version.V1_13)) {
 	    	try {
@@ -131,6 +131,7 @@ public class SpigotItemBuilder extends ItemBuilder {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+        return this;
     }
     
     @Override
@@ -163,6 +164,18 @@ public class SpigotItemBuilder extends ItemBuilder {
     @Override
     public ItemBuilder addToLore(String... loreToAdd) {
         return lore(loreToAdd);
+    }
+    
+    @Override
+    public ItemBuilder setCustomModelData(int data) {
+		if(Version.getVersion().isNewerOrEquals(Version.V1_14)) {
+			try {
+				itemMeta.getClass().getDeclaredMethod("setCustomModelData", int.class).invoke(itemMeta, data);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return this;
     }
 
     @Override
