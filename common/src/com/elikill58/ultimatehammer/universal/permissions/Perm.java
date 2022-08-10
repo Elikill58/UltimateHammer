@@ -39,7 +39,7 @@ public class Perm {
 	public static boolean hasPerm(CommandSender sender, String perm) {
 		if(sender instanceof Player) {
 			PermissionChecker checker = getActiveChecker();
-			return checker != null && checker.hasPermission(UltimateHammerPlayer.getNegativityPlayer((Player) sender), perm);
+			return checker != null && checker.hasPermission(UltimateHammerPlayer.getUltimateHammerPlayer((Player) sender), perm);
 		} else
 			return true;
 	}

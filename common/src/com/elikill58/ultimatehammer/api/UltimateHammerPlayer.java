@@ -64,8 +64,8 @@ public class UltimateHammerPlayer {
 	 * @param p the player which we are looking for it's NegativityPlayer
 	 * @return the negativity player
 	 */
-	public static UltimateHammerPlayer getNegativityPlayer(Player p) {
-		return getNegativityPlayer(p.getUniqueId(), () -> p);
+	public static UltimateHammerPlayer getUltimateHammerPlayer(Player p) {
+		return getUltimateHammerPlayer(p.getUniqueId(), () -> p);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class UltimateHammerPlayer {
 	 * @param call a creator of a new player
 	 * @return the negativity player
 	 */
-	public static UltimateHammerPlayer getNegativityPlayer(UUID uuid, Callable<Player> call) {
+	public static UltimateHammerPlayer getUltimateHammerPlayer(UUID uuid, Callable<Player> call) {
 		synchronized (PLAYERS) {
 			return PLAYERS.computeIfAbsent(uuid, (a) -> {
 				try {
@@ -111,7 +111,7 @@ public class UltimateHammerPlayer {
 		}
 	}
 	
-	public static List<UltimateHammerPlayer> getAllNegativityPlayers() {
+	public static List<UltimateHammerPlayer> getAllUltimateHammerPlayers() {
 		synchronized (PLAYERS) {
 			return new ArrayList<>(PLAYERS.values());
 		}

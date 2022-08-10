@@ -1,4 +1,4 @@
-package com.elikill58.ultimatehammer.universal.dataStorage;
+package com.elikill58.ultimatehammer.universal.storage.accounts;
 
 import java.io.File;
 import java.util.HashMap;
@@ -11,8 +11,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Database;
 import com.elikill58.ultimatehammer.universal.account.UltimateHammerAccount;
-import com.elikill58.ultimatehammer.universal.dataStorage.database.DatabaseAccountStorage;
-import com.elikill58.ultimatehammer.universal.dataStorage.file.FileAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.database.DatabaseAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.file.FileAccountStorage;
 
 public abstract class UltimateHammerAccountStorage {
 

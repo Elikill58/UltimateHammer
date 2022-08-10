@@ -1,4 +1,4 @@
-package com.elikill58.ultimatehammer.universal.dataStorage;
+package com.elikill58.ultimatehammer.universal.storage.accounts;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;

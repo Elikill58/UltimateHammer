@@ -2,14 +2,14 @@ package com.elikill58.ultimatehammer.universal;
 
 import java.util.HashMap;
 
+import com.elikill58.ultimatehammer.api.UltimateHammerPlayer;
 import com.elikill58.ultimatehammer.api.events.EventManager;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.universal.bypass.WorldRegionBypass;
-import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
 import com.elikill58.ultimatehammer.universal.file.FileSaverTimer;
 import com.elikill58.ultimatehammer.universal.permissions.Perm;
-import com.elikill58.ultimatehammer.universal.utils.SemVer;
+import com.elikill58.ultimatehammer.universal.storage.accounts.UltimateHammerAccountStorage;
 import com.elikill58.ultimatehammer.universal.utils.UniversalUtils;
 
 public class UltimateHammer {
@@ -18,6 +18,8 @@ public class UltimateHammer {
 	public static HashMap<String, UltimateTool> getAlltools() {
 		return ALL_TOOLS;
 	}
+	
+	private static ScheduledTask fileSaverTimer;
 	
 	/**
 	 * Load all Negativity's class and content.
@@ -40,6 +42,9 @@ public class UltimateHammer {
 				old.runAll();
 			else
 				ada.getScheduler().runRepeatingAsync(new FileSaverTimer(), 20);
+			if(fileSaverTimer != null)
+				fileSaverTimer.cancel();
+			fileSaverTimer = ada.getScheduler().runRepeatingAsync(FileSaverTimer.getInstance(), 20, "UltimateHammer FileSaver");
 			WorldRegionBypass.load();
 			ALL_TOOLS.clear();
 
@@ -55,12 +60,12 @@ public class UltimateHammer {
 			
 		}
 		UniversalUtils.init();
-
-		new Thread(() -> {
-			SemVer latestVersion = UniversalUtils.getLatestVersionIfNewer();
-			if (latestVersion != null) {
-				ada.getLogger().info("New version of UltimateHammer available: " + latestVersion.toFormattedString() + ". Download it here: https://www.spigotmc.org/resources/86874/");
-			}
-		}).start();
+	}
+	
+	public static void disableUltimateHammer() {
+		if(fileSaverTimer != null)
+			fileSaverTimer.cancel();
+		UltimateHammerPlayer.getAllPlayers().clear();
+		Database.close();
 	}
 }

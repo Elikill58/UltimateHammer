@@ -1,4 +1,4 @@
-package com.elikill58.ultimatehammer.universal.dataStorage.database;
+package com.elikill58.ultimatehammer.universal.storage.accounts.database;
 
 import java.io.IOException;
 import java.net.URI;

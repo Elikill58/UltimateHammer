@@ -1,4 +1,4 @@
-package com.elikill58.ultimatehammer.universal.dataStorage.database;
+package com.elikill58.ultimatehammer.universal.storage.accounts.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.elikill58.ultimatehammer.universal.Database;
 import com.elikill58.ultimatehammer.universal.account.UltimateHammerAccount;
-import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.UltimateHammerAccountStorage;
 
 public class DatabaseAccountStorage extends UltimateHammerAccountStorage {
 

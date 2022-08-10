@@ -48,7 +48,7 @@ public class PlayersListeners implements Listener {
 		Player p = e.getPlayer();
 		if(p.hasMetadata("NPC"))
 			return;
-		UltimateHammerPlayer np = UltimateHammerPlayer.getNegativityPlayer(p.getUniqueId(), () -> new SpigotPlayer(p));
+		UltimateHammerPlayer np = UltimateHammerPlayer.getUltimateHammerPlayer(p.getUniqueId(), () -> new SpigotPlayer(p));
 		PlayerLeaveEvent event = new PlayerLeaveEvent(np.getPlayer(), np, e.getQuitMessage());
 		EventManager.callEvent(event);
 		e.setQuitMessage(event.getQuitMessage());
@@ -136,7 +136,7 @@ public class PlayersListeners implements Listener {
 		Player p = e.getPlayer();
 		if(p.hasMetadata("NPC"))
 			return;
-		UltimateHammerPlayer np = UltimateHammerPlayer.getNegativityPlayer(p.getUniqueId(), () -> new SpigotPlayer(p));
+		UltimateHammerPlayer np = UltimateHammerPlayer.getUltimateHammerPlayer(p.getUniqueId(), () -> new SpigotPlayer(p));
 		PlayerConnectEvent event = new PlayerConnectEvent(np.getPlayer(), np, e.getJoinMessage());
 		EventManager.callEvent(event);
 		e.setJoinMessage(event.getJoinMessage());

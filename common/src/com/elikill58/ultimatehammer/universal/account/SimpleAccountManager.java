@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.elikill58.ultimatehammer.universal.Adapter;
-import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.UltimateHammerAccountStorage;
 
 public class SimpleAccountManager extends UltimateHammerAccountManager {
 

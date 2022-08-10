@@ -1,4 +1,4 @@
-package com.elikill58.ultimatehammer.universal.dataStorage.file;
+package com.elikill58.ultimatehammer.universal.storage.accounts.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import com.elikill58.ultimatehammer.api.yaml.YamlConfiguration;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.TranslatedMessages;
 import com.elikill58.ultimatehammer.universal.account.UltimateHammerAccount;
-import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.UltimateHammerAccountStorage;
 
 public class FileAccountStorage extends UltimateHammerAccountStorage {
 
@@ -62,7 +62,7 @@ public class FileAccountStorage extends UltimateHammerAccountStorage {
 			Configuration accountConfig = YamlConfiguration.load(file);
 			accountConfig.set("playername", account.getPlayerName());
 			accountConfig.set("lang", account.getLang());
-			accountConfig.save();
+			accountConfig.directSave();
 		});
 	}
 }

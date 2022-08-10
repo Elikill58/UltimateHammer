@@ -1,7 +1,6 @@
 package com.elikill58.ultimatehammer.spigot;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import org.bukkit.Bukkit;
@@ -9,7 +8,6 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.elikill58.ultimatehammer.api.UltimateHammerPlayer;
 import com.elikill58.ultimatehammer.spigot.listeners.BlockListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.CommandsListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.EntityListeners;
@@ -18,10 +16,9 @@ import com.elikill58.ultimatehammer.spigot.listeners.PlayersListeners;
 import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 import com.elikill58.ultimatehammer.spigot.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Adapter;
-import com.elikill58.ultimatehammer.universal.Database;
 import com.elikill58.ultimatehammer.universal.UltimateHammer;
 import com.elikill58.ultimatehammer.universal.Version;
-import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
+import com.elikill58.ultimatehammer.universal.storage.accounts.UltimateHammerAccountStorage;
 
 public class SpigotUltimateHammer extends JavaPlugin {
 
@@ -82,8 +79,7 @@ public class SpigotUltimateHammer extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		new Thread(() -> new ArrayList<>(UltimateHammerPlayer.getAllPlayers().keySet()).forEach(UltimateHammerPlayer::removeFromCache)).start();
-		Database.close();
+		UltimateHammer.disableUltimateHammer();
 	}
 
 	public static SpigotUltimateHammer getInstance() {
