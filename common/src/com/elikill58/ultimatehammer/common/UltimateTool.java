@@ -9,8 +9,10 @@ import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
+import com.elikill58.ultimatehammer.api.packets.nms.VersionAdapter;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
+import com.elikill58.ultimatehammer.universal.Adapter;
 
 public class UltimateTool {
 
@@ -39,8 +41,12 @@ public class UltimateTool {
 		this.hoeSize = section.getInt("hoe.size", 3);
 		
 		if(isEnabled) {
-			this.item = ItemStack.getItem(section);
-			this.defaultItem = item.clone();
+			VersionAdapter<?> ada = Adapter.getAdapter().getVersionAdapter();
+			ItemStack basicItem = ItemStack.getItem(section);
+			for(String type : types)
+				basicItem = ada.addNbtTag(basicItem, type);
+			this.item = basicItem;
+			this.defaultItem = basicItem.clone();
 		}
 	}
 	
@@ -63,7 +69,7 @@ public class UltimateTool {
 	public boolean isItem(ItemStack inHand) {
 		if(inHand == null || inHand.getType().getId().contains("AIR"))
 			return false;
-		return item.clone().isSimilarExceptDamage(inHand);
+		return Adapter.getAdapter().getVersionAdapter().hasNbtTag(inHand, key);
 	}
 
 	public void used(Player p, String string, Block b) {}
