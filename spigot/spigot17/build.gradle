@@ -1,10 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 import java.nio.file.Paths
 
-plugins {
-    id 'com.github.johnrengelman.shadow'
-}
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'eclipse'
 
 sourceSets {
     main {
@@ -13,6 +11,12 @@ sourceSets {
     }
     spigot17 {
         java.srcDir 'spigot17'
+    }
+}
+
+eclipse {
+    project {
+        name = 'UltimateHammerV2-spigot17'
     }
 }
 
