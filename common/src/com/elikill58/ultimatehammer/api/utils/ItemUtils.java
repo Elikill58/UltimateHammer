@@ -17,15 +17,13 @@ public class ItemUtils {
 	}
 
 	public static void damage(UltimateTool tool, Player p, ItemStack inHand, int slot, int amount) {
-		if(tool.getConfigSection().getBoolean("infinity", false))
+		if(tool.getConfigSection().getBoolean("infinity", false) || inHand.isUnbreakable() || p.getGameMode().equals(GameMode.CREATIVE))
 			return;
 		short dam = 0;
 		for(int i = 0; i < amount; i++) {
-			if (!p.getGameMode().equals((Object) GameMode.CREATIVE)) {
-				boolean shouldDamage = !inHand.hasEnchant(Enchantment.DURABILITY) || Math.random() < 1.0 / (inHand.getEnchantLevel(Enchantment.DURABILITY) + 1);
-				if (shouldDamage) {
-					dam++;
-				}
+			boolean shouldDamage = !inHand.hasEnchant(Enchantment.DURABILITY) || Math.random() < 1.0 / (inHand.getEnchantLevel(Enchantment.DURABILITY) + 1);
+			if (shouldDamage) {
+				dam++;
 			}
 		}
 		if(dam > 0) {

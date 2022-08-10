@@ -10,7 +10,8 @@ public abstract class BlockData {
 	 */
 	public abstract boolean isLeavesPersistent();
 	/**
-	 * Check leave distance
+	 * Check leave distance<br>
+	 * Return -1 for no-leave blocks
 	 * 
 	 * @return distance
 	 */

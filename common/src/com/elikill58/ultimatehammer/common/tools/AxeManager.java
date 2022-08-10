@@ -17,6 +17,7 @@ import com.elikill58.ultimatehammer.api.events.block.BlockBreakEvent;
 import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
+import com.elikill58.ultimatehammer.api.item.Materials;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
 import com.elikill58.ultimatehammer.common.tools.axe.DetectedTree;
@@ -73,16 +74,16 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			durabilityCost /= (axe.getEnchantLevel(Enchantment.DURABILITY) + 1);
 			if (durabilityCost < 1)
 				durabilityCost++;
-		}
-		if (axe.getType().getMaxDurability() == 0)
-			durabilityCost = 0;// there is no durability
-		if (player.getGameMode() == GameMode.CREATIVE)
-			durabilityCost = 0;// Don't cost durability
-		else {
-			if (axe.getType().getMaxDurability() > 0) {
-				axe.setDurability((short) (axe.getDurability() + durabilityCost));
-				if (durability == durabilityCost) {
-					axe.setAmount(0);
+			if (axe.getType().getMaxDurability() == 0)
+				durabilityCost = 0;// there is no durability
+			if (player.getGameMode() == GameMode.CREATIVE)
+				durabilityCost = 0;// Don't cost durability
+			else {
+				if (axe.getType().getMaxDurability() > 0) {
+					axe.setDurability((short) (axe.getDurability() + durabilityCost));
+					if (durability == durabilityCost) {
+						axe.setAmount(0);
+					}
 				}
 			}
 		}
@@ -99,12 +100,13 @@ public class AxeManager extends UltimateToolType implements Listeners {
 				if (total <= 0)
 					break;
 				for (Block leaf : toList(getBlocks(detectedTree.tree.leaves, b, 6, detectedTree.tree.diagonalLeave))) {
-					if(!tool.usedBreak(player, leaf))
+					if(!leaf.getType().equals(Materials.AIR) && !tool.usedBreak(player, leaf))
 						leaf.breakNaturally(axe);
 				}
-				if(!tool.usedBreak(player, b))
+				if(!b.getType().equals(Materials.AIR) && !tool.usedBreak(player, b)) {
 					b.breakNaturally(axe);
-				total--;
+					total--;
+				}
 			}
 		}
 		return true;
@@ -216,7 +218,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 		if (layer.contains(newBlock))
 			return;// if the new block is on the next layer, but already processed, ignore
 		BlockData bd = newBlock.getBlockData();
-		if(bd.isLeavesPersistent() || bd.getLeavesDistance() <= block.getBlockData().getLeavesDistance())
+		if(bd.isLeavesPersistent() || (bd.getLeavesDistance() <= block.getBlockData().getLeavesDistance() && block.getBlockData().getLeavesDistance() != -1))
 			return;
 		layer.add(newBlock);
 	}

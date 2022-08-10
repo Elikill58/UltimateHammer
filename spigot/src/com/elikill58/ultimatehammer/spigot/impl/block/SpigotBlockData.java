@@ -17,31 +17,31 @@ public class SpigotBlockData extends BlockData {
 
 	@Override
 	public boolean isLeavesPersistent() {
-		return b.getState() instanceof Leaves && ((Leaves) b.getState()).isPersistent();
+		return b.getBlockData() instanceof Leaves && ((Leaves) b.getBlockData()).isPersistent();
 	}
 
 	@Override
 	public int getLeavesDistance() {
-		return b.getState() instanceof Leaves ? ((Leaves) b.getState()).getDistance() : -1;
+		return b.getBlockData() instanceof Leaves ? ((Leaves) b.getBlockData()).getDistance() : -1;
 	}
 
 	@Override
 	public int getHumidity() {
-		return b.getState() instanceof Farmland ? ((Farmland) b.getState()).getMoisture() : -1;
+		return b.getBlockData() instanceof Farmland ? ((Farmland) b.getBlockData()).getMoisture() : -1;
 	}
 
 	@Override
 	public int getMaximumHumidity() {
-		return b.getState() instanceof Farmland ? ((Farmland) b.getState()).getMaximumMoisture() : -1;
+		return b.getBlockData() instanceof Farmland ? ((Farmland) b.getBlockData()).getMaximumMoisture() : -1;
 	}
 
 	@Override
 	public int getAge() {
-		return b.getState() instanceof Ageable ? ((Ageable) b.getState()).getAge() : -1;
+		return b.getBlockData() instanceof Ageable ? ((Ageable) b.getBlockData()).getAge() : -1;
 	}
 
 	@Override
 	public int getMaximumAge() {
-		return b.getState() instanceof Ageable ? ((Ageable) b.getState()).getMaximumAge() : -1;
+		return b.getBlockData() instanceof Ageable ? ((Ageable) b.getBlockData()).getMaximumAge() : -1;
 	}
 }

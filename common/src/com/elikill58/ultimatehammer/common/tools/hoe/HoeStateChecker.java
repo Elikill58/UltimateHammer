@@ -10,7 +10,7 @@ public class HoeStateChecker {
 		return bd.getHumidity() == bd.getMaximumHumidity();
 	}
 	
-	public static boolean hasReachAge(Block b, byte max) {
+	public static boolean hasReachAge(Block b, int max) {
 		BlockData bd = b.getBlockData();
 		return bd.getAge() == (bd.getMaximumAge() == -1 ? max : bd.getMaximumAge());
 	}

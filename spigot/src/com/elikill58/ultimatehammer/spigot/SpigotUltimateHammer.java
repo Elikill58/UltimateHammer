@@ -52,7 +52,6 @@ public class SpigotUltimateHammer extends JavaPlugin {
 			SpigotVersionAdapter.getVersionAdapter();
 			getLogger().info("Detected server version: " + v.name().toLowerCase(Locale.ROOT) + " (" + Utils.VERSION + ")");
 		}
-		getLogger().info("Running with Java " + System.getProperty("java.version"));
 		
 		try {
 			Class.forName("org.spigotmc.SpigotConfig");
