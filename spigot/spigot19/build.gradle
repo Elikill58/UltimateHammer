@@ -16,7 +16,7 @@ sourceSets {
 
 eclipse {
     project {
-        name = 'UltimateHammerV2-spigot19'
+        name = 'UHv2-spigot19'
     }
 }
 

@@ -1,10 +1,9 @@
-package com.elikill58.negativity.spigot17;
+package com.elikill58.ultimatehammer.spigot.nms;
 
 import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
 
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
-import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -24,8 +24,8 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 			Messages.sendMessage(sender, "well_reloaded");
 		} else {
 			String key = arg[0].toLowerCase();
-			if(UltimateHammer.getAlltools().containsKey(key)) {
-				UltimateTool tool = UltimateHammer.getAlltools().get(key);
+			if(UltimateTool.getAlltools().containsKey(key)) {
+				UltimateTool tool = UltimateTool.getAlltools().get(key);
 				if(!tool.isEnabled()) {
 					Messages.sendMessage(sender, "not_enabled");
 					return false;
@@ -60,7 +60,7 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 	public List<String> onTabComplete(CommandSender sender, String[] arg, String prefix) {
 		List<String> list = new ArrayList<>();
 		if(arg.length == 1) {
-			UltimateHammer.getAlltools().forEach((key, tool) -> {
+			UltimateTool.getAlltools().forEach((key, tool) -> {
 				if((prefix.isEmpty() || key.startsWith(prefix)) && !tool.isEnabled())
 					list.add(key);
 			});

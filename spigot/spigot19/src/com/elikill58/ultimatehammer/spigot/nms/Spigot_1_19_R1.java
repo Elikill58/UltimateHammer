@@ -1,20 +1,19 @@
-package com.elikill58.negativity.spigot18;
+package com.elikill58.ultimatehammer.spigot.nms;
 
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
-import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 
-public class Spigot_1_18_R2 extends SpigotVersionAdapter {
+public class Spigot_1_19_R1 extends SpigotVersionAdapter {
 
-	public Spigot_1_18_R2() {
-		super("v1_18_R2");
+	public Spigot_1_19_R1() {
+		super("v1_19_R1");
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.tools.HoeManager;
 import com.elikill58.ultimatehammer.universal.Scheduler;
-import com.elikill58.ultimatehammer.universal.UltimateHammer;
 
 public class LocationActions {
 	
@@ -53,7 +52,7 @@ public class LocationActions {
 		ItemStack inHand = sl.p.getItemInHand();
 		if (inHand == null)
 			return false;
-		for(UltimateTool tool : UltimateHammer.getAlltools().values()) {
+		for(UltimateTool tool : UltimateTool.getAlltools().values()) {
 			if(tool.getTypes().contains(HoeManager.KEY) && !tool.isItem(inHand))
 				return false;
 		}

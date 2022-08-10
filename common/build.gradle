@@ -1,8 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
-plugins {
-    id 'com.github.johnrengelman.shadow'
-}
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'eclipse'
 
 sourceSets {
     main {
@@ -12,6 +11,12 @@ sourceSets {
     test {
         java.srcDirs = ['testSrc']
         resources.srcDirs = ['testResources']
+    }
+}
+
+eclipse {
+    project {
+        name = 'UHv2-common'
     }
 }
 
@@ -25,13 +30,13 @@ processResources {
     def props = [version: version]
     inputs.properties(props)
     // Do not try to expand service files, they may contain a dollar sign to mark inner classes
-    filesNotMatching(['META-INF/services/*', 'assets/negativity/*.properties']) {
+    filesNotMatching(['META-INF/services/*']) {
         expand(props)
     }
 }
 
 shadowJar {
-    archiveBaseName.set('negativity')
+    archiveBaseName.set('ultimatehammer')
     archiveAppendix.set('common')
     archiveClassifier.set(null)
     
@@ -47,6 +52,3 @@ parent.tasks.named('shadowJar', ShadowJar) {
 test {
     useJUnitPlatform()
 }
-
-// Uncomment to enable event listeners instrumentation
-//com.elikill58.negativity.build.InstrumentClassesTask.setupInstrumentation(project, sourceSets.main)

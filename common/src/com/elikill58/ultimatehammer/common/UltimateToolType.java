@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.universal.Adapter;
-import com.elikill58.ultimatehammer.universal.UltimateHammer;
 
 public abstract class UltimateToolType {
 	
@@ -21,10 +20,10 @@ public abstract class UltimateToolType {
 	}
 	
 	public List<UltimateTool> getTool(Player p) {
-		return UltimateHammer.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key)).collect(Collectors.toList());
+		return UltimateTool.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key)).collect(Collectors.toList());
 	}
 	
 	public List<UltimateTool> getToolForHand(Player p) {
-		return UltimateHammer.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key) && u.isItem(p.getItemInHand())).collect(Collectors.toList());
+		return UltimateTool.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key) && u.isItem(p.getItemInHand())).collect(Collectors.toList());
 	}
 }

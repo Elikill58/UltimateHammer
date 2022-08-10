@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS negativity_accounts
+CREATE TABLE IF NOT EXISTS ultimatehammer_accounts
 (
     id CHAR(36) NOT NULL PRIMARY KEY,
     playername VARCHAR(16),

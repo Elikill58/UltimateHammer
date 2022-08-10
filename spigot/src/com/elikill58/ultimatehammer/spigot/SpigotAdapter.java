@@ -2,13 +2,16 @@ package com.elikill58.ultimatehammer.spigot;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -23,6 +26,7 @@ import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
+import com.elikill58.ultimatehammer.api.plugin.ExternalPlugin;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotEntityManager;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotOfflinePlayer;
@@ -30,6 +34,7 @@ import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotPlayer;
 import com.elikill58.ultimatehammer.spigot.impl.inventory.SpigotInventory;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemBuilder;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemRegistrar;
+import com.elikill58.ultimatehammer.spigot.impl.plugin.SpigotExternalPlugin;
 import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 import com.elikill58.ultimatehammer.spigot.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -247,5 +252,21 @@ public class SpigotAdapter extends Adapter {
 		LeavesDecayEvent event = new LeavesDecayEvent((org.bukkit.block.Block) b.getDefault());
 		Bukkit.getPluginManager().callEvent(event);
 		return event.isCancelled();
+	}
+
+	@Override
+	public boolean hasPlugin(String id) {
+		return Bukkit.getPluginManager().getPlugin(id) != null;
+	}
+
+	@Override
+	public List<ExternalPlugin> getDependentPlugins() {
+		return Arrays.stream(Bukkit.getPluginManager().getPlugins())
+				.filter(plugin -> {
+					PluginDescriptionFile description = plugin.getDescription();
+					return description.getDepend().contains("Negativity") || description.getSoftDepend().contains("Negativity");
+				})
+				.map(SpigotExternalPlugin::new)
+				.collect(Collectors.toList());
 	}
 }

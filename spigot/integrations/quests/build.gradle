@@ -1,0 +1,29 @@
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+        name = 'UHv2-quests'
+    }
+}
+
+evaluationDependsOn(':spigot')
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources.srcDirs = ['resources']
+    }
+}
+
+repositories {
+    maven {
+        url = uri('https://repo.leonardobishop.com/releases/')
+    }
+}
+
+
+dependencies {
+    compileOnly 'com.leonardobishop:quests:3.12'
+    api(project(':spigot'))
+    compileOnly(project(path: ':spigot', configuration: 'spigot'))
+}

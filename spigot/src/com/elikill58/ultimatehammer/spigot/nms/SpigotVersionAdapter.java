@@ -46,28 +46,28 @@ public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 			case "v1_17_R1":
 				try {
 					return instance = (SpigotVersionAdapter) Class
-							.forName("com.elikill58.negativity.spigot17.Spigot_1_17_R1").getConstructor().newInstance();
+							.forName("com.elikill58.ultimatehammer.spigot.nms.Spigot_1_17_R1").getConstructor().newInstance();
 				} catch (ReflectiveOperationException e) {
 					throw new RuntimeException(e);
 				}
 			case "v1_18_R1":
 				try {
 					return instance = (SpigotVersionAdapter) Class
-							.forName("com.elikill58.negativity.spigot18.Spigot_1_18_R1").getConstructor().newInstance();
+							.forName("com.elikill58.ultimatehammer.spigot.nms.Spigot_1_18_R1").getConstructor().newInstance();
 				} catch (ReflectiveOperationException e) {
 					throw new RuntimeException(e);
 				}
 			case "v1_18_R2":
 				try {
 					return instance = (SpigotVersionAdapter) Class
-							.forName("com.elikill58.negativity.spigot18.Spigot_1_18_R2").getConstructor().newInstance();
+							.forName("com.elikill58.ultimatehammer.spigot.nms.Spigot_1_18_R2").getConstructor().newInstance();
 				} catch (ReflectiveOperationException e) {
 					throw new RuntimeException(e);
 				}
 			case "v1_19_R1":
 				try {
 					return instance = (SpigotVersionAdapter) Class
-							.forName("com.elikill58.negativity.spigot19.Spigot_1_19_R1").getConstructor().newInstance();
+							.forName("com.elikill58.ultimatehammer.spigot.nms.Spigot_1_19_R1").getConstructor().newInstance();
 				} catch (ReflectiveOperationException e) {
 					throw new RuntimeException(e);
 				}

@@ -1,5 +1,7 @@
 package com.elikill58.ultimatehammer.common;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,9 +15,42 @@ import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.Adapter;
+import com.elikill58.ultimatehammer.universal.UltimateHammer;
+import com.elikill58.ultimatehammer.universal.support.UsedActionManager;
+import com.elikill58.ultimatehammer.universal.support.UsedActionManagerProvider;
 
 public class UltimateTool {
 
+	private static final List<UsedActionManager> USED_ACTIONS = new ArrayList<>();
+	private static final HashMap<String, UltimateTool> ALL_TOOLS = new HashMap<>();
+	public static HashMap<String, UltimateTool> getAlltools() {
+		return ALL_TOOLS;
+	}
+	
+	public static void init() {
+		USED_ACTIONS.clear();
+		Adapter adapter = Adapter.getAdapter();
+		UltimateHammer.loadExtensions(UsedActionManagerProvider.class, provider -> {
+			UsedActionManager usedActions = provider.create(adapter);
+			if (usedActions != null) {
+				USED_ACTIONS.add(usedActions);
+				return true;
+			}
+			return false;
+		});
+		
+		ALL_TOOLS.clear();
+		int enabled = 0;
+		Configuration itemConfig = adapter.getConfig().getSection("items");
+		for(String key : itemConfig.getKeys()) {
+			UltimateTool tool = new UltimateTool(itemConfig.getSection(key), key);
+			if(tool.isEnabled())
+				enabled++;
+			ALL_TOOLS.put(key, tool);
+		}
+		adapter.getLogger().info("Loaded " + ALL_TOOLS.size() + " tools (" + enabled + " enabled).");
+	}
+	
 	private final String key;
 	private final Configuration section;
 	private List<String> types;

@@ -16,7 +16,7 @@ sourceSets {
 
 eclipse {
     project {
-        name = 'UltimateHammerV2-spigot18'
+        name = 'UHv2-spigot18'
     }
 }
 
@@ -46,6 +46,7 @@ configurations {
 
 dependencies {
     api parent
+    
     remapped 'org.spigotmc:spigot:1.18-R0.1-SNAPSHOT:remapped-mojang'
     obf 'org.spigotmc:spigot:1.18-R0.1-SNAPSHOT:remapped-obf'
 

@@ -1,8 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
-plugins {
-    id 'com.github.johnrengelman.shadow'
-}
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'eclipse'
 
 sourceSets {
     main {
@@ -19,6 +18,12 @@ repositories {
     maven {
         name 'spigot'
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+eclipse {
+    project {
+        name = 'UHv2-spigot'
     }
 }
 
@@ -54,7 +59,8 @@ shadowJar {
     archiveClassifier.set(null)
 
     mergeServiceFiles()
-    from(project(':common').tasks.shadowJar)
+    from(project(':common').tasks.shadowJar,
+            project('integrations:quests').jar.outputs.files)
 }
 
 build.dependsOn shadowJar
