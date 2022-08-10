@@ -165,9 +165,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
 					upperDirt.breakNaturally(inHand);
 					upperDirt.setType(plant.getNextItem());
-					//p.sendMessage("Block " + b.getType().getId() + " : " + needNewPlant + ", " + fromBreak + " > " + upperDirt.getType().getId() +" / " + value.getId() +" > " + plant.getNeededDataToGet() + " ! " + plant.getInventoryItem().getId());
-				} //else
-					//p.sendMessage("Block not used " + b.getType().getId() + " : " + needNewPlant + ", " + fromBreak + " > " + upperDirt.getType().getId() +" / " + value.getId() +" > " + plant.getNeededDataToGet() + " ! " + plant.getInventoryItem().getId() + " up data: " + upperDirt.getData());
+				}
 			}
 		}
 		int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 4));
@@ -189,7 +187,6 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		for(int slot = 0; slot < inv.getSize(); slot++) {
 			ItemStack item = inv.get(slot);
 			if(item != null && item.getType().equals(m)) {
-				//p.sendMessage("Removing item " + item.getType().name());
 				item.setAmount(item.getAmount() - 1);
 				if(item.getAmount() == 0)
 					inv.set(slot, null);
