@@ -1,7 +1,5 @@
 package com.elikill58.ultimatehammer.spigot.impl.entity;
 
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -21,10 +19,6 @@ public class SpigotEntityManager {
 		switch (bukkitEntity.getType()) {
 		case PLAYER:
 			return getPlayer((Player) bukkitEntity);
-		case IRON_GOLEM:
-			return new SpigotIronGolem((IronGolem) bukkitEntity);
-		case ARROW:
-			return new SpigotArrow((Arrow) bukkitEntity);
 		default:
 			return new SpigotEntity<>(bukkitEntity);
 		}

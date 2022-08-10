@@ -4,7 +4,7 @@ import static com.elikill58.ultimatehammer.spigot.utils.Utils.VERSION;
 
 import org.bukkit.entity.Player;
 
-import com.elikill58.ultimatehammer.api.packets.nms.VersionAdapter;
+import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 
 public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 	

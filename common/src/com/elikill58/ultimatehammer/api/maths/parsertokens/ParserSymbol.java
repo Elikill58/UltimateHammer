@@ -93,7 +93,6 @@ public final class ParserSymbol {
 	public static final String FRACTION							= "(" + INTEGER + "\\_)?" + INTEGER + "\\_" + INTEGER;
 	public static final String nameOnlyTokenRegExp				= "([a-zA-Z_])+([a-zA-Z0-9_])*";
 	public static final String unitOnlyTokenRegExp				= "\\[" + nameOnlyTokenRegExp + "\\]";
-	public static final String nameOnlyTokenOptBracketsRegExp	= "(" +  nameOnlyTokenRegExp + "|" + unitOnlyTokenRegExp + ")";
 	/*
 	 * ParserSymbol - token type id.
 	 */

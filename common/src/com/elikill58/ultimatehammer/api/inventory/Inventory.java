@@ -3,8 +3,6 @@ package com.elikill58.ultimatehammer.api.inventory;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
-import com.elikill58.ultimatehammer.api.colors.ChatColor;
-import com.elikill58.ultimatehammer.api.colors.DyeColor;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.item.ItemBuilder;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
@@ -119,24 +117,5 @@ public abstract class Inventory implements UltimateHammerObject {
 	
 	public static ItemStack getCloseItem(Player p) {
 		return ItemBuilder.Builder(Materials.BARRIER).displayName(Messages.getMessage(p, "inventory.close")).build();
-	}
-
-	public static final String NAME_CHECK_MENU = "Check", ADMIN_MENU = "Admin",
-			ADMIN_ALERT = Messages.getMessage("inventory.alerts.shower.manage"),
-			NAME_ACTIVED_CHEAT_MENU = Messages.getMessage("inventory.detection.name_inv"), NAME_FREEZE_MENU = "Freeze",
-			BAN_MANAGER_MENU = "Bans", BAN_PROCESSOR_MANAGER_MENU = "Bans processors", NAME_MOD_MENU = "Mod",
-			NAME_ALERT_MENU = "Alerts", CHEAT_MANAGER = "Cheat Manager", SPECIAL_MANAGER = "Special Manager", NAME_FORGE_MOD_MENU = "Mods";
-	public static final ItemStack EMPTY, EMPTY_RED;
-	public static final ItemStack DYE_GRAY, DYE_GREEN;
-
-	static {
-		EMPTY = createEmptyColoredItem(Materials.GRAY_STAINED_GLASS_PANE, DyeColor.GRAY);
-		EMPTY_RED = createEmptyColoredItem(Materials.RED_STAINED_GLASS_PANE, DyeColor.RED);
-		DYE_GRAY = createEmptyColoredItem(Materials.GRAY_DYE, DyeColor.GRAY);
-		DYE_GREEN = createEmptyColoredItem(Materials.LIME_DYE, DyeColor.LIME);
-	}
-
-	private static ItemStack createEmptyColoredItem(Material item, DyeColor color) {
-		return ItemBuilder.Builder(item).color(color).displayName(ChatColor.RESET + " - ").build();
 	}
 }

@@ -1155,30 +1155,4 @@ public final class MathFunctions {
 		double u = ulp(value);
 		return decimalDigitsBefore(u);
 	}
-
-	/**
-	 * Check whether double value is almost integer.
-	 * 
-	 * @param x
-	 *            Number
-	 * @return True if double value is almost integer, otherwise false.
-	 *         {@link BinaryRelations#DEFAULT_COMPARISON_EPSILON}
-	 *
-	 * @see BinaryRelations#DEFAULT_COMPARISON_EPSILON
-	 */
-	public static final boolean isInteger(double x) {
-		if (Double.isNaN(x))
-			return false;
-		if (x == Double.POSITIVE_INFINITY)
-			return false;
-		if (x == Double.NEGATIVE_INFINITY)
-			return false;
-		if (x < 0)
-			x = -x;
-		double round = Math.round(x);
-		if (Math.abs(x - round) < BinaryRelations.DEFAULT_COMPARISON_EPSILON)
-			return true;
-		else
-			return false;
-	}
 }

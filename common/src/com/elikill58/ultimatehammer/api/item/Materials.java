@@ -36,9 +36,6 @@ public class Materials {
     // DYE
     public static final Material GRAY_DYE = ItemRegistrar.getInstance().get("gray_dye", "ink_sack", "dye");
     public static final Material LIME_DYE = ItemRegistrar.getInstance().get("lime_dye", "ink_sack", "dye");
-
-    public static final Material LEAVES = ItemRegistrar.getInstance().get("leaves", "oak_leaves");
-    public static final Material LOG = ItemRegistrar.getInstance().get("log", "oak_log");
     
     /* END OF STAINED MATERIALS */
 }

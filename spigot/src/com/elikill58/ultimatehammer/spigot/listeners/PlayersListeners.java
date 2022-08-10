@@ -15,6 +15,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -161,5 +162,10 @@ public class PlayersListeners implements Listener {
 		PlayerToggleActionEvent toggleEvent = new PlayerToggleActionEvent(SpigotEntityManager.getPlayer(e.getPlayer()), ToggleAction.SPRINT, e.isCancelled());
 		EventManager.callEvent(toggleEvent);
 		e.setCancelled(toggleEvent.isCancelled()); // can do right now because the event take the cancellation of the bukkit event
+	}
+	
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent e) {
+		EventManager.callEvent(new com.elikill58.ultimatehammer.api.events.player.PlayerRespawnEvent(SpigotEntityManager.getPlayer(e.getPlayer()), SpigotLocation.toCommon(e.getRespawnLocation())));
 	}
 }

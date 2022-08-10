@@ -15,7 +15,7 @@ import com.elikill58.ultimatehammer.api.item.ItemBuilder;
 import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
-import com.elikill58.ultimatehammer.api.packets.nms.VersionAdapter;
+import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.logger.LoggerAdapter;
 import com.elikill58.ultimatehammer.universal.translation.TranslationProviderFactory;

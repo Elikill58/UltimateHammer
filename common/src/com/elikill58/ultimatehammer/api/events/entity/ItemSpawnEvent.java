@@ -11,9 +11,10 @@ public class ItemSpawnEvent implements Event, CancellableEvent {
 	private final Location loc;
 	private boolean cancel = false;
 	
-	public ItemSpawnEvent(ItemStack item, Location loc) {
+	public ItemSpawnEvent(ItemStack item, Location loc, boolean cancelled) {
 		this.loc = loc;
 		this.item = item;
+		this.cancel = cancelled;
 	}
 	
 	public ItemStack getItem() {
