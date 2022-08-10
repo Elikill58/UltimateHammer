@@ -4,17 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.block.data.Waterlogged;
-import org.bukkit.block.data.type.Leaves;
 
 import com.elikill58.ultimatehammer.api.block.Block;
-import com.elikill58.ultimatehammer.api.block.data.BlockData;
-import com.elikill58.ultimatehammer.api.block.data.EmptyData;
+import com.elikill58.ultimatehammer.api.block.BlockData;
 import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.api.location.World;
-import com.elikill58.ultimatehammer.spigot.impl.block.data.SpigotLeavesData;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotLocation;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotWorld;
@@ -91,12 +88,6 @@ public class SpigotBlock extends Block {
 		return block.getDrops((org.bukkit.inventory.ItemStack) item.getDefault()).stream().map(SpigotItemStack::new).collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public byte getData() {
-		return block.getData();
-	}
-
 	@Override
 	public Block getRelative(int x, int y, int z) {
 		return new SpigotBlock(block.getRelative(x, y, z));
@@ -104,8 +95,8 @@ public class SpigotBlock extends Block {
 
 	@Override
 	public BlockData getBlockData() {
-		if(block.getBlockData() instanceof Leaves)
-			return new SpigotLeavesData((Leaves) block.getBlockData());
-		return new EmptyData();
+		if(Version.getVersion().isNewerOrEquals(Version.V1_13))
+			return new SpigotBlockData(block);
+		return new SpigotBlockDataOld(block);
 	}
 }

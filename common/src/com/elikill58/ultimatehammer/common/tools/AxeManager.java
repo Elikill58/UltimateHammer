@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 import com.elikill58.ultimatehammer.api.GameMode;
 import com.elikill58.ultimatehammer.api.block.Block;
-import com.elikill58.ultimatehammer.api.block.data.LeavesData;
+import com.elikill58.ultimatehammer.api.block.BlockData;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.events.EventListener;
 import com.elikill58.ultimatehammer.api.events.Listeners;
@@ -215,15 +215,9 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			return;
 		if (layer.contains(newBlock))
 			return;// if the new block is on the next layer, but already processed, ignore
-		if (newBlock.getBlockData() instanceof LeavesData) {
-			LeavesData newLeaf = (LeavesData) newBlock.getBlockData();
-			if (newLeaf.isPersistent())
-				return;
-			if (block.getBlockData() instanceof LeavesData) {
-				if (newLeaf.getDistance() <= ((LeavesData) block.getBlockData()).getDistance())
-					return;
-			}
-		}
+		BlockData bd = newBlock.getBlockData();
+		if(bd.isLeavesPersistent() || bd.getLeavesDistance() <= block.getBlockData().getLeavesDistance())
+			return;
 		layer.add(newBlock);
 	}
 

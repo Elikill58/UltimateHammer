@@ -101,7 +101,7 @@ public class QuestsUsedAction implements UsedActionManager {
 		return false;
 	}*/
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	public boolean matchBlock(Task task, Block block) {
         Material material;
 
@@ -129,7 +129,7 @@ public class QuestsUsedAction implements UsedActionManager {
             material = Material.getMaterial(String.valueOf(split[0]));
             Material blockType = (Material) block.getType().getDefault();
 
-            short blockData = block.getData();
+            short blockData = ((org.bukkit.block.Block) block.getDefault()).getData();
 
             if (blockType == material) {
             	if (((split.length == 1 && configData == null) || ((int) blockData) == comparableData))
