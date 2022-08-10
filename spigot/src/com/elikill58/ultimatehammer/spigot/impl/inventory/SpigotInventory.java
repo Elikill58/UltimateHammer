@@ -15,23 +15,23 @@ public class SpigotInventory extends Inventory {
 
 	private final String inventoryName;
 	private final int size;
-	private final SpigotNegativityHolder holder;
+	private final SpigotHammerHolder holder;
 	private final org.bukkit.inventory.Inventory inv;
 	
 	public SpigotInventory(org.bukkit.inventory.Inventory inv) {
 		this.inventoryName = "";
 		this.size = inv.getSize();
-		if(inv.getHolder() instanceof SpigotNegativityHolder) {
-			this.holder = (SpigotNegativityHolder) inv.getHolder();
+		if(inv.getHolder() instanceof SpigotHammerHolder) {
+			this.holder = (SpigotHammerHolder) inv.getHolder();
 		} else
-			this.holder = (inv.getHolder() == null ? null : new SpigotNegativityHolder(new SpigotInventoryHolder(inv.getHolder())));
+			this.holder = (inv.getHolder() == null ? null : new SpigotHammerHolder(new SpigotInventoryHolder(inv.getHolder())));
 		this.inv = inv;
 	}
 	
 	public SpigotInventory(String inventoryName, int size, UltimateHammerHolder holder) {
 		this.inventoryName = inventoryName;
 		this.size = size;
-		this.holder = new SpigotNegativityHolder(holder);
+		this.holder = new SpigotHammerHolder(holder);
 		this.inv = Bukkit.createInventory(this.holder, size, inventoryName);
 	}
 	

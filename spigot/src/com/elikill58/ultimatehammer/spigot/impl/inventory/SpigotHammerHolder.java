@@ -5,11 +5,11 @@ import org.bukkit.inventory.InventoryHolder;
 
 import com.elikill58.ultimatehammer.api.inventory.PlatformHolder;
 
-public class SpigotNegativityHolder extends PlatformHolder implements InventoryHolder {
+public class SpigotHammerHolder extends PlatformHolder implements InventoryHolder {
 
 	private final PlatformHolder holder;
 	
-	public SpigotNegativityHolder(PlatformHolder holder) {
+	public SpigotHammerHolder(PlatformHolder holder) {
 		this.holder = holder;
 	}
 

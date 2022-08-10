@@ -19,8 +19,6 @@ import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 import com.elikill58.ultimatehammer.spigot.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Database;
-import com.elikill58.ultimatehammer.universal.Stats;
-import com.elikill58.ultimatehammer.universal.Stats.StatsType;
 import com.elikill58.ultimatehammer.universal.UltimateHammer;
 import com.elikill58.ultimatehammer.universal.Version;
 import com.elikill58.ultimatehammer.universal.dataStorage.UltimateHammerAccountStorage;
@@ -79,8 +77,6 @@ public class SpigotUltimateHammer extends JavaPlugin {
 		negativity.setExecutor(command);
 		negativity.setTabCompleter(command);
 		
-		Stats.sendStartupStats(Bukkit.getServer().getPort());
-		
 		UltimateHammerAccountStorage.setDefaultStorage("file");
 	}
 
@@ -88,7 +84,6 @@ public class SpigotUltimateHammer extends JavaPlugin {
 	public void onDisable() {
 		new Thread(() -> new ArrayList<>(UltimateHammerPlayer.getAllPlayers().keySet()).forEach(UltimateHammerPlayer::removeFromCache)).start();
 		Database.close();
-		Stats.updateStats(StatsType.ONLINE, 0 + "");
 	}
 
 	public static SpigotUltimateHammer getInstance() {
