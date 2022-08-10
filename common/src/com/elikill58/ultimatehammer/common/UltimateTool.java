@@ -107,7 +107,13 @@ public class UltimateTool {
 		return Adapter.getAdapter().getVersionAdapter().hasNbtTag(inHand, key);
 	}
 
-	public void used(Player p, String string, Block b) {}
+	public boolean usedBreak(Player p, Block b) {
+		for(UsedActionManager u : USED_ACTIONS) {
+			if(u.usedBreak(this, p, b))
+				return true;
+		}
+		return false;
+	}
 	
 	public int getHoeSize() {
 		return hoeSize;

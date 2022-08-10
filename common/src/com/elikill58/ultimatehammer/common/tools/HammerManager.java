@@ -75,12 +75,14 @@ public class HammerManager extends UltimateToolType implements Listeners {
 						boolean notAllowed = Adapter.getAdapter().callBreakEvent(b, p);
 						if(notAllowed)
 							continue;
-						b.breakNaturally(inHand);
-			            if(next > inHand.getType().getMaxDurability()) {
-			            	p.setItemInHand(null);
-			            	return;
-			            }
-			            next++;
+						if(!tool.usedBreak(p, b)) {
+							b.breakNaturally(inHand);
+				            if(next > inHand.getType().getMaxDurability()) {
+				            	p.setItemInHand(null);
+				            	return;
+				            }
+				            next++;
+						}
 					}
 				}
 			}

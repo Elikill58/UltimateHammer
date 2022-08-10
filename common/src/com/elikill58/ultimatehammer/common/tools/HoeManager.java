@@ -159,12 +159,13 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				}
 				Material value = plant.getNextItem();
 				if ((value.equals(upperDirt.getType()) && (plant.getNeededDataToGet() == -1 || plant.getNeededDataToGet() == upperDirt.getData())) || (needNewPlant && !fromBreak && upperDirt.getType().equals(Materials.AIR))) {
-					tool.used(p, "BREAK", b);
-					count++;
-					boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
-					LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
-					upperDirt.breakNaturally(inHand);
-					upperDirt.setType(plant.getNextItem());
+					if(!tool.usedBreak(p, b)) {
+						count++;
+						boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
+						LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
+						upperDirt.breakNaturally(inHand);
+						upperDirt.setType(plant.getNextItem());
+					}
 				}
 			}
 		}

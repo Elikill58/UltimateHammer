@@ -17,6 +17,7 @@ import com.elikill58.ultimatehammer.api.events.block.BlockBreakEvent;
 import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
+import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
 import com.elikill58.ultimatehammer.common.tools.axe.DetectedTree;
 import com.elikill58.ultimatehammer.common.tools.axe.Tree;
@@ -37,12 +38,12 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			Block b = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
-			if (!fellTree(b, p, p.getItemInHand()))
+			if (!fellTree(tool, b, p, p.getItemInHand()))
 				e.setCancelled(true);
 		});
 	}
 
-	public static boolean fellTree(Block block, Player player, ItemStack axe) {
+	public static boolean fellTree(UltimateTool tool, Block block, Player player, ItemStack axe) {
 		boolean unbreakable = axe.isUnbreakable();
 		DetectedTree detectedTree = detectTree(block, player, axe, (testTree) -> {
 			int durability = axe.getType().getMaxDurability() - axe.getDurability();
@@ -98,9 +99,11 @@ public class AxeManager extends UltimateToolType implements Listeners {
 				if (total <= 0)
 					break;
 				for (Block leaf : toList(getBlocks(detectedTree.tree.leaves, b, 6, detectedTree.tree.diagonalLeave))) {
-					leaf.breakNaturally(axe);
+					if(!tool.usedBreak(player, leaf))
+						leaf.breakNaturally(axe);
 				}
-				b.breakNaturally(axe);
+				if(!tool.usedBreak(player, b))
+					b.breakNaturally(axe);
 				total--;
 			}
 		}
