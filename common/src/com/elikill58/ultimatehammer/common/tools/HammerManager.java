@@ -8,7 +8,6 @@ import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.events.EventListener;
 import com.elikill58.ultimatehammer.api.events.Listeners;
 import com.elikill58.ultimatehammer.api.events.block.BlockBreakEvent;
-import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
@@ -62,7 +61,6 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				z1--;
 				z2++;
 			}
-			int bonusLevel = inHand.hasEnchant(Enchantment.LUCK) ? inHand.getEnchantLevel(Enchantment.LUCK) : 1;
 	        int next = inHand.getDurability();
 			World w = loc.getWorld();
 			for (int x = x1; x <= x2; x++) {
@@ -77,9 +75,6 @@ public class HammerManager extends UltimateToolType implements Listeners {
 						boolean notAllowed = Adapter.getAdapter().callBreakEvent(b, p);
 						if(notAllowed)
 							continue;
-						int xp = Adapter.getAdapter().getVersionAdapter().getXpToDrop(b, bonusLevel, inHand);
-						if (xp > 0)
-							w.spawnExperienceOrb(b.getLocation(), xp);
 						b.breakNaturally(inHand);
 			            if(next > inHand.getType().getMaxDurability()) {
 			            	p.setItemInHand(null);

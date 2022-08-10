@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.universal.Adapter;
 
@@ -21,7 +20,9 @@ public abstract class VersionAdapter<R> {
 		return version;
 	}
 	
-	public abstract int getXpToDrop(Block b, int bonusLevel, ItemStack item);
+	public abstract ItemStack addNbtTag(ItemStack item, String tagVal);
+
+	public abstract boolean hasNbtTag(ItemStack item, String searchedVal);
 
 	protected <T> T get(Object obj, Class<?> clazz, String name) {
 		try {

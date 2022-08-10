@@ -1,33 +1,45 @@
 package com.elikill58.negativity.spigot17;
 
-import org.bukkit.craftbukkit.v1_17_R1.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 
-import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
+import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
-import com.elikill58.ultimatehammer.spigot.utils.PacketUtils;
 
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 
 public class Spigot_1_17_R1 extends SpigotVersionAdapter {
 
 	public Spigot_1_17_R1() {
 		super("v1_17_R1");
 	}
-	
+
 	@Override
-	public int getXpToDrop(Block b, int bonusLevel, ItemStack item) {
-		CraftBlock obcBlock = (CraftBlock) b.getDefault();
-		BlockState blockData = obcBlock.getNMS();
-		return blockData.getBlock().getExpDrop(blockData, obcBlock.getCraftWorld().getHandle(), obcBlock.getPosition(), CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item.getDefault()));
+	public ItemStack addNbtTag(ItemStack item, String tagVal) {
+		net.minecraft.world.item.ItemStack nmsItem = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item.getDefault());
+		CompoundTag comp = nmsItem.getTag();
+		if(comp == null)
+			return null;
+		ListTag list = comp.getList(NBT_TAG_KEY, 10);
+		list.add(StringTag.valueOf(tagVal));
+		comp.put(NBT_TAG_KEY, list);
+		nmsItem.setTag(comp);
+		return new SpigotItemStack(CraftItemStack.asBukkitCopy(nmsItem));
 	}
-	
+
 	@Override
-	public void sendPacket(Player p, Object packet) {
-		((ServerPlayer) PacketUtils.getEntityPlayer(p)).connection.send((Packet<?>) packet);
+	public boolean hasNbtTag(ItemStack item, String searchedVal) {
+		net.minecraft.world.item.ItemStack nmsItem = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item.getDefault());
+		CompoundTag comp = nmsItem.getTag();
+		if(comp == null)
+			return false;
+		ListTag list = comp.getList(NBT_TAG_KEY, 10);
+		for(Tag st : list)
+			if(st.getAsString().equalsIgnoreCase(searchedVal))
+				return true;
+		return false;
 	}
 }

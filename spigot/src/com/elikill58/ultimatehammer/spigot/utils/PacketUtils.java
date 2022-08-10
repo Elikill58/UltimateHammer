@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 import com.elikill58.ultimatehammer.universal.Version;
 
 public class PacketUtils {
@@ -17,18 +16,14 @@ public class PacketUtils {
 			.split(",")[3];
 	public static final String NMS_PREFIX, OBC;
 
-	public static Class<?> CRAFT_PLAYER_CLASS, CRAFT_SERVER_CLASS, CRAFT_ENTITY_CLASS;
+	public static final Class<?> CRAFT_PLAYER_CLASS, CRAFT_SERVER_CLASS, CRAFT_ENTITY_CLASS;
 	
 	static {
 		OBC = "org.bukkit.craftbukkit." + VERSION + ".";
 		NMS_PREFIX = Version.getVersion(VERSION).isNewerOrEquals(Version.V1_17) ? "net.minecraft." : "net.minecraft.server." + VERSION + ".";
-		try {
-			CRAFT_PLAYER_CLASS = Class.forName("org.bukkit.craftbukkit." + VERSION + ".entity.CraftPlayer");
-			CRAFT_ENTITY_CLASS = Class.forName("org.bukkit.craftbukkit." + VERSION + ".entity.CraftEntity");
-			CRAFT_SERVER_CLASS = Class.forName("org.bukkit.craftbukkit." + VERSION + ".CraftServer");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		CRAFT_PLAYER_CLASS = PacketUtils.getObcClass("entity.CraftPlayer");
+		CRAFT_ENTITY_CLASS = PacketUtils.getObcClass("entity.CraftEntity");
+		CRAFT_SERVER_CLASS = PacketUtils.getObcClass("CraftServer");
 	}
 	
 	/**
@@ -184,22 +179,6 @@ public class PacketUtils {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	/**
-	 * Create and send a packet (with only one parameter)
-	 * 
-	 * @param p the player which will receive the packet
-	 * @param packetName the name of the packet that will be created and sent
-	 * @param type the constructor type of parameter
-	 * @param data the data associated with parameter type
-	 */
-	public static void sendPacket(Player p, String packetName, Class<?> type, Object data) {
-		try {
-			SpigotVersionAdapter.getVersionAdapter().sendPacket(p, getNmsClass(packetName, "network.protocol.game.").getConstructor(type).newInstance(data));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
