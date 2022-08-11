@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Utils {
 
 	public static String coloredMessage(String msg) {
-		return ChatColor.translateAlternateColorCodes('§', msg);
+		return ChatColor.translateAlternateColorCodes('&', msg);
 	}
 	
 	@SuppressWarnings("unchecked")
