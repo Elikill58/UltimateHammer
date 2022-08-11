@@ -172,6 +172,7 @@ public class HoeManager extends UltimateTool implements Listener {
 				if ((value == upperDirt.getType()
 						&& (plant.getNeededDataToGet() == -1 || HoeStateChecker.hasReachAge(upperDirt, plant.getNeededDataToGet())))
 						|| (needNewPlant && keepEmpty && upperDirt.getType() == Material.AIR)) {
+					count++;
 					boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
 					LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
 					upperDirt.breakNaturally(inHand);
