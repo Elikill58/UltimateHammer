@@ -180,10 +180,12 @@ public class HoeManager extends UltimateTool implements Listener {
 				}
 			}
 		}
-		int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 1));
-		if (counterDamage == 0)
-			counterDamage = 1;
-		ItemUtils.damage(tool, p, inHand, slot, counterDamage);
+		if(count > 0) {
+			int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 1));
+			if (counterDamage == 0)
+				counterDamage = 1;
+			ItemUtils.damage(tool, p, inHand, slot, counterDamage);
+		}
 		return count;
 	}
 
