@@ -1,6 +1,10 @@
 package com.elikill58.ultimatehammer.common.tools;
 
+import java.util.Arrays;
+
 import com.elikill58.ultimatehammer.api.block.Block;
+import com.elikill58.ultimatehammer.api.block.BlockData;
+import com.elikill58.ultimatehammer.api.block.BlockFace;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.events.EventListener;
 import com.elikill58.ultimatehammer.api.events.Listeners;
@@ -9,6 +13,7 @@ import com.elikill58.ultimatehammer.api.events.entity.ItemSpawnEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerInteractEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerInteractEvent.Action;
 import com.elikill58.ultimatehammer.api.inventory.PlayerInventory;
+import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
@@ -16,7 +21,6 @@ import com.elikill58.ultimatehammer.api.location.World;
 import com.elikill58.ultimatehammer.api.utils.ItemUtils;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
-import com.elikill58.ultimatehammer.common.tools.hoe.HoeStateChecker;
 import com.elikill58.ultimatehammer.common.tools.hoe.Plantable;
 import com.elikill58.ultimatehammer.common.tools.hoe.Plantable.PlantableType;
 import com.elikill58.ultimatehammer.common.tools.hoe.pickup.LocationActions;
@@ -45,17 +49,21 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		type.addPlantage(new Plantable(invItem, nextItem, neededDataToGet));
 	}
 
+	private Block getGoodBlockForPlant(Block b) {
+		return Arrays.asList(Materials.DIRT, Materials.GRASS, Materials.SOIL, Materials.SOUL_SAND).contains(b.getType()) ? b.getRelative(BlockFace.UP) : b;
+	}
+	
 	@EventListener
 	public void onInteract(PlayerInteractEvent e) {
 		if (e.getBlock() == null || e.getAction().equals(Action.PHYSICAL))
 			return;
 		Player p = e.getPlayer();
-		getToolForHand(p).forEach((tool) -> {
-			Block b = e.getBlock();
+		getToolForHand(p).ifPresent((tool) -> {
+			Block b = getGoodBlockForPlant(e.getBlock());
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
 			e.setCancelled(true);
-			manageAllPlant(p, b, tool, e.getAction().name().contains("RIGHT"), false);
+			managePlants(p, b, tool, e.getAction().name().contains("RIGHT"));
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
 		});
 	}
@@ -63,12 +71,13 @@ public class HoeManager extends UltimateToolType implements Listeners {
 	@EventListener
 	public void onBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
-		getToolForHand(p).forEach((tool) -> {
-			Block b = e.getBlock();
+		getToolForHand(p).ifPresent((tool) -> {
+			Block b = getGoodBlockForPlant(e.getBlock());
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
 			e.setCancelled(true);
-			manageAllPlant(p, b, tool, true, true);
+			p.sendMessage("Run when break");
+			managePlants(p, b, tool, true);
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
 		});
 	}
@@ -80,94 +89,89 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		}
 	}
 
-	public static int manageAllPlant(Player p, Block baseBlock, UltimateTool tool, boolean keepEmpty,
-			boolean fromBreak) {
-		Material m = baseBlock.getType();
-		if (m == Materials.AIR) {
-			baseBlock = baseBlock.getLocation().sub(0, 1, 0).getBlock();
-			m = baseBlock.getType();
-		}
-		PlantableType plantableType = PlantableType.getPlantageType(m);
+	public void managePlants(Player p, Block baseBlock, UltimateTool tool, boolean keepEmpty) {
+		Block baseDirt = baseBlock.getRelative(BlockFace.DOWN);
+		PlantableType plantableType = PlantableType.getPlantageType(baseDirt.getType());
 		if (plantableType == null) {
-			plantableType = PlantableType.getPlantageType(baseBlock.getLocation().sub(0, 1, 0).getBlock().getType());
-			if (plantableType == null)
-				return 0;
+			Adapter.getAdapter().debug("Can't find valid plantable type for " + baseDirt.getType().getId());
+			return;
 		}
 		ItemStack inHand = p.getItemInHand();
 		int slot = p.getInventory().getHeldItemSlot();
 		World w = baseBlock.getWorld();
-		int count = 0;
-		int amount = 1;
+		int count = 0, size = (tool.getHoeSize() - 1) / 2;
 		int x = baseBlock.getX(), y = baseBlock.getY(), z = baseBlock.getZ();
-		for (int xx = (x - amount); xx <= (x + amount); xx++) {
-			for (int zz = (z - amount); zz <= (z + amount); zz++) {
-				Block b = w.getBlockAt(xx, y, zz);
-				if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
+		Adapter.getAdapter().debug("Bases: " + size + " > " + x + ", " + y + ", " + z);
+		for (int xx = (x - size); xx <= (x + size); xx++) {
+			for (int zz = (z - size); zz <= (z + size); zz++) {
+				Block checking = w.getBlockAt(xx, y, zz); // get new block
+				if (WorldRegionBypass.cannotBuild(p, tool, checking.getLocation())) // not allowed to build
 					continue;
-				Material blockMaterial = b.getType();
-				if (blockMaterial.getId().contains("WATER"))
-					continue;
-				if (!plantableType.getMaterial().contains(blockMaterial)) {
-					Adapter.getAdapter().debug("Wrong type: " + blockMaterial.getId());
-					continue;
-				}
-				Block dirt = plantableType.getMaterial().contains(blockMaterial) ? b : w.getBlockAt(xx, y - 1, zz);
-				if (dirt.getType().getId().contains("WATER"))
+				Block dirt = checking.getRelative(BlockFace.DOWN); // get dirt below
+				if (!plantableType.getMaterial().contains(dirt.getType())) // near to invalid block (sand, gravel etc)
 					continue;
 				if (dirt.getType().equals(Materials.GRASS) || dirt.getType().equals(Materials.DIRT)) {
+					// not soil but set it to
+					if (!checking.getType().isTransparent()) // don't change type when upper it's not like grass
+						continue;
 					dirt.setType(Materials.SOIL);
 					count++;
 					Block up = dirt.getLocation().add(0, 1, 0).getBlock();
-					if (up.getType().getId().contains("GRASS"))
+					if (up.getType().isTransparent()) // upper is not full block
 						up.setType(Materials.AIR);
 					continue;
-				} else if (dirt.getType().equals(Materials.SOIL) && !HoeStateChecker.hasHumidity(dirt)) {
-					Adapter.getAdapter().debug("Not enough humidity: " + dirt.getBlockData().getHumidity()  + " , " + dirt.getBlockData().getMaximumHumidity());
+				} else if (dirt.getType().equals(Materials.SOIL)
+						&& dirt.getBlockData().getHumidity() != dirt.getBlockData().getMaximumHumidity()) {
+					Adapter.getAdapter().debug("Not enough humidity: " + dirt.getBlockData().getHumidity() + " , "
+							+ dirt.getBlockData().getMaximumHumidity());
 					continue;
 				}
-				Block upperDirt = dirt.getLocation().add(0, 1, 0).getBlock();
-				boolean needNewPlant = upperDirt.getType().equals(Materials.AIR);
-				Plantable plant = PlantableType.getPlantage(blockMaterial);
+				Material checkingMaterial = checking.getType();
+				boolean needNewPlant = checkingMaterial.equals(Materials.AIR);
+				Plantable plant = PlantableType.getPlantage(checkingMaterial);
 				if (plant == null) {
 					for (ItemStack temp : p.getInventory().getContents()) {
 						if (temp != null) {
 							plant = plantableType.getPlantageHasInventoryItem(temp.getType());
-							if (plant != null && (needNewPlant || plant.getNextItem() == upperDirt.getType()))
+							if (plant != null && (needNewPlant || plant.getNextItem() == checking.getType()))
 								break;
 						}
 					}
 				}
 				if (plant == null) {
-					plant = PlantableType.getPlantage(upperDirt.getType());
+					plant = PlantableType.getPlantage(checking.getType());
 					if (plant == null)
 						continue;
 				}
-				if (plant.getNextItem() != upperDirt.getType()) {
-					Plantable pl = PlantableType.getPlantage(upperDirt.getType());
+				if (plant.getNextItem() != checking.getType()) {
+					Plantable pl = PlantableType.getPlantage(checking.getType());
 					if (pl != null)
 						plant = pl;
 				}
+				BlockData data = checking.getBlockData();
 				Material value = plant.getNextItem();
-				if ((value == upperDirt.getType() && HoeStateChecker.hasReachAge(upperDirt, plant.getNeededDataToGet()))
-						|| (needNewPlant && keepEmpty && upperDirt.getType().equals(Materials.AIR))) {
-					if (!tool.usedBreak(p, b)) {
+				if ((value.equals(checking.getType()) && data
+						.getAge() == (data.getMaximumAge() == -1 ? plant.getNeededDataToGet() : data.getMaximumAge()))
+						|| (needNewPlant && keepEmpty && checking.getType().equals(Materials.AIR))) {
+					if (!tool.usedBreak(p, checking)) {
 						count++;
 						boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
-						LocationActions.add(upperDirt.getLocation(), p, !isRemoved);
-						upperDirt.breakNaturally(inHand);
-						upperDirt.setType(plant.getNextItem());
-					} else
-						Adapter.getAdapter().debug("no break: " + dirt.getType().getId());
+						LocationActions.add(checking.getLocation(), p, !isRemoved);
+						checking.breakNaturally(inHand);
+						checking.setType(plant.getNextItem());
+					}
 				}
 			}
 		}
-		if (count > 0) {
+		if (count > 0 && !inHand.isUnbreakable()) {
+			count /= (inHand.getEnchantLevel(Enchantment.DURABILITY) + 1);
+			if (count < 1)
+				count = 1;
 			int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 1));
 			if (counterDamage == 0)
 				counterDamage = 1;
 			ItemUtils.damage(tool, p, inHand, slot, counterDamage);
 		}
-		return count;
 	}
 
 	/**

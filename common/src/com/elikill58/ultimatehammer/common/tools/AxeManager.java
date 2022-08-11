@@ -35,7 +35,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 		if (e.isCancelled())
 			return;
 		Player p = e.getPlayer();
-		getToolForHand(p).forEach(tool -> {
+		getToolForHand(p).ifPresent(tool -> {
 			Block b = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;

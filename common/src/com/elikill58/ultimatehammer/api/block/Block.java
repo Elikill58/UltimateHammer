@@ -20,7 +20,7 @@ public abstract class Block implements UltimateHammerObject {
 	public abstract int getZ();
 
 	public Block getRelative(BlockFace blockFace) {
-		return getRelative(blockFace.getModX(), blockFace.getModY(), blockFace.getModY());
+		return getRelative(blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
 	}
 	public abstract Block getRelative(int x, int y, int z);
 

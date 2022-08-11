@@ -1,6 +1,8 @@
 package com.elikill58.ultimatehammer.common;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.elikill58.ultimatehammer.api.entity.Player;
@@ -23,7 +25,10 @@ public abstract class UltimateToolType {
 		return UltimateTool.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key)).collect(Collectors.toList());
 	}
 	
-	public List<UltimateTool> getToolForHand(Player p) {
-		return UltimateTool.getAlltools().values().stream().filter(UltimateTool::isEnabled).filter((u) -> u.getTypes().contains(key) && u.isItem(p.getItemInHand())).collect(Collectors.toList());
+	public Optional<UltimateTool> getToolForHand(Player p) {
+		for(UltimateTool allTool : new ArrayList<>(UltimateTool.getAlltools().values()))
+			if(allTool.getTypes().contains(key) && allTool.isItem(p.getItemInHand()))
+				return Optional.of(allTool);
+		return Optional.empty();
 	}
 }

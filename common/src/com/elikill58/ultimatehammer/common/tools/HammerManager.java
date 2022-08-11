@@ -28,7 +28,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 		if (e.isCancelled())
 			return;
 		Player p = e.getPlayer();
-		getToolForHand(p).forEach((tool) -> {
+		getToolForHand(p).ifPresent((tool) -> {
 			ItemStack inHand = p.getItemInHand();
 			Block baseBlock = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, baseBlock.getLocation()))
