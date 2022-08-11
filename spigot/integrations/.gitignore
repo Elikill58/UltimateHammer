@@ -2,6 +2,7 @@
 
 !/.gitignore
 
+!/aureliumskills
 !/quests
 
 # Keep src, resources and build.gradle in all dirs included above

@@ -1,0 +1,27 @@
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+        name = 'UHv2-aureliumskills'
+    }
+}
+
+evaluationDependsOn(':spigot')
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources.srcDirs = ['resources']
+    }
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+
+dependencies {
+    compileOnly 'com.github.Archy-X:AureliumSkills:Beta1.3.7'
+    api(project(':spigot'))
+    compileOnly(project(path: ':spigot', configuration: 'spigot'))
+}
