@@ -3,18 +3,28 @@ package com.elikill58.ultimatehammer.spigot.support;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.elikill58.ultimatehammer.api.block.Block;
+import com.elikill58.ultimatehammer.api.entity.Player;
+import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.PluginDependentExtension;
 import com.elikill58.ultimatehammer.universal.support.UsedActionManager;
 import com.elikill58.ultimatehammer.universal.support.UsedActionManagerProvider;
+import com.leonardobishop.quests.bukkit.BukkitQuestsPlugin;
+import com.leonardobishop.quests.bukkit.util.TaskUtils;
+import com.leonardobishop.quests.common.player.QPlayer;
+import com.leonardobishop.quests.common.player.questprogressfile.QuestProgress;
+import com.leonardobishop.quests.common.player.questprogressfile.TaskProgress;
+import com.leonardobishop.quests.common.quest.Quest;
 import com.leonardobishop.quests.common.quest.Task;
+import com.leonardobishop.quests.common.tasktype.TaskType;
 
 public class QuestsUsedAction implements UsedActionManager {
 
-	/*@Override
+	@Override
 	public boolean usedBreak(UltimateTool tool, Player p, Block b) {
 		BukkitQuestsPlugin q = (BukkitQuestsPlugin) Bukkit.getPluginManager().getPlugin("Quests");
 		QPlayer qPlayer = q.getPlayerManager().getPlayer(p.getUniqueId());
@@ -99,7 +109,7 @@ public class QuestsUsedAction implements UsedActionManager {
 			}
         }
 		return false;
-	}*/
+	}
 
     @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	public boolean matchBlock(Task task, Block block) {
