@@ -10,13 +10,6 @@ sourceSets {
     }
 }
 
-repositories {
-    maven {
-        name 'sonatype'
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
-}
-
 eclipse {
     project {
         name = 'UHv2-spigot'
@@ -80,15 +73,6 @@ task prepareServer(type: Copy) {
 
 subprojects {
     repositories {
-        mavenLocal {
-            metadataSources {
-                mavenPom()
-                artifact()
-            }
-            content {
-                includeGroup('org.spigotmc')
-            }
-        }
 		maven {
 		    url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
 		

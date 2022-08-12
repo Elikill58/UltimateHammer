@@ -43,10 +43,10 @@ subprojects {
 	        name 'spigotmc nexus'
 		    url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
 		}
-        maven {
-            name 'Sonatype'
-            url 'https://oss.sonatype.org/content/groups/public/'
-        }
+	    maven {
+	        name 'sonatype'
+	        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+	    }
         maven {
             name 'eliapp'
             url 'https://repo.eliapp.fr:8081/repository/internal/'
