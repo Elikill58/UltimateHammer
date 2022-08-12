@@ -39,6 +39,10 @@ subprojects {
             name 'codemc'
             url 'https://repo.codemc.org/repository/maven-public/'
         }
+		maven {
+	        name 'spigotmc nexus'
+		    url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+		}
         maven {
             name 'Sonatype'
             url 'https://oss.sonatype.org/content/groups/public/'
