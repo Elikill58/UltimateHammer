@@ -2,6 +2,7 @@ package com.elikill58.ultimatehammer.universal.support;
 
 import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.Player;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 
 public interface UsedActionManager {
@@ -14,8 +15,7 @@ public interface UsedActionManager {
 	 * @param b the breaked block (before breaking)
 	 * @return true if should cancel
 	 */
-	default boolean usedBreak(UltimateTool tool, Player p, Block b) {
+	default boolean usedBreak(UltimateTool tool, Player p, ItemStack item, Block b) {
 		return false;
 	}
-	
 }

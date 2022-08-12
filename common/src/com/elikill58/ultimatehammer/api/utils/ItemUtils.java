@@ -21,7 +21,7 @@ public class ItemUtils {
 			return;
 		short dam = 0;
 		for(int i = 0; i < amount; i++) {
-			boolean shouldDamage = !inHand.hasEnchant(Enchantment.DURABILITY) || Math.random() < 1.0 / (inHand.getEnchantLevel(Enchantment.DURABILITY) + 1);
+			boolean shouldDamage = !inHand.hasEnchant(Enchantment.UNBREAKING) || Math.random() < 1.0 / (inHand.getEnchantLevel(Enchantment.UNBREAKING) + 1);
 			if (shouldDamage) {
 				dam++;
 			}

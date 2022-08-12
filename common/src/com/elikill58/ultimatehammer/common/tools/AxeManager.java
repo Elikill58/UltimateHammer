@@ -53,7 +53,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			if (unbreakable)
 				durabilityCost = 0;
 			else {
-				durabilityCost /= (axe.getEnchantLevel(Enchantment.DURABILITY) + 1);
+				durabilityCost /= (axe.getEnchantLevel(Enchantment.UNBREAKING) + 1);
 				if (durabilityCost < 1)
 					durabilityCost++;
 			}
@@ -71,7 +71,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 		if (unbreakable)
 			durabilityCost = 0;
 		else {
-			durabilityCost /= (axe.getEnchantLevel(Enchantment.DURABILITY) + 1);
+			durabilityCost /= (axe.getEnchantLevel(Enchantment.UNBREAKING) + 1);
 			if (durabilityCost < 1)
 				durabilityCost++;
 			if (axe.getType().getMaxDurability() == 0)

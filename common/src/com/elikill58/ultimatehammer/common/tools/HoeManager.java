@@ -164,7 +164,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 			}
 		}
 		if (count > 0 && !inHand.isUnbreakable()) {
-			count /= (inHand.getEnchantLevel(Enchantment.DURABILITY) + 1);
+			count /= (inHand.getEnchantLevel(Enchantment.UNBREAKING) + 1);
 			if (count < 1)
 				count = 1;
 			int counterDamage = (int) (count / tool.getConfigSection().getDouble("dura-reduction", 1));
