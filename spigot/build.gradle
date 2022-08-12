@@ -61,7 +61,8 @@ shadowJar {
     mergeServiceFiles()
     from(project(':common').tasks.shadowJar,
             project('integrations:quests').jar.outputs.files,
-            project('integrations:aureliumskills').jar.outputs.files)
+            project('integrations:aureliumskills').jar.outputs.files,
+            project('integrations:slimefun').jar.outputs.files)
 }
 
 build.dependsOn shadowJar

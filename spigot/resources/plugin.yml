@@ -4,7 +4,7 @@ version: 2.0
 author: Elikill58
 api-version: 1.13
 
-softdepend: [WorldGuard, Factions, Quests, AureliumSkills]
+softdepend: [WorldGuard, Factions, Quests, AureliumSkills, Slimefun]
 
 commands:
   ultimatehammer:

@@ -1,0 +1,29 @@
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+        name = 'UHv2-smilefun'
+    }
+}
+
+evaluationDependsOn(':spigot')
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources.srcDirs = ['resources']
+    }
+}
+
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+
+dependencies {
+    compileOnly 'com.github.Slimefun:Slimefun4:RC-32'
+    api(project(':spigot'))
+    compileOnly(project(path: ':spigot', configuration: 'spigot'))
+}
