@@ -105,7 +105,7 @@ public class UltimateTool {
 
 	public boolean usedBreak(Player p, Block b) {
 		for(UsedActionManager u : USED_ACTIONS) {
-			if(u.usedBreak(this, p, b))
+			if(u.usedBreak(this, p, p.getItemInHand(), b))
 				return true;
 		}
 		return false;

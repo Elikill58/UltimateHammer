@@ -3,6 +3,7 @@ package com.elikill58.ultimatehammer.spigot.support;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import com.archyx.aureliumskills.api.AureliumAPI;
+import com.archyx.aureliumskills.skills.foraging.ForagingLeveler;
 import com.archyx.aureliumskills.skills.foraging.ForagingSource;
 import com.archyx.aureliumskills.skills.mining.MiningLeveler;
 import com.archyx.aureliumskills.skills.mining.MiningSource;
@@ -30,7 +31,7 @@ public class AureliumSkillsUsedAction implements UsedActionManager {
 		}
 		for(ForagingSource source : ForagingSource.values()) {
 			if(source.isMatch(b)) {
-				new MiningLeveler(AureliumAPI.getPlugin()).onBlockBreak(event);
+				new ForagingLeveler(AureliumAPI.getPlugin()).onBlockBreak(event);
 				return event.isCancelled();
 			}
 		}

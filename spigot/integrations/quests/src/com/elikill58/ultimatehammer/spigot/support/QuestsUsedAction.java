@@ -8,6 +8,7 @@ import org.bukkit.Material;
 
 import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.Player;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.PluginDependentExtension;
@@ -25,7 +26,7 @@ import com.leonardobishop.quests.common.tasktype.TaskType;
 public class QuestsUsedAction implements UsedActionManager {
 
 	@Override
-	public boolean usedBreak(UltimateTool tool, Player p, Block b) {
+	public boolean usedBreak(UltimateTool tool, Player p, ItemStack item, Block b) {
 		BukkitQuestsPlugin q = (BukkitQuestsPlugin) Bukkit.getPluginManager().getPlugin("Quests");
 		QPlayer qPlayer = q.getPlayerManager().getPlayer(p.getUniqueId());
 		
