@@ -23,6 +23,7 @@ repositories {
 
 
 dependencies {
+	compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     compileOnly 'com.github.Slimefun:Slimefun4:RC-32'
     api(project(':spigot'))
     compileOnly(project(path: ':spigot', configuration: 'spigot'))

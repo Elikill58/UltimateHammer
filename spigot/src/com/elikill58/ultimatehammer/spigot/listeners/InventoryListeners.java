@@ -63,8 +63,9 @@ public class InventoryListeners implements Listener {
 			return InventoryAction.NUMBER;
 		case UNKNOWN:
 			return InventoryAction.UNKNOWN;
+		default:
+			return InventoryAction.UNKNOWN;
 		}
-		return InventoryAction.UNKNOWN;
 	}
 	
 	@EventHandler
