@@ -25,10 +25,6 @@ repositories {
         name 'sonatype'
         url 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
-    maven {
-        name 'spigot'
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
 }
 
 eclipse {
@@ -47,7 +43,7 @@ configurations {
 dependencies {
     api project(':common')
 
-	compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+	spigot compileOnly('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
 }
 
 processResources {
@@ -103,6 +99,20 @@ subprojects {
                 includeGroup('org.spigotmc')
             }
         }
+		maven {
+		    url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+		
+		    // As of Gradle 5.1, you can limit this to only those
+		    // dependencies you expect from it
+		    content {
+		        includeGroup 'org.bukkit'
+		        includeGroup 'org.spigotmc'
+		    }
+		}
+	    maven {
+	        name 'sonatype'
+	        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+	    }
     }
     java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 }

@@ -16,12 +16,13 @@ sourceSets {
 }
 
 repositories {
-    maven { url 'https://repo.leonardobishop.com/releases/' }
+    maven {
+    	url 'https://repo.leonardobishop.com/releases/'
+    }
 }
 
 
 dependencies {
-	compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     compileOnly 'com.leonardobishop:quests:3.12'
     api(project(':spigot'))
     compileOnly(project(path: ':spigot', configuration: 'spigot'))
