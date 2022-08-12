@@ -85,7 +85,16 @@ public class SpigotItemStack extends ItemStack {
 
 	@Override
 	public boolean isUnbreakable() {
-		return item.getItemMeta().isUnbreakable();
+		try {
+			if(!Version.getVersion().isNewerOrEquals(Version.V1_13)) {
+		    	Object toUnbreakable = ItemMeta.class.getDeclaredMethod("spigot").invoke(item.getItemMeta());
+		    	return (boolean) ItemMeta.class.getDeclaredClasses()[0].getDeclaredMethod("isUnbreakable").invoke(toUnbreakable);
+			}
+			return item.getItemMeta().isUnbreakable();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	@Override

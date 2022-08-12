@@ -17,8 +17,9 @@ public class Materials {
     public static final Material CARROT = ItemRegistrar.getInstance().get("carrot");
     public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot_item", "carrots");
     
-    public static final Material BEETROOTS = ItemRegistrar.getInstance().get("beetroots");
-    public static final Material BEETROOT_SEEDS = ItemRegistrar.getInstance().get("beetroot_seeds");
+    // set carrot to prevent some missing logs
+    public static final Material BEETROOTS = ItemRegistrar.getInstance().get("beetroots", "carrot");
+    public static final Material BEETROOT_SEEDS = ItemRegistrar.getInstance().get("beetroot_seeds", "carrot_item");
     
     public static final Material POTATO = ItemRegistrar.getInstance().get("potato");
     public static final Material POTATO_ITEM = ItemRegistrar.getInstance().get("potato_item", "potatoes");

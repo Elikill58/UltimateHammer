@@ -8,7 +8,11 @@ import org.bukkit.entity.Entity;
 import com.elikill58.ultimatehammer.universal.Version;
 
 public class PacketUtils {
-
+	
+	/**
+	 * This Map is to reduce Reflection action which take more ressources than just RAM action
+	 */
+	private static final HashMap<String, Class<?>> ALL_CLASS = new HashMap<>();
 	private static final String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",")
 			.split(",")[3];
 	public static final String NMS_PREFIX, OBC;
@@ -21,11 +25,6 @@ public class PacketUtils {
 		CRAFT_PLAYER_CLASS = PacketUtils.getObcClass("entity.CraftPlayer");
 		CRAFT_ENTITY_CLASS = PacketUtils.getObcClass("entity.CraftEntity");
 	}
-	
-	/**
-	 * This Map is to reduce Reflection action which take more ressources than just RAM action
-	 */
-	private static final HashMap<String, Class<?>> ALL_CLASS = new HashMap<>();
 	
 	/**
 	 * Get the Class in NMS, with a processing reducer

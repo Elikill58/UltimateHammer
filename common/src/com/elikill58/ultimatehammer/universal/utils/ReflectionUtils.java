@@ -1,6 +1,7 @@
 package com.elikill58.ultimatehammer.universal.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class ReflectionUtils {
 	
@@ -48,6 +49,23 @@ public class ReflectionUtils {
 	public static Object callMethod(Object source, String method) {
 		try {
 			return source.getClass().getDeclaredMethod(method).invoke(source);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Get the mode
+	 * 
+	 * @param source the object where we want to run the method
+	 * @param method the name of the method to call
+	 * @param params all class of param method
+	 * @return the method or null
+	 */
+	public static Method getMethod(Class<?> source, String method, Class<?>... params) {
+		try {
+			return source.getDeclaredMethod(method, params);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
