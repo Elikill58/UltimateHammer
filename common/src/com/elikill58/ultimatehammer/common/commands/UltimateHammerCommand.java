@@ -18,7 +18,9 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 	@Override
 	public boolean onCommand(CommandSender sender, String[] arg, String prefix) {
 		if(arg.length == 0 || arg[0].equalsIgnoreCase("help")) {
-			Messages.sendMessageList(sender, "help");
+			if(Perm.hasPerm(sender, "ultimatehammer.reload"))
+				Messages.sendMessage(sender, "help.reload");
+			Messages.sendMessage(sender, "help.general");
 		} else if(arg[0].equalsIgnoreCase("reload") && Perm.hasPerm(sender, "ultimatehammer.reload")) {
 			UltimateHammer.loadUltimateHammer();
 			Messages.sendMessage(sender, "well_reloaded");
@@ -31,13 +33,13 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 					return false;
 				}
 				if(sender instanceof Player && !tool.hasPermission((Player) sender)) {
-					Messages.sendMessage(sender, "no_perm");
+					Messages.sendMessage(sender, "not_permission");
 					return false;
 				}
 				if(arg.length > 1) {
 					Player cible = Adapter.getAdapter().getPlayer(arg[1]);
 					if(cible == null)
-						Messages.sendMessage(sender, "no_player", "%arg%", arg[1]);
+						Messages.sendMessage(sender, "not_player", "%arg%", arg[1]);
 					else {
 						tool.addItem(cible);
 						tool.sendMessage(cible);
@@ -61,9 +63,11 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 		List<String> list = new ArrayList<>();
 		if(arg.length == 1) {
 			UltimateTool.getAlltools().forEach((key, tool) -> {
-				if((prefix.isEmpty() || key.startsWith(prefix)) && tool.isEnabled())
+				if((prefix.isEmpty() || key.startsWith(prefix)) && tool.isEnabled() && tool.hasPermission((Player) sender))
 					list.add(key);
 			});
+			if(prefix.isEmpty() || "reload".startsWith(prefix))
+				list.add("reload");
 		} else {
 			for(Player p : Adapter.getAdapter().getOnlinePlayers())
 				if(prefix.isEmpty() || p.getName().toLowerCase().startsWith(prefix))

@@ -1,6 +1,5 @@
 package com.elikill58.ultimatehammer.universal;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,29 +76,6 @@ public class TranslatedMessages {
 			return UltimateHammerAccount.get(playerId).getLang();
 		}
 		return DEFAULT_LANG;
-	}
-
-	public static List<String> getStringListFromLang(String lang, String key, Object... placeholders) {
-		TranslationProvider provider = getProviderFor(lang);
-		if (provider != null) {
-			List<String> messageList = provider.getList(key, placeholders);
-			if (messageList != null && !messageList.isEmpty()) {
-				return messageList;
-			}
-		}
-
-		if (!lang.equals(DEFAULT_LANG)) {
-			return getStringListFromLang(DEFAULT_LANG, key, placeholders);
-		}
-
-		if (fallbackTranslationProvider != null) {
-			List<String> fallbackMessageList = fallbackTranslationProvider.getList(key, placeholders);
-			if (fallbackMessageList != null && !fallbackMessageList.isEmpty()) {
-				return fallbackMessageList;
-			}
-		}
-
-		return Collections.singletonList(key);
 	}
 
 	public static String getStringFromLang(String lang, String key, Object... placeholders) {

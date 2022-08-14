@@ -1,8 +1,5 @@
 package com.elikill58.ultimatehammer.universal.translation;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -30,30 +27,7 @@ public interface TranslationProvider {
 		}
 		return applyPlaceholders(rawMessage, placeholders);
 	}
-
-	/**
-	 * Returns a message of one or more lines.
-	 * @param key the key of the requested message
-	 */
-	@Nullable
-	List<String> getList(String key);
-
-	/**
-	 * Returns a message of one or more lines.
-	 * @param key the key of the requested message
-	 * @param placeholders the placeholders to use in this message
-	 */
-	@Nullable
-	default List<String> getList(String key, Object... placeholders) {
-		List<String> rawLines = getList(key);
-		if (rawLines == null || placeholders.length == 0) {
-			return rawLines;
-		}
-		return rawLines.stream()
-				.map(line -> applyPlaceholders(line, placeholders))
-				.collect(Collectors.toList());
-	}
-
+	
 	/**
 	 * Applied placeholders to the given raw message.
 	 * @param raw the raw message to process

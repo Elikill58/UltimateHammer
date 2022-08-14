@@ -1,9 +1,7 @@
 package com.elikill58.ultimatehammer.universal.translation;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -15,7 +13,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class CachingTranslationProvider implements TranslationProvider {
 
 	private final Map<String, String> cachedMessages = new HashMap<>();
-	private final Map<String, List<String>> cachedMessageLists = new HashMap<>();
 
 	private final TranslationProvider backingProvider;
 
@@ -40,33 +37,6 @@ public final class CachingTranslationProvider implements TranslationProvider {
 			return null;
 		}
 		return applyPlaceholders(rawMessage, placeholders);
-	}
-
-	@Nullable
-	@Override
-	public List<String> getList(String key) {
-		return cachedMessageLists.computeIfAbsent(key, msgKey -> {
-			List<String> messageList = backingProvider.getList(msgKey);
-			if (messageList == null || messageList.isEmpty()) {
-				return null;
-			}
-			return messageList;
-		});
-	}
-
-	@Nullable
-	@Override
-	public List<String> getList(String key, Object... placeholders) {
-		if (placeholders.length == 0) {
-			return getList(key);
-		}
-		List<String> rawMessages = getList(key);
-		if (rawMessages == null) {
-			return null;
-		}
-		return rawMessages.stream()
-				.map(raw -> applyPlaceholders(raw, placeholders))
-				.collect(Collectors.toList());
 	}
 
 	@Override
