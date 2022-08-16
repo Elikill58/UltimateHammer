@@ -2,6 +2,8 @@ package com.elikill58.ultimatehammer.api.item;
 
 import java.util.List;
 
+import org.bukkit.inventory.ItemFlag;
+
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -74,6 +76,15 @@ public abstract class ItemStack implements UltimateHammerObject {
 		}
 		if(sec.contains("custom_model_data"))
 			builder.setCustomModelData(sec.getInt("custom_model_data"));
+		if(sec.contains("flags")) {
+			for(String flag : sec.getStringList("flags")) {
+				try {
+					builder.itemFlag(ItemFlag.valueOf(flag));
+				} catch (Exception e) {
+					Adapter.getAdapter().getLogger().warn("Failed to find item flag " + flag + ".");
+				}
+			}
+		}
 		builder.amount(sec.getInt("amount", 1));
 		builder.unbreakable(sec.getBoolean("unbreakable", false));
 		if(sec.contains("enchant")) {
