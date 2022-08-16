@@ -19,6 +19,8 @@ public class SpigotItemRegistrar extends ItemRegistrar {
 	}
 	
 	private org.bukkit.Material getMaterial(String id, String... alias){
+		if(id.equalsIgnoreCase("MOB_SPAWNER") && alias.length == 0)
+			alias = new String[] { "SPAWNER" };
 		Material idM = get(id);
 		if(idM != null)
 			return idM;

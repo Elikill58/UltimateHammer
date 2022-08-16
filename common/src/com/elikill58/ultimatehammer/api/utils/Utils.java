@@ -26,7 +26,13 @@ public class Utils {
 	}
 
 	public static String coloredMessage(String msg) {
-		return msg == null ? null : ChatColor.translateAlternateColorCodes('&', msg);
+		if(msg == null)
+			return null;
+		msg = ChatColor.translateAlternateColorCodes('&', msg);
+		if(msg.contains("&x§")) {
+			msg = msg.replace("&x§", "§x§");
+		}
+		return msg;
 	}
 
 	public static List<String> coloredMessage(String... messages) {

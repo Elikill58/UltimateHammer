@@ -4,6 +4,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.elikill58.ultimatehammer.api.colors.ChatColor;
@@ -16,13 +22,6 @@ import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Version;
-
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 @SuppressWarnings("deprecation")
 public class SpigotItemBuilder extends ItemBuilder {

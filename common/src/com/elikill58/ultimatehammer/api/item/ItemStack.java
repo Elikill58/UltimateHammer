@@ -2,8 +2,6 @@ package com.elikill58.ultimatehammer.api.item;
 
 import java.util.List;
 
-import org.bukkit.inventory.ItemFlag;
-
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.Adapter;
