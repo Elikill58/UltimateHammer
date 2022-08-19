@@ -21,7 +21,7 @@ public class SpigotGlobalVersion extends SpigotVersionAdapter {
 		Version v = Version.getVersion();
 		if (v.isNewerOrEquals(Version.V1_18)) {
 			setString = ReflectionUtils.getMethod(nbtTabClass, "a", String.class, String.class);
-			getString = ReflectionUtils.getMethod(nbtTabClass, "a", String.class);
+			getString = ReflectionUtils.getMethod(nbtTabClass, "l", String.class);
 			hasKey = ReflectionUtils.getMethod(nbtTabClass, "e", String.class);
 			getTag = ReflectionUtils.getMethod(nmsItemStackClass,
 					v.equals(Version.V1_19) ? "u" : (version.equals("v1_18_R2") ? "t" : "s"));

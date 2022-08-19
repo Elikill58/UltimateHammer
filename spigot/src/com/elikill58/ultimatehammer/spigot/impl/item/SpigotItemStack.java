@@ -101,11 +101,7 @@ public class SpigotItemStack extends ItemStack {
 	public void setCustomModelData(int data) {
 		if(Version.getVersion().isNewerOrEquals(Version.V1_14)) {
 			ItemMeta meta = item.getItemMeta();
-			try {
-				meta.getClass().getDeclaredMethod("setCustomModelData", int.class).invoke(meta, data);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			meta.setCustomModelData(data);
 			item.setItemMeta(meta);
 		}
 	}

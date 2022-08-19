@@ -168,11 +168,7 @@ public class SpigotItemBuilder extends ItemBuilder {
     @Override
     public ItemBuilder setCustomModelData(int data) {
 		if(Version.getVersion().isNewerOrEquals(Version.V1_14)) {
-			try {
-				itemMeta.getClass().getDeclaredMethod("setCustomModelData", int.class).invoke(itemMeta, data);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			itemMeta.setCustomModelData(data);
 		}
 		return this;
     }
