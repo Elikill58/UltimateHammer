@@ -122,8 +122,6 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					continue;
 				} else if (dirt.getType().equals(Materials.SOIL)
 						&& dirt.getBlockData().getHumidity() != dirt.getBlockData().getMaximumHumidity()) {
-					Adapter.getAdapter().debug("Not enough humidity: " + dirt.getBlockData().getHumidity() + " , "
-							+ dirt.getBlockData().getMaximumHumidity());
 					continue;
 				}
 				Material checkingMaterial = checking.getType();
