@@ -18,7 +18,7 @@ public class SlimefunUsedAction implements UsedActionManager {
 
 	@Override
 	public boolean usedBreak(UltimateTool tool, Player p, ItemStack item, Block b) {
-		BlockBreakEvent event = new BlockBreakEvent((org.bukkit.block.Block) b, (org.bukkit.entity.Player) p);
+		BlockBreakEvent event = new BlockBreakEvent((org.bukkit.block.Block) b.getDefault(), (org.bukkit.entity.Player) p.getDefault());
 		Slimefun.getRegistry().getAllSlimefunItems().forEach(sf -> Talisman.trigger(event, sf));
 		return event.isCancelled();
 	}
