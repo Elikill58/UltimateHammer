@@ -1,0 +1,41 @@
+name: "Bug report"
+description: "Report a bug from UltimateHammer's plugin"
+title: "Bug: "
+labels: ["bug"]
+assignees:
+- Elikill58
+body:
+- type: markdown
+  attributes:
+    value: "Use this template if you have a feature that is not working as expected with UltimateHammer."
+- type: dropdown
+  id: platform
+  attributes:
+    label: "Which platform are you using ?"
+    multiple: true
+    options:
+    - Spigot
+    - Paper
+    - Other
+- type: textarea
+  id: versions
+  attributes:
+    label: "Versions of UltimateHammer and of the server"
+    description: "Show output result of `/version UltimateHammer` command"
+    value: "My version is: "
+  validations:
+    required: true
+- type: textarea
+  id: reproduce-step
+  attributes:
+    label: "Step to reproduce"
+    description: "Explain all step to reproduce, with some element that can be particular to your setup and help us to fix it"
+    placeholder: "To reproduce, I do ... then ..."
+  validations:
+    required: true
+- type: textarea
+  id: error-logs
+  attributes:
+    label: "Errors / Logs"
+    description: "If applicable, add logs of error (copy/paste on pastebin/hastebin)"
+    placeholder: "Here is my link to error:"
