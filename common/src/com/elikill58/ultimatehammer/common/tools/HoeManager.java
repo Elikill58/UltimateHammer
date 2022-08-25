@@ -37,11 +37,17 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		super(KEY);
 		add(PlantableType.BASIC, Materials.SEEDS, Materials.CROPS, (byte) 7);
 
-		add(PlantableType.BASIC, Materials.POTATO_ITEM, Materials.POTATO, (byte) 7);
-		add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
+		Version v = Version.getVersion();
+		if(v.isNewerOrEquals(Version.V1_18)) {
+			add(PlantableType.BASIC, Materials.POTATO, Materials.POTATOES, (byte) 7);
+			add(PlantableType.BASIC, Materials.CARROT, Materials.CARROTS, (byte) 7);
+		} else {
+			add(PlantableType.BASIC, Materials.POTATO_ITEM, Materials.POTATO, (byte) 7);
+			add(PlantableType.BASIC, Materials.CARROT_ITEM, Materials.CARROT, (byte) 7);
+		}
 
 		add(PlantableType.NETHER, Materials.NETHER_WART_ITEM, Materials.NETHER_WART, (byte) 3);
-		if (Version.getVersion().isNewerOrEquals(Version.V1_9))
+		if (v.isNewerOrEquals(Version.V1_9))
 			add(PlantableType.BASIC, Materials.BEETROOT_SEEDS, Materials.BEETROOTS, (byte) 7);
 	}
 
