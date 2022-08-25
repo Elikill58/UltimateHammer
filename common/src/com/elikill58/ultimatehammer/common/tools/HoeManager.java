@@ -157,6 +157,11 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				if ((value.equals(checking.getType()) && data
 						.getAge() == (data.getMaximumAge() == -1 ? plant.getNeededDataToGet() : data.getMaximumAge()))
 						|| (needNewPlant && keepEmpty && checking.getType().equals(Materials.AIR))) {
+					if (WorldRegionBypass.cannotBuild(p, tool, checking.getLocation()))
+						continue;
+					boolean notAllowed = Adapter.getAdapter().callBreakEvent(checking, p);
+					if(notAllowed)
+						continue;
 					if (!tool.usedBreak(p, checking)) {
 						count++;
 						boolean isRemoved = tryToRemoveFirstItem(p, plant.getInventoryItem());
