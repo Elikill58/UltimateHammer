@@ -14,15 +14,15 @@ public class Materials {
 	public static final Material SEEDS = ItemRegistrar.getInstance().get("seeds", "wheat_seeds");
     public static final Material CROPS = ItemRegistrar.getInstance().get("crops", "wheat");
     
-    public static final Material CARROT = ItemRegistrar.getInstance().get("carrot");
-    public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot_item", "carrots");
+    public static final Material CARROT = ItemRegistrar.getInstance().get("carrot_item", "carrots");
+    public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot");
     
     // set carrot to prevent some missing logs
     public static final Material BEETROOTS = ItemRegistrar.getInstance().get("beetroots", "carrot");
     public static final Material BEETROOT_SEEDS = ItemRegistrar.getInstance().get("beetroot_seeds", "carrot_item");
     
-    public static final Material POTATO = ItemRegistrar.getInstance().get("potato");
-    public static final Material POTATO_ITEM = ItemRegistrar.getInstance().get("potato_item", "potatoes");
+    public static final Material POTATO = ItemRegistrar.getInstance().get("potato_item", "potatoes");
+    public static final Material POTATO_ITEM = ItemRegistrar.getInstance().get("potato");
     
     public static final Material NETHER_WART = ItemRegistrar.getInstance().get("nether_warts", "nether_wart");
     public static final Material NETHER_WART_ITEM = ItemRegistrar.getInstance().get("nether_stalk", "nether_wart");
