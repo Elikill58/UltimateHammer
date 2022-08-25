@@ -12,6 +12,7 @@ public interface UsedActionManager {
 	 * 
 	 * @param tool the tool used for cancel
 	 * @param p the player which break
+	 * @param item the item used to break block
 	 * @param b the breaked block (before breaking)
 	 * @return true if should cancel
 	 */
