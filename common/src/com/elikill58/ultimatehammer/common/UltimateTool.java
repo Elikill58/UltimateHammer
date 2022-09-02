@@ -54,7 +54,7 @@ public class UltimateTool {
 	private final Configuration section;
 	private List<String> types;
 	private String message, permission;
-	private boolean isEnabled = false;
+	private boolean isEnabled = false, renameble = true;
 	private ItemStack item, defaultItem;
 	// hammer config
 	private final List<Material> blacklistHammer;
@@ -64,7 +64,8 @@ public class UltimateTool {
 	public UltimateTool(Configuration section, String key) {
 		this.key = key;
 		this.section = section;
-		this.isEnabled = section.getBoolean("enable");
+		this.isEnabled = section.getBoolean("enable", false);
+		this.renameble = section.getBoolean("renameble", true);
 		this.message = Utils.coloredMessage(section.getString("message", ""));
 		this.permission = section.getString("permission");
 		this.types = section.getStringList("type");
@@ -87,6 +88,15 @@ public class UltimateTool {
 
 	public boolean isEnabled() {
 		return isEnabled;
+	}
+	
+	/**
+	 * Check if can rename this item
+	 * 
+	 * @return true if can rename
+	 */
+	public boolean isRenameble() {
+		return renameble;
 	}
 	
 	public Configuration getConfigSection() {
