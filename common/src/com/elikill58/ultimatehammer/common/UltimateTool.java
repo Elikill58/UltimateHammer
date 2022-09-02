@@ -11,6 +11,7 @@ import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
+import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 import com.elikill58.ultimatehammer.api.utils.Utils;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -20,6 +21,8 @@ import com.elikill58.ultimatehammer.universal.support.UsedActionManagerProvider;
 
 public class UltimateTool {
 
+	public static final String NBT_TAG_KEY = "ultimatehammer-v2";
+	
 	private static final List<UsedActionManager> USED_ACTIONS = new ArrayList<>();
 	private static final HashMap<String, UltimateTool> ALL_TOOLS = new HashMap<>();
 	public static HashMap<String, UltimateTool> getAlltools() {
@@ -76,7 +79,10 @@ public class UltimateTool {
 		this.hoeSize = section.getInt("hoe.size", 3);
 		
 		if(isEnabled) {
-			ItemStack basicItem = Adapter.getAdapter().getVersionAdapter().setNbtTag(ItemStack.getItem(section), key);
+			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();
+			ItemStack basicItem = va.setNbtTag(ItemStack.getItem(section), NBT_TAG_KEY, key);
+			if(!isRenameble())
+				basicItem = va.setNbtTag(basicItem, "RepairCost", 100); // 100 more than 40 -> "too expensive"
 			this.item = basicItem;
 			this.defaultItem = basicItem.clone();
 		}
@@ -110,7 +116,7 @@ public class UltimateTool {
 	public boolean isItem(ItemStack inHand) {
 		if(inHand == null || inHand.getType().getId().contains("AIR"))
 			return false;
-		return Adapter.getAdapter().getVersionAdapter().hasNbtTag(inHand, key);
+		return Adapter.getAdapter().getVersionAdapter().hasNbtTag(inHand, NBT_TAG_KEY, key);
 	}
 
 	public boolean usedBreak(Player p, Block b) {

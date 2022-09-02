@@ -19,9 +19,11 @@ public abstract class VersionAdapter<R> {
 		return version;
 	}
 	
-	public abstract ItemStack setNbtTag(ItemStack item, String val);
+	public abstract ItemStack setNbtTag(ItemStack item, String key, String val);
+	
+	public abstract ItemStack setNbtTag(ItemStack item, String key, int val);
 
-	public abstract boolean hasNbtTag(ItemStack item, String val);
+	public abstract boolean hasNbtTag(ItemStack item, String key, String val);
 
 	protected <T> T get(Class<?> clazz, Object obj, String name) {
 		try {
