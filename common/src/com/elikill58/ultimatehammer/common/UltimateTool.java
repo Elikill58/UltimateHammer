@@ -57,7 +57,7 @@ public class UltimateTool {
 	private final Configuration section;
 	private List<String> types;
 	private String message, permission;
-	private boolean isEnabled = false, renameble = true;
+	private boolean isEnabled = false, renamable = true;
 	private ItemStack item, defaultItem;
 	// hammer config
 	private final List<Material> blacklistHammer;
@@ -68,7 +68,7 @@ public class UltimateTool {
 		this.key = key;
 		this.section = section;
 		this.isEnabled = section.getBoolean("enable", false);
-		this.renameble = section.getBoolean("renameble", true);
+		this.renamable = section.getBoolean("renamable", true);
 		this.message = Utils.coloredMessage(section.getString("message", ""));
 		this.permission = section.getString("permission");
 		this.types = section.getStringList("type");
@@ -81,7 +81,7 @@ public class UltimateTool {
 		if(isEnabled) {
 			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();
 			ItemStack basicItem = va.setNbtTag(ItemStack.getItem(section), NBT_TAG_KEY, key);
-			if(!isRenameble())
+			if(!isRenamable())
 				basicItem = va.setNbtTag(basicItem, "RepairCost", 100); // 100 more than 40 -> "too expensive"
 			this.item = basicItem;
 			this.defaultItem = basicItem.clone();
@@ -101,8 +101,8 @@ public class UltimateTool {
 	 * 
 	 * @return true if can rename
 	 */
-	public boolean isRenameble() {
-		return renameble;
+	public boolean isRenamable() {
+		return renamable;
 	}
 	
 	public Configuration getConfigSection() {

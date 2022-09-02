@@ -10,7 +10,7 @@ public class InventoryFeature implements Listeners {
 
 	@EventListener
 	public void onPrepareEvent(PrepareAnvilEvent e) {
-		if(UltimateTool.getAlltools().values().stream().filter(u -> !u.isRenameble() && u.isItem(e.getResult())).count() > 0)
+		if(UltimateTool.getAlltools().values().stream().filter(u -> !u.isRenamable() && u.isItem(e.getResult())).count() > 0)
 			e.setResult(ItemBuilder.Builder(Materials.AIR).build());
 	}
 }

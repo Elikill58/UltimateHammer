@@ -12,9 +12,11 @@ public class Listener9Upper implements Listener {
 	
 	@EventHandler
 	public void onAnvil(org.bukkit.event.inventory.PrepareAnvilEvent e) {
+		if(e.getResult() == null)
+			return;
 		PrepareAnvilEvent event = new PrepareAnvilEvent(new SpigotInventory(e.getInventory()), new SpigotItemStack(e.getResult()));
 		EventManager.callEvent(event);
-		e.setResult((org.bukkit.inventory.ItemStack) event.getResult().getDefault());
+		e.setResult(event.getResult() == null ? null : (org.bukkit.inventory.ItemStack) event.getResult().getDefault());
 	}
 
 }
