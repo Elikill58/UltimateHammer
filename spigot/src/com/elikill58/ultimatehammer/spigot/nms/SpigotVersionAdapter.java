@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
 
 public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
-	
-	protected static final String NBT_TAG_KEY = "ultimatehammer-v2";
 
 	public SpigotVersionAdapter(String version) {
 		super(version);

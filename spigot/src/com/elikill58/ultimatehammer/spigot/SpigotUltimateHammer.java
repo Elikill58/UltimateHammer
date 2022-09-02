@@ -13,6 +13,8 @@ import com.elikill58.ultimatehammer.spigot.listeners.CommandsListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.EntityListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.InventoryListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.PlayersListeners;
+import com.elikill58.ultimatehammer.spigot.listeners.version.Listener8Lower;
+import com.elikill58.ultimatehammer.spigot.listeners.version.Listener9Upper;
 import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
 import com.elikill58.ultimatehammer.spigot.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Adapter;
@@ -67,6 +69,11 @@ public class SpigotUltimateHammer extends JavaPlugin {
 		pm.registerEvents(new BlockListeners(), this);
 		pm.registerEvents(new EntityListeners(), this);
 		pm.registerEvents(new CommandsListeners(), this);
+		if(v.isNewerOrEquals(Version.V1_9))
+			pm.registerEvents(new Listener9Upper(), this);
+		else
+			pm.registerEvents(new Listener8Lower(), this);
+			
 
 		CommandsListeners command = new CommandsListeners();
 		PluginCommand negativity = getCommand("ultimatehammer");
