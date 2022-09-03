@@ -1,21 +1,27 @@
-package com.elikill58.ultimatehammer.api.events.others;
+package com.elikill58.ultimatehammer.api.events.inventory;
 
 import com.elikill58.ultimatehammer.api.events.Event;
 import com.elikill58.ultimatehammer.api.inventory.Inventory;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 
-public class PrepareAnvilEvent implements Event {
+public class PrepareItemCraftEvent implements Event {
 
-	private final Inventory inventory;
+	private final Inventory inv;
+	private final ItemStack[] matrix;
 	private ItemStack result;
 	
-	public PrepareAnvilEvent(Inventory inv, ItemStack result) {
-		this.inventory = inv;
+	public PrepareItemCraftEvent(Inventory inv, ItemStack[] matrix, ItemStack result) {
+		this.inv = inv;
+		this.matrix = matrix;
 		this.result = result;
 	}
 	
 	public Inventory getInventory() {
-		return inventory;
+		return inv;
+	}
+	
+	public ItemStack[] getMatrix() {
+		return matrix;
 	}
 	
 	public ItemStack getResult() {

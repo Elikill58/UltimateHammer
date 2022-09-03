@@ -3,6 +3,7 @@ package com.elikill58.ultimatehammer.common;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.elikill58.ultimatehammer.api.block.Block;
@@ -27,6 +28,14 @@ public class UltimateTool {
 	private static final HashMap<String, UltimateTool> ALL_TOOLS = new HashMap<>();
 	public static HashMap<String, UltimateTool> getAlltools() {
 		return ALL_TOOLS;
+	}
+	public static Optional<UltimateTool> getTool(ItemStack item) {
+		for(UltimateTool tool : new ArrayList<>(ALL_TOOLS.values())) {
+			if(tool.isItem(item)) {
+				return Optional.of(tool);
+			}
+		}
+		return Optional.empty();
 	}
 	
 	public static void init() {
@@ -57,7 +66,7 @@ public class UltimateTool {
 	private final Configuration section;
 	private List<String> types;
 	private String message, permission;
-	private boolean isEnabled = false, renamable = true;
+	private boolean isEnabled = false, renamable = true, craftable = false;
 	private ItemStack item, defaultItem;
 	// hammer config
 	private final List<Material> blacklistHammer;
@@ -69,6 +78,7 @@ public class UltimateTool {
 		this.section = section;
 		this.isEnabled = section.getBoolean("enable", false);
 		this.renamable = section.getBoolean("renamable", true);
+		this.craftable = section.getBoolean("craftable", false);
 		this.message = Utils.coloredMessage(section.getString("message", ""));
 		this.permission = section.getString("permission");
 		this.types = section.getStringList("type");
@@ -103,6 +113,10 @@ public class UltimateTool {
 	 */
 	public boolean isRenamable() {
 		return renamable;
+	}
+	
+	public boolean isCraftable() {
+		return craftable;
 	}
 	
 	public Configuration getConfigSection() {

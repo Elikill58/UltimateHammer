@@ -66,7 +66,7 @@ public class UltimateHammerCommand implements CommandListeners, TabListeners {
 				if((prefix.isEmpty() || key.startsWith(prefix)) && tool.isEnabled() && tool.hasPermission((Player) sender))
 					list.add(key);
 			});
-			if(prefix.isEmpty() || "reload".startsWith(prefix))
+			if((prefix.isEmpty() || "reload".startsWith(prefix)) && Perm.hasPerm(sender, "ultimatehammer.reload"))
 				list.add("reload");
 		} else {
 			for(Player p : Adapter.getAdapter().getOnlinePlayers())
