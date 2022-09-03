@@ -120,6 +120,9 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					// not soil but set it to
 					if (!checking.getType().isTransparent()) // don't change type when upper it's not like grass
 						continue;
+					boolean notAllowed = Adapter.getAdapter().callBreakEvent(checking, p);
+					if(notAllowed)
+						continue;
 					dirt.setType(Materials.SOIL);
 					count++;
 					Block up = dirt.getLocation().add(0, 1, 0).getBlock();
@@ -157,8 +160,6 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				if ((value.equals(checking.getType()) && data
 						.getAge() == (data.getMaximumAge() == -1 ? plant.getNeededDataToGet() : data.getMaximumAge()))
 						|| (needNewPlant && keepEmpty && checking.getType().equals(Materials.AIR))) {
-					if (WorldRegionBypass.cannotBuild(p, tool, checking.getLocation()))
-						continue;
 					boolean notAllowed = Adapter.getAdapter().callBreakEvent(checking, p);
 					if(notAllowed)
 						continue;
