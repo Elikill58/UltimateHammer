@@ -9,7 +9,6 @@ import com.elikill58.ultimatehammer.api.events.inventory.PrepareItemCraftEvent;
 import com.elikill58.ultimatehammer.api.item.ItemBuilder;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Materials;
-import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Messages;
 
 public class InventoryFeature implements Listeners {
@@ -34,10 +33,8 @@ public class InventoryFeature implements Listeners {
 			Optional<UltimateTool> tool = UltimateTool.getTool(all);
 			if(tool.isPresent() && !tool.get().isCraftable()) {
 				e.setResult(null);
-				Adapter.getAdapter().getLogger().info("Cleaning result");
 				return;
-			} else
-				Adapter.getAdapter().getLogger().info("Type: " + all.getType().getId());
+			}
 		}
 	}
 }
