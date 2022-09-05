@@ -82,7 +82,6 @@ public class HoeManager extends UltimateToolType implements Listeners {
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
 			e.setCancelled(true);
-			p.sendMessage("Run when break");
 			managePlants(p, b, tool, true);
 			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
 		});
