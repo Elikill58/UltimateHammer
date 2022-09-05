@@ -1,6 +1,6 @@
-name: Build UltimateHammer V2
+name: Check UltimateHammer V2 for pull request
 
-on: push
+on: pull_request
 
 jobs:
   build:
@@ -21,10 +21,3 @@ jobs:
       
     - name: Build with Gradle
       run: ./gradlew build
-
-    - name: Send builded files
-      uses: sinshutu/upload-to-discord@master
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      with:
-        args: build/libs/*.jar
