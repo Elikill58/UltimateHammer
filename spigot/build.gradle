@@ -53,9 +53,15 @@ shadowJar {
         it.include(it.project('integrations:aureliumskills'))
         it.include(it.project('integrations:slimefun'))
     }
-    
-    
-    from(project(':common').jar.outputs.files)
+    def pluginDir = System.getProperty('include_dep')
+    if(pluginDir != null) {
+    	from(project(':common').jar.outputs.files,
+		    	project('integrations:quests').jar.outputs.files,
+		    	project('integrations:aureliumskills').jar.outputs.files,
+		    	project('integrations:slimefun').jar.outputs.files)
+    } else {
+    	from(project(':common').jar.outputs.files)
+    }
 }
 
 build.dependsOn shadowJar

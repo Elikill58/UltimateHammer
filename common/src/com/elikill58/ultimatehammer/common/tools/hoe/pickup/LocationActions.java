@@ -6,7 +6,6 @@ import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.location.Location;
 import com.elikill58.ultimatehammer.common.UltimateTool;
-import com.elikill58.ultimatehammer.common.tools.HoeManager;
 import com.elikill58.ultimatehammer.universal.Scheduler;
 
 public class LocationActions {
@@ -53,7 +52,7 @@ public class LocationActions {
 		if (inHand == null)
 			return false;
 		for(UltimateTool tool : UltimateTool.getAlltools().values()) {
-			if(tool.getTypes().contains(HoeManager.KEY) && !tool.isItem(inHand))
+			if(!tool.isItem(inHand))
 				return false;
 		}
 		return AutoPickup.pickup(sl.p, item);

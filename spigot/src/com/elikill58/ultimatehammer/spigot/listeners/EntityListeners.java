@@ -24,7 +24,7 @@ public class EntityListeners implements Listener {
 	}
 
 	@EventHandler
-	public void onProjectileHit(ItemSpawnEvent e) {
+	public void onItemSpawn(ItemSpawnEvent e) {
 		com.elikill58.ultimatehammer.api.events.entity.ItemSpawnEvent c = new com.elikill58.ultimatehammer.api.events.entity.ItemSpawnEvent(new SpigotItemStack(e.getEntity().getItemStack()), SpigotLocation.toCommon(e.getLocation()), e.isCancelled());
 		EventManager.callEvent(c);
 		e.setCancelled(c.isCancelled());
