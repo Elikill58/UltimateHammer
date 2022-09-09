@@ -42,7 +42,7 @@ public class SlimefunUsedAction implements UsedActionManager {
         Material type = block.getType();
         BlockBreakEvent event = new BlockBreakEvent(block, player);
         // Handle double drops for Miner Talisman
-        //doubleTalismanDrops(event, SlimefunItems.TALISMAN_MINER, SlimefunTag.MINER_TALISMAN_TRIGGERS, type, meta);
+        doubleTalismanDrops(event, SlimefunItems.TALISMAN_MINER, SlimefunTag.MINER_TALISMAN_TRIGGERS, type, meta);
 
         // Handle double drops for Farmer Talisman
         doubleTalismanDrops(event, SlimefunItems.TALISMAN_FARMER, SlimefunTag.FARMER_TALISMAN_TRIGGERS, type, meta);
@@ -75,13 +75,10 @@ public class SlimefunUsedAction implements UsedActionManager {
                     // Fixes #2818
                     if (talisman != null) {
                         talisman.sendMessage(e.getPlayer());
-                    } else
-                    	e.getPlayer().sendMessage("Failed to find talisman obj");
-                } else
-                	e.getPlayer().sendMessage("No double drop");
+                    }
+                }
             }
-        } else
-        	e.getPlayer().sendMessage("Type " + type.name() + " not tagged");
+        }
     }
     
     private int getAmountWithFortune(@Nonnull Material type, int fortuneLevel) {
