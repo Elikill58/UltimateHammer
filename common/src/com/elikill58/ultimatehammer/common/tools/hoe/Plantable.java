@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.elikill58.ultimatehammer.api.block.Block;
+import com.elikill58.ultimatehammer.api.block.BlockFace;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
 
@@ -35,15 +37,23 @@ public class Plantable {
 		return neededDataToGet;
 	}
 	
+	@Override
+	public String toString() {
+		return inventoryItem.getId() + " > " + nextItem.getId() + ": " + neededDataToGet;
+	}
+	
 	public static enum PlantableType {
-		BASIC(Materials.DIRT, Materials.GRASS, Materials.SOIL),
-		NETHER(Materials.SOUL_SAND);
+		WOOD(true, Materials.JUNGLE_LOG),
+		BASIC(false, Materials.DIRT, Materials.GRASS, Materials.SOIL),
+		NETHER(false, Materials.SOUL_SAND);
 		
+		private final boolean vertical;
 		private final List<Material> material;
 		private final List<Plantable> plantage = new ArrayList<>();
 		
-		private PlantableType(Material... mat) {
-			material = new LinkedList<>(Arrays.asList(mat));
+		private PlantableType(boolean vertical, Material... mat) {
+			this.vertical = vertical;
+			this.material = new LinkedList<>(Arrays.asList(mat));
 		}
 
 		public List<Material> getMaterial() {
@@ -54,12 +64,22 @@ public class Plantable {
 			return plantage;
 		}
 		
+		public boolean isVertical() {
+			return vertical;
+		}
+		
 		public void addPlantage(Plantable pl) {
 			this.plantage.add(pl);
 		}
 		
 		public Plantable getPlantageHasInventoryItem(Material m) {
 			return plantage.stream().filter((pl) -> pl.getInventoryItem().equals(m)).findFirst().orElse(null);
+		}
+		
+		public static PlantableType getPlantageTypeForBaseBlock(Block baseBlock) {
+			BlockFace facing = baseBlock.getBlockData().getFacing();
+			Block base = baseBlock.getRelative(facing == null ? BlockFace.DOWN : facing);
+			return getPlantageType(base.getType());
 		}
 		
 		public static PlantableType getPlantageType(Material m) {

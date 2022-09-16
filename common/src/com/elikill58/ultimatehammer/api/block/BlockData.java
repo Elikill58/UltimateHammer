@@ -46,4 +46,18 @@ public abstract class BlockData {
 	 */
 	public abstract int getMaximumAge();
 
+	// Directional interface
+	/**
+	 * Get facing of given block. Can return null
+	 * 
+	 * @return block facing or null
+	 */
+	public abstract BlockFace getFacing();
+	
+	/**
+	 * Change block facing
+	 * 
+	 * @param face new facing
+	 */
+	public abstract void setFacing(BlockFace face);
 }

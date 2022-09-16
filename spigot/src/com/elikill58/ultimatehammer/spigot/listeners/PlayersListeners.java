@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerPlayer;
+import com.elikill58.ultimatehammer.api.block.BlockFace;
 import com.elikill58.ultimatehammer.api.events.EventManager;
 import com.elikill58.ultimatehammer.api.events.player.LoginEvent;
 import com.elikill58.ultimatehammer.api.events.player.LoginEvent.Result;
@@ -96,7 +97,8 @@ public class PlayersListeners implements Listener {
 	
 	@EventHandler
 	public void onInteract(org.bukkit.event.player.PlayerInteractEvent e) {
-		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()), e.getClickedBlock() != null ? new SpigotBlock(e.getClickedBlock()) : null);
+		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()),
+				e.getClickedBlock() != null ? new SpigotBlock(e.getClickedBlock()) : null, e.getBlockFace() == null ? null : BlockFace.valueOf(e.getBlockFace().name()));
 		EventManager.callEvent(event);
 		if(event.isCancelled())
 			e.setCancelled(event.isCancelled());

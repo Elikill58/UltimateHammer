@@ -18,6 +18,9 @@ public class Materials {
     public static final Material CARROTS = ItemRegistrar.getInstance().get("carrots", "carrot");
     public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot_item", "carrot");
     
+    public static final Material CACAO = ItemRegistrar.getInstance().get("cocoa");
+    public static final Material CACAO_ITEM = ItemRegistrar.getInstance().get("cocoa_beans", "cocoa");
+    
     // set carrot to prevent some missing logs
     public static final Material BEETROOTS = ItemRegistrar.getInstance().get("beetroots", "carrot");
     public static final Material BEETROOT_SEEDS = ItemRegistrar.getInstance().get("beetroot_seeds", "carrot_item");
@@ -41,4 +44,7 @@ public class Materials {
     public static final Material LIME_DYE = ItemRegistrar.getInstance().get("lime_dye", "ink_sack", "dye");
     
     /* END OF STAINED MATERIALS */
+
+    public static final Material JUNGLE_LOG = ItemRegistrar.getInstance().get("jungle_log", "log");
+
 }
