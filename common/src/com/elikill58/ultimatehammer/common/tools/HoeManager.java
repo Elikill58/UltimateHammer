@@ -64,9 +64,10 @@ public class HoeManager extends UltimateToolType implements Listeners {
 			Block b = getGoodBlockForPlant(e.getBlock());
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
-			e.setCancelled(true);
-			managePlants(p, b, tool, e.getAction().name().contains("RIGHT"), e.getFace());
-			Scheduler.getInstance().runDelayed(p::updateInventory, 2);
+			if(managePlants(p, b, tool, e.getAction().name().contains("RIGHT"), e.getFace()) > 0) {
+				e.setCancelled(true); // don't cancel if nothing change
+				Scheduler.getInstance().runDelayed(p::updateInventory, 2);
+			}
 		});
 	}
 
@@ -90,11 +91,11 @@ public class HoeManager extends UltimateToolType implements Listeners {
 		}
 	}
 
-	public void managePlants(Player p, Block baseBlock, UltimateTool tool, boolean keepEmpty, BlockFace baseFacing) {
+	public int managePlants(Player p, Block baseBlock, UltimateTool tool, boolean keepEmpty, BlockFace baseFacing) {
 		PlantableType plantableType = PlantableType.getPlantageTypeForBaseBlock(baseBlock);
 		if (plantableType == null) {
 			Adapter.getAdapter().debug("Can't find valid plantable type for " + baseBlock.getType().getId() + " and facing " + baseBlock.getBlockData().getFacing());
-			return;
+			return 0;
 		}
 		ItemStack inHand = p.getItemInHand();
 		int slot = p.getInventory().getHeldItemSlot();
@@ -132,7 +133,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					if (WorldRegionBypass.cannotBuild(p, tool, checking.getLocation())) // not allowed to build
 						continue;
 					BlockFace facing = checking.getBlockData().getFacing();
-					Block dirt = checking.getRelative(facing == null ? BlockFace.DOWN : facing); // get dirt below
+					Block dirt = checking.getRelative(facing == null ? (plantableType.isVertical() ? BlockFace.SELF : BlockFace.DOWN) : facing); // get dirt below
 					if (!plantableType.getMaterial().contains(dirt.getType())) // near to invalid block (sand, gravel etc)
 						continue;
 					if (dirt.getType().equals(Materials.GRASS) || dirt.getType().equals(Materials.DIRT)) {
@@ -151,12 +152,12 @@ public class HoeManager extends UltimateToolType implements Listeners {
 					} else if (dirt.getType().equals(Materials.SOIL)
 							&& dirt.getBlockData().getHumidity() != dirt.getBlockData().getMaximumHumidity()) {
 						continue;
-					} else if(dirt.getType().equals(Materials.JUNGLE_LOG) && !checking.getType().equals(Materials.CACAO)) {
+					} else if(checking.getType().equals(Materials.JUNGLE_LOG)/* && !checking.getType().equals(Materials.CACAO)*/) {
 						Block next = checking.getRelative(baseFacing);
 						if(next.getType().isTransparent()) {
 							if(tryToRemoveFirstItem(p, Materials.CACAO_ITEM)) {
 								next.setType(Materials.CACAO);
-								Adapter.getAdapter().debug("Change facing " + baseFacing + " > " + baseFacing.getOppositeFace());
+								Adapter.getAdapter().debug("Change facing " + baseFacing + " > " + baseFacing.getOppositeFace() + ", checking: " + checking + ", dirt: " + dirt);
 								next.getBlockData().setFacing(baseFacing.getOppositeFace());
 							} else
 								Adapter.getAdapter().debug("Can't remove item " + next.getType().getId());
@@ -204,7 +205,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 							checking.setType(plant.getNextItem());
 							if(plantableType.isVertical()) {
 								checking.getBlockData().setFacing(facing == null ? baseFacing : facing);
-								Adapter.getAdapter().debug("Set facing " + (facing == null ? baseFacing : facing) + ", done: " + checking.getBlockData().getFacing());
+								Adapter.getAdapter().debug("Set facing " + facing + ", done: " + dirt);
 							}
 						}
 					} else
@@ -221,6 +222,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 				counterDamage = 1;
 			ItemUtils.damage(tool, p, inHand, slot, counterDamage);
 		}
+		return count;
 	}
 
 	/**

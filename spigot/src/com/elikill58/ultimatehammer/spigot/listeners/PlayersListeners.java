@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerPlayer;
 import com.elikill58.ultimatehammer.api.block.BlockFace;
@@ -42,6 +43,7 @@ import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotEntityManager;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotPlayer;
 import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotLocation;
+import com.elikill58.ultimatehammer.universal.Version;
 
 public class PlayersListeners implements Listener {
 	
@@ -74,6 +76,8 @@ public class PlayersListeners implements Listener {
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
+		if(e.getPlayer().hasMetadata("NPC"))
+			return;
 		PlayerChatEvent event = new PlayerChatEvent(SpigotEntityManager.getPlayer(e.getPlayer()), e.getMessage(), e.getFormat());
 		EventManager.callEvent(event);
 		if(event.isCancelled())
@@ -97,6 +101,8 @@ public class PlayersListeners implements Listener {
 	
 	@EventHandler
 	public void onInteract(org.bukkit.event.player.PlayerInteractEvent e) {
+		if(e.getPlayer().hasMetadata("NPC") || (Version.getVersion().isNewerOrEquals(Version.V1_9) && !e.getHand().equals(EquipmentSlot.HAND)))
+			return;
 		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()),
 				e.getClickedBlock() != null ? new SpigotBlock(e.getClickedBlock()) : null, e.getBlockFace() == null ? null : BlockFace.valueOf(e.getBlockFace().name()));
 		EventManager.callEvent(event);
