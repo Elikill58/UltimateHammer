@@ -154,7 +154,7 @@ public class HoeManager extends UltimateToolType implements Listeners {
 						continue;
 					} else if(checking.getType().equals(Materials.JUNGLE_LOG)/* && !checking.getType().equals(Materials.CACAO)*/) {
 						Block next = checking.getRelative(baseFacing);
-						if(next.getType().isTransparent()) {
+						if(next.getType().isTransparent() && baseFacing.getOppositeFace().isBlockFacing()) {
 							if(tryToRemoveFirstItem(p, Materials.CACAO_ITEM)) {
 								next.setType(Materials.CACAO);
 								Adapter.getAdapter().debug("Change facing " + baseFacing + " > " + baseFacing.getOppositeFace() + ", checking: " + checking + ", dirt: " + dirt);

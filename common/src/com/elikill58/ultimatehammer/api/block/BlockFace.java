@@ -35,6 +35,10 @@ public enum BlockFace {
 	public int getModZ() {
 		return this.modZ;
 	}
+	
+	public boolean isBlockFacing() {
+		return this == NORTH || this == SOUTH || this == EAST || this == WEST;
+	}
 
 	public BlockFace getOppositeFace() {
 		switch (this) {
