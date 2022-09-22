@@ -101,7 +101,7 @@ public class PlayersListeners implements Listener {
 	
 	@EventHandler
 	public void onInteract(org.bukkit.event.player.PlayerInteractEvent e) {
-		if(e.getPlayer().hasMetadata("NPC") || (Version.getVersion().isNewerOrEquals(Version.V1_9) && !e.getHand().equals(EquipmentSlot.HAND)))
+		if(e.getPlayer().hasMetadata("NPC") || (Version.getVersion().isNewerOrEquals(Version.V1_9) && (e.getAction().equals(org.bukkit.event.block.Action.PHYSICAL) || !e.getHand().equals(EquipmentSlot.HAND))))
 			return;
 		PlayerInteractEvent event = new PlayerInteractEvent(SpigotEntityManager.getPlayer(e.getPlayer()), Action.valueOf(e.getAction().name()),
 				e.getClickedBlock() != null ? new SpigotBlock(e.getClickedBlock()) : null, e.getBlockFace() == null ? null : BlockFace.valueOf(e.getBlockFace().name()));
