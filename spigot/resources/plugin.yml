@@ -1,6 +1,6 @@
 name: UltimateHammer
 main: com.elikill58.ultimatehammer.spigot.SpigotUltimateHammer
-version: 2.0
+version: ${version}
 author: Elikill58
 api-version: 1.13
 
