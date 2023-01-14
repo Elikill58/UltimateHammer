@@ -1,4 +1,4 @@
-rootProject.name = 'UltimateHammerV2'
+rootProject.name = 'UltimateHammer'
 
 // common
 include 'common'

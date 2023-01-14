@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'eclipse'
 }
 
 shadowJar {
@@ -10,6 +11,11 @@ shadowJar {
     mergeServiceFiles()
 }
 
+eclipse {
+    project {
+        name = 'UltimateHammerV2'
+    }
+}
 
 task prepareServer(type: Copy) {
     from shadowJar.outputs
