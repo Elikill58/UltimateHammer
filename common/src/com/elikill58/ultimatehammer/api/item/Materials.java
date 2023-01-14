@@ -14,7 +14,6 @@ public class Materials {
 	public static final Material SEEDS = ItemRegistrar.getInstance().get("seeds", "wheat_seeds");
     public static final Material CROPS = ItemRegistrar.getInstance().get("crops", "wheat");
 
-    public static final Material CARROT = ItemRegistrar.getInstance().get("carrot");
     public static final Material CARROTS = ItemRegistrar.getInstance().get("carrots", "carrot");
     public static final Material CARROT_ITEM = ItemRegistrar.getInstance().get("carrot_item", "carrot");
     
@@ -25,7 +24,6 @@ public class Materials {
     public static final Material BEETROOTS = ItemRegistrar.getInstance().get("beetroots", "carrot");
     public static final Material BEETROOT_SEEDS = ItemRegistrar.getInstance().get("beetroot_seeds", "carrot_item");
 
-    public static final Material POTATO = ItemRegistrar.getInstance().get("potato");
     public static final Material POTATOES = ItemRegistrar.getInstance().get("potatoes", "potato");
     public static final Material POTATO_ITEM = ItemRegistrar.getInstance().get("potato_item", "potato");
     
@@ -34,17 +32,6 @@ public class Materials {
 
     public static final Material PLAYER_HEAD = ItemRegistrar.getInstance().get("player_head", "skull_item", "skull");
     
-    /* STAINED MATERIALS */
-    
-    // GLASS
-    public static final Material GRAY_STAINED_GLASS_PANE = ItemRegistrar.getInstance().get("gray_stained_glass_pane", "stained_glass_pane");
-    public static final Material RED_STAINED_GLASS_PANE = ItemRegistrar.getInstance().get("red_stained_glass_pane", "stained_glass_pane");
-    // DYE
-    public static final Material GRAY_DYE = ItemRegistrar.getInstance().get("gray_dye", "ink_sack", "dye");
-    public static final Material LIME_DYE = ItemRegistrar.getInstance().get("lime_dye", "ink_sack", "dye");
-    
-    /* END OF STAINED MATERIALS */
-
     public static final Material JUNGLE_LOG = ItemRegistrar.getInstance().get("jungle_log", "log");
 
 }

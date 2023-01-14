@@ -1,8 +1,6 @@
 package com.elikill58.ultimatehammer.api.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -102,17 +100,6 @@ public class BoundingBox {
 				&& (Math.min(minZ, maxZ) <= z && z <= Math.max(minZ, maxZ));
 	}
 
-	public Point getNearestPoint(Point other) {
-		double x = getNeareatValue(other.x, Arrays.asList(minX, maxX));
-		double y = getNeareatValue(other.y, Arrays.asList(minY, maxY));
-		double z = getNeareatValue(other.z, Arrays.asList(minZ, maxZ));
-		return new Point(x, y, z);
-	}
-
-	private double getNeareatValue(Double to, List<Double> all) {
-		return all.stream().min(Comparator.comparingInt(i -> Math.abs((int) (i - to)))).get();
-	}
-
 	/**
 	 * Get head point where does the attack comes from
 	 * 
@@ -120,16 +107,6 @@ public class BoundingBox {
 	 */
 	public Point getAsHeadPoint() {
 		return new Point((minX + maxX) / 2, maxY - 0.3, (minZ + maxZ) / 2);
-	}
-	
-	/**
-	 * Get intersection point between actual bounding box and the given player
-	 * 
-	 * @param p player that attack
-	 * @return point of intersection or null if failed to find it
-	 */
-	public Point getIntersectPoint(Player p) {
-		return getIntersectPoint(p.getBoundingBox().getAsHeadPoint(), p.getEyeLocation().getDirection());
 	}
 	
 	/**
