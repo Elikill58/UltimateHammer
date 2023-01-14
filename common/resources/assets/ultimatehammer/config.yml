@@ -67,6 +67,7 @@ items:
     message: "&eThis is the &cAxe &e!"
     permission: "ultimatehammer.axe"
     material: "DIAMOND_AXE"
+    name: "&aTree destroyer"
 
   # Automatic plant a seed which is on your inventory
   hoe:
@@ -85,10 +86,10 @@ items:
     enable: true
     type:
     - "infinite"
-    message: "&eThis is the &cHoe &e!"
+    message: "&eThis is the &cinfinite sword &e!"
     permission: "ultimatehammer.hoe"
     material: "DIAMOND_SWORD"
-    name: "&cThe infinite sword"
+    name: "&cInfinite sword"
 
   all:
     enable: true
@@ -97,12 +98,11 @@ items:
     - "hoe"
     - "axe"
     - "infinite"
-    message: "&4&l>> &6Ultimate &lHammer &7:&cCan do EVERYTHING &4&l<<"
+    message: "&4&l>> &6&lUltimate Hammer &7: &cCan do everything &4&l<<"
     permission: "ultimatehammer.all"
     material: "STICK"
-    name: "&cThe &4Ultimate &lHammer"
+    name: "&cThe &4Ultimate &c&lHammer"
     lore:
-    - "&6Waw !"
     - "&7This stick can:"
     - "Break 3x3"
     - "Destroy tree"
@@ -122,20 +122,6 @@ region-bypass:
     features:
     - "hoe"
 
-messages:
-  help:
-  - "/uh hammer: Get the 3x3x1 pickaxe"
-  - "/uh axe: Drop tree"
-  - "/uh hoe: Plant seed"
-  - "/uh sword: Keep it at your death"
-  not_found: "&cCannot find &e%arg% &c!"
-  no_perm: "&cYou are not permitted to get it."
-  give_other: "&eItem given to %name% !"
-  no_player: "&c%arg% isn't a valid player"
-  not_enabled: "&cThis tool isn't enabled."
-  console_cannot: "&cYou cannot give item to yourself"
-  well_reloaded: "&eUltimateHammer &ais now reloaded !"
-
 Database:
   isActive: false
   # To get the information. We use the player uuid to get the information.
@@ -147,7 +133,7 @@ Database:
   type: "mysql"
 
 # Configuration of the permissions subsystem. For more information
-# see https://github.com/Elikill58/Negativity/wiki/Permissions
+# see https://github.com/Elikill58/UltimateHammer/wiki/Permissions
 Permissions:
   # The checker indicates if a player has a specific permission.
   # By default only 'platform' is available
@@ -158,26 +144,10 @@ Permissions:
 Translation:
   active: false # enable or disable the translation
   lang_available:
-  - ar_EG
-  - cs_CZ
-  - de_DE
   - en_US
-  - es_ES
   - fr_FR
-  - hu_HU
-  - it_IT
-  - nl_NL
-  - no_NO
-  - pl_PL
-  - pt_BR
-  - ro_RO
-  - ru_RU
-  - sq_SQ
-  - sv_SV
-  - vi_VN
-  - zh_CN
   default: en_US
-  # The provider used to get translated messages, useful if you want to customize the way Negativity gets its messages.
+  # The provider used to get translated messages, useful if you want to customize the way UltimateHammer gets its messages.
   # The only one available out-of-the-box is "platform".
   provider: platform
 
@@ -187,20 +157,7 @@ accounts:
     # The ID of the storage to use.
     #
     # The following are available out-of-the-box:
-    # - file : stored in files under ./plugins/Negativity/user/
+    # - file : stored in files under ./plugins/UltimateHammer/user/
     # - database : uses a database
     # Defaults to "file"
     id: "file"
-
-region-bypass:
-  enabled: false
-  1:
-    # You need WorldGuard for the region
-    regions:
-    - "spawn"
-    # Default worlds names (or Multiverse names)
-    worlds:
-    - "world_the_end"
-    # the cheats keys
-    cheats:
-    - "fly"
