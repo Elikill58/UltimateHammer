@@ -58,7 +58,6 @@ public abstract class ItemStack implements UltimateHammerObject {
 		return "ItemStack{type=" + getType().getId() + ",amount=" + getAmount() + (getName() != null ? ",name=" + getName() : "") + "}";
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static ItemStack getItem(Configuration sec) {
 		ItemBuilder builder = Adapter.getAdapter().createItemBuilder(ItemRegistrar.getInstance().get(sec.getString("material")));
 		if(sec.contains("name"))

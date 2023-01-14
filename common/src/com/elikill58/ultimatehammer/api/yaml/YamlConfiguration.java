@@ -16,7 +16,6 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.representer.Represent;
 import org.yaml.snakeyaml.representer.Representer;
 
-@SuppressWarnings("unchecked")
 public class YamlConfiguration {
 	private static final ThreadLocal<Yaml> yaml = new ThreadLocal<Yaml>() {
 		@Override

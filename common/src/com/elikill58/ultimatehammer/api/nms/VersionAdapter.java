@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.universal.Adapter;
 
-@SuppressWarnings("unchecked")
 public abstract class VersionAdapter<R> {
 
 	protected final String version;

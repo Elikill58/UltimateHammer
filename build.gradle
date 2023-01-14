@@ -5,6 +5,7 @@ plugins {
 
 shadowJar {
     archiveBaseName.set('UltimateHammer')
+    archiveClassifier.set(null)
     
     mergeServiceFiles()
 }

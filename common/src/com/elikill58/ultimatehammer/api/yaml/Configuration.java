@@ -13,7 +13,6 @@ import java.util.Map;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.file.FileSaverTimer;
 
-@SuppressWarnings("unchecked")
 public final class Configuration {
 	
     //private static final char SEPARATOR = '.';

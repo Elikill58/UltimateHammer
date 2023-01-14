@@ -45,23 +45,14 @@ compileJava.javaCompiler.set(
 shadowJar {
     archiveBaseName.set('ultimatehammer')
     archiveAppendix.set('spigot')
+    archiveClassifier.set(null)
 
     mergeServiceFiles()
     
-    dependencies {
-        it.include(it.project('integrations:quests'))
-        it.include(it.project('integrations:aureliumskills'))
-        it.include(it.project('integrations:slimefun'))
-    }
-    def pluginDir = System.getProperty('include_dep')
-    if(pluginDir != null) {
-    	from(project(':common').jar.outputs.files,
-		    	project('integrations:quests').jar.outputs.files,
-		    	project('integrations:aureliumskills').jar.outputs.files,
-		    	project('integrations:slimefun').jar.outputs.files)
-    } else {
-    	from(project(':common').jar.outputs.files)
-    }
+	from(project(':common').jar.outputs.files,
+	    	project('integrations:quests').jar.outputs.files,
+	    	project('integrations:aureliumskills').jar.outputs.files,
+	    	project('integrations:slimefun').jar.outputs.files)
 }
 
 build.dependsOn shadowJar
