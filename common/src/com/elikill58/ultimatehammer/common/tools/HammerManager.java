@@ -42,24 +42,25 @@ public class HammerManager extends UltimateToolType implements Listeners {
 			int x1 = loc.getBlockX(), x2 = x1;
 			int y1 = loc.getBlockY(), y2 = y1;
 			int z1 = loc.getBlockZ(), z2 = z1;
+			int size = (tool.getHammerSize() - 1) / 2;
 			if (Math.abs(p.getLocation().getPitch()) <= 30) {
-				y1--;
-				y2++;
+				y1 -= size;
+				y2 += size;
 				float yaw = Math.abs(p.getLocation().getYaw());
 				if ((yaw >= 45 && yaw <= 135) || (yaw <= 315 && yaw >= 225)) {
 					// move selon Z
-					z1--;
-					z2++;
+					z1 -= size;
+					z2 += size;
 				} else {
 					// move selon X
-					x1--;
-					x2++;
+					x1 -= size;
+					x2 += size;
 				}
 			} else {
-				x1--;
-				x2++;
-				z1--;
-				z2++;
+				x1 -= size;
+				x2 += size;
+				z1 -= size;
+				z2 += size;
 			}
 	        int next = inHand.getDurability();
 			World w = loc.getWorld();

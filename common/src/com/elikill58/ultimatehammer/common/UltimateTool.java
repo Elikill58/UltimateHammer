@@ -71,7 +71,7 @@ public class UltimateTool {
 	// hammer config
 	private final List<Material> blacklistHammer;
 	// hoe config
-	private final int hoeSize;
+	private final int hoeSize, hammerSize;
 	
 	public UltimateTool(Configuration section, String key) {
 		this.key = key;
@@ -85,8 +85,9 @@ public class UltimateTool {
 		
 		blacklistHammer = section.getStringList("hammer.blacklist").stream().map(s -> ItemRegistrar.getInstance().get(s)).collect(Collectors.toList());
 		blacklistHammer.add(Materials.BEDROCK);
-		
+
 		this.hoeSize = section.getInt("hoe.size", 3);
+		this.hammerSize = section.getInt("hammer.size", 3);
 		
 		if(isEnabled) {
 			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();
@@ -143,6 +144,10 @@ public class UltimateTool {
 	
 	public int getHoeSize() {
 		return hoeSize;
+	}
+	
+	public int getHammerSize() {
+		return hammerSize;
 	}
 	
 	public void sendMessage(Player p) {
