@@ -58,6 +58,8 @@ items:
       blacklist:
       - "MOB_SPAWNER"
       - "CHEST"
+      size: 3
+      layer: 1
 
   # Destroy all of a tree
   axe:

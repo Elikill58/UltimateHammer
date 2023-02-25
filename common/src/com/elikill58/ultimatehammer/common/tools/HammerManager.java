@@ -51,16 +51,25 @@ public class HammerManager extends UltimateToolType implements Listeners {
 					// move selon Z
 					z1 -= size;
 					z2 += size;
+
+					x1 -= tool.getHammerLayerSize();
+					x2 += tool.getHammerLayerSize();
 				} else {
 					// move selon X
 					x1 -= size;
 					x2 += size;
+
+					z1 -= tool.getHammerLayerSize();
+					z2 += tool.getHammerLayerSize();
 				}
 			} else {
 				x1 -= size;
 				x2 += size;
 				z1 -= size;
 				z2 += size;
+
+				y1 -= tool.getHammerLayerSize();
+				y2 += tool.getHammerLayerSize();
 			}
 	        int next = inHand.getDurability();
 			World w = loc.getWorld();

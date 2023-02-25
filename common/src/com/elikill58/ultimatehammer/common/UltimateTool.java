@@ -71,7 +71,7 @@ public class UltimateTool {
 	// hammer config
 	private final List<Material> blacklistHammer;
 	// hoe config
-	private final int hoeSize, hammerSize;
+	private final int hoeSize, hammerSize, hammerLayerSize;
 	
 	public UltimateTool(Configuration section, String key) {
 		this.key = key;
@@ -88,6 +88,7 @@ public class UltimateTool {
 
 		this.hoeSize = section.getInt("hoe.size", 3);
 		this.hammerSize = section.getInt("hammer.size", 3);
+		this.hammerLayerSize = (section.getInt("hammer.layer", 1) - 1) / 2;
 		
 		if(isEnabled) {
 			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();
@@ -148,6 +149,10 @@ public class UltimateTool {
 	
 	public int getHammerSize() {
 		return hammerSize;
+	}
+	
+	public int getHammerLayerSize() {
+		return hammerLayerSize;
 	}
 	
 	public void sendMessage(Player p) {
