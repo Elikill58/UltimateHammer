@@ -88,7 +88,7 @@ public class UltimateTool {
 
 		this.hoeSize = section.getInt("hoe.size", 3);
 		this.hammerSize = section.getInt("hammer.size", 3);
-		this.hammerLayerSize = (section.getInt("hammer.layer", 1) - 1) / 2;
+		this.hammerLayerSize = section.getInt("hammer.layer", 1);
 		
 		if(isEnabled) {
 			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();

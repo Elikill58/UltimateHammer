@@ -2,7 +2,6 @@ package com.elikill58.ultimatehammer.common.tools;
 
 import java.util.List;
 
-import com.elikill58.ultimatehammer.api.GameMode;
 import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.events.EventListener;
@@ -11,6 +10,7 @@ import com.elikill58.ultimatehammer.api.events.block.BlockBreakEvent;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.location.Location;
+import com.elikill58.ultimatehammer.api.location.Vector;
 import com.elikill58.ultimatehammer.api.location.World;
 import com.elikill58.ultimatehammer.api.utils.ItemUtils;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
@@ -35,14 +35,13 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				return;
 
 			List<Material> list = tool.getBlacklistHammer();
-
-			if (!p.getGameMode().equals(GameMode.CREATIVE))
-				ItemUtils.damage(tool, p, inHand, -1);
+			Vector dir = p.getEyeLocation().getDirection().normalize();
 			Location loc = baseBlock.getLocation();
 			int x1 = loc.getBlockX(), x2 = x1;
 			int y1 = loc.getBlockY(), y2 = y1;
 			int z1 = loc.getBlockZ(), z2 = z1;
 			int size = (tool.getHammerSize() - 1) / 2;
+			int lowLayer = (tool.getHammerLayerSize() % 2 == 0 ? tool.getHammerLayerSize() : tool.getHammerLayerSize() - 1) / 2, highLayer = tool.getHammerLayerSize() - lowLayer - 1;
 			if (Math.abs(p.getLocation().getPitch()) <= 30) {
 				y1 -= size;
 				y2 += size;
@@ -52,15 +51,15 @@ public class HammerManager extends UltimateToolType implements Listeners {
 					z1 -= size;
 					z2 += size;
 
-					x1 -= tool.getHammerLayerSize();
-					x2 += tool.getHammerLayerSize();
+					x1 -= dir.getX() > 0 ? lowLayer : highLayer;
+					x2 += dir.getX() > 0 ? highLayer : lowLayer;
 				} else {
 					// move selon X
 					x1 -= size;
 					x2 += size;
 
-					z1 -= tool.getHammerLayerSize();
-					z2 += tool.getHammerLayerSize();
+					z1 -= dir.getZ() > 0 ? lowLayer : highLayer;
+					z2 += dir.getZ() > 0 ? highLayer : lowLayer;
 				}
 			} else {
 				x1 -= size;
@@ -68,10 +67,10 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				z1 -= size;
 				z2 += size;
 
-				y1 -= tool.getHammerLayerSize();
-				y2 += tool.getHammerLayerSize();
+				y1 -= dir.getY() > 0 ? lowLayer : highLayer;
+				y2 += dir.getY() > 0 ? highLayer : lowLayer;
 			}
-			int next = 0;
+			int next = 1; // 1 for the first block
 			World w = loc.getWorld();
 			for (int x = x1; x <= x2; x++) {
 				for (int y = y1; y <= y2; y++) {
