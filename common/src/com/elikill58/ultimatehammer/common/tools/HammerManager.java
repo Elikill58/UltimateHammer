@@ -18,7 +18,7 @@ import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.bypass.WorldRegionBypass;
 
 public class HammerManager extends UltimateToolType implements Listeners {
-	
+
 	public HammerManager() {
 		super("hammer");
 	}
@@ -71,27 +71,26 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				y1 -= tool.getHammerLayerSize();
 				y2 += tool.getHammerLayerSize();
 			}
-	        int next = inHand.getDurability();
+			int next = 0;
 			World w = loc.getWorld();
 			for (int x = x1; x <= x2; x++) {
 				for (int y = y1; y <= y2; y++) {
 					for (int z = z1; z <= z2; z++) {
 						Block b = w.getBlockAt(x, y, z);
-						if (b.getType().getId().contains("AIR") || list.contains(b.getType()) || b.getType().getId().contains("WATER")
-								|| b.getType().getId().contains("LAVA"))
+						if (b.getType().getId().contains("AIR") || list.contains(b.getType()) || b.getType().getId().contains("WATER") || b.getType().getId().contains("LAVA"))
 							continue;
 						if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 							continue;
 						boolean notAllowed = Adapter.getAdapter().callBreakEvent(b, p);
-						if(notAllowed)
+						if (notAllowed)
 							continue;
-						if(!tool.usedBreak(p, b)) {
+						if (!tool.usedBreak(p, b)) {
 							b.breakNaturally(inHand);
-				            if(next > inHand.getType().getMaxDurability()) {
-				            	p.setItemInHand(null);
-				            	return;
-				            }
-				            next++;
+							if (next > inHand.getType().getMaxDurability()) {
+								p.setItemInHand(null);
+								return;
+							}
+							next++;
 						}
 					}
 				}
