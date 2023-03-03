@@ -41,7 +41,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 			int y1 = loc.getBlockY(), y2 = y1;
 			int z1 = loc.getBlockZ(), z2 = z1;
 			int size = (tool.getHammerSize() - 1) / 2;
-			int lowLayer = (tool.getHammerLayerSize() % 2 == 0 ? tool.getHammerLayerSize() : tool.getHammerLayerSize() - 1) / 2, highLayer = tool.getHammerLayerSize() - lowLayer - 1;
+			int lowLayer = (tool.getHammerLayerSize() % 2 == 0 ? tool.getHammerLayerSize() : tool.getHammerLayerSize() - 1) / 2, highLayer = tool.getHammerLayerSize() - lowLayer;
 			if (Math.abs(p.getLocation().getPitch()) <= 30) {
 				y1 -= size;
 				y2 += size;
