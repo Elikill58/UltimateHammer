@@ -33,7 +33,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 			Block baseBlock = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, baseBlock.getLocation()))
 				return;
-
+			e.setCancelled(true);
 			List<Material> list = tool.getBlacklistHammer();
 			Vector dir = p.getEyeLocation().getDirection().normalize();
 			Location loc = baseBlock.getLocation();
@@ -70,7 +70,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 				y1 -= dir.getY() > 0 ? lowLayer : highLayer;
 				y2 += dir.getY() > 0 ? highLayer : lowLayer;
 			}
-			int next = 1; // 1 for the first block
+			int next = 0; // 1 for the first block
 			World w = loc.getWorld();
 			for (int x = x1; x <= x2; x++) {
 				for (int y = y1; y <= y2; y++) {
@@ -94,6 +94,7 @@ public class HammerManager extends UltimateToolType implements Listeners {
 					}
 				}
 			}
+			
 			ItemUtils.damage(tool, p, inHand, -1, next);
 		});
 	}
