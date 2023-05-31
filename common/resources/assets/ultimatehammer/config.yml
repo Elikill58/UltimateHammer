@@ -16,6 +16,7 @@ items:
   # This is an example of an item
   example-item:
     enable: false
+    renamable: false
     available-types:
     - "hammer: Destroy 3x3x1 according to your vision"
     - "axe: Destroy a complete tree"
@@ -47,6 +48,7 @@ items:
   # Destroy 3x3x1 according to your vision
   hammer:
     enable: true
+    renamable: false
     type:
     - "hammer"
     message: "&eThis is the &cHammer &e!"
@@ -64,6 +66,7 @@ items:
   # Destroy all of a tree
   axe:
     enable: true
+    renamable: false
     type:
     - "axe"
     message: "&eThis is the &cAxe &e!"
@@ -74,6 +77,7 @@ items:
   # Automatic plant a seed which is on your inventory
   hoe:
     enable: true
+    renamable: false
     type:
     - "hoe"
     message: "&eThis is the &cHoe &e!"
@@ -86,6 +90,7 @@ items:
   # Keep on inventory on death
   sword:
     enable: true
+    renamable: false
     type:
     - "infinite"
     message: "&eThis is the &cinfinite sword &e!"
@@ -95,6 +100,7 @@ items:
 
   all:
     enable: true
+    renamable: false
     type:
     - "hammer"
     - "hoe"

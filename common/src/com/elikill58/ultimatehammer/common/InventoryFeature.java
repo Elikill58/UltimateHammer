@@ -13,12 +13,15 @@ import com.elikill58.ultimatehammer.universal.Messages;
 
 public class InventoryFeature implements Listeners {
 
+	private long lastMessage = 0;
+	
 	@EventListener
 	public void onPrepareEvent(PrepareAnvilEvent e) {
 		if(UltimateTool.getAlltools().values().stream().filter(u -> !u.isRenamable() && u.isItem(e.getResult())).count() > 0) {
 			e.setResult(ItemBuilder.Builder(Materials.AIR).build());
-			e.getViewers().forEach(et -> Messages.sendMessage(et, "cant_edit"));
-			e.setClose(true);
+			if(lastMessage + 50 < System.currentTimeMillis())
+				e.getViewers().forEach(et -> Messages.sendMessage(et, "cant_edit"));
+			lastMessage = System.currentTimeMillis();
 		}
 	}
 	
