@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.representer.Represent;
 import org.yaml.snakeyaml.representer.Representer;
@@ -20,7 +19,9 @@ public class YamlConfiguration {
 	private static final ThreadLocal<Yaml> yaml = new ThreadLocal<Yaml>() {
 		@Override
 		protected Yaml initialValue() {
-			final Representer representer = new Representer() {
+			DumperOptions options = new DumperOptions();
+			options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+			return new Yaml(new Representer(options) {
 				{
 					this.representers.put(Configuration.class, new Represent() {
 						@Override
@@ -29,10 +30,7 @@ public class YamlConfiguration {
 						}
 					});
 				}
-			};
-			final DumperOptions options = new DumperOptions();
-			options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-			return new Yaml(new Constructor(), representer, options);
+			}, options);
 		}
 	};
 
