@@ -52,7 +52,7 @@ public abstract class Block implements UltimateHammerObject {
 		if(!(obj instanceof Block))
 			return false;
 		Block b = (Block) obj;
-		return b.getLocation().equals(getLocation()) && getType().equals(b.getType());
+		return b.getDefault().equals(getDefault()) || (b.getX() == getX() && b.getY() == getY() && b.getZ() == getZ());
 	}
 	
 	@Override
