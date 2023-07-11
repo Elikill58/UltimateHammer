@@ -31,7 +31,7 @@ public class SpigotItemRegistrar extends ItemRegistrar {
 				return m;
 		}
 		if(id.contains("_")) {
-			for(String types : Arrays.asList("WOOL", "STAINED_CLAY", "CARPET", "STAINED_GLASS_PANE", "BANNER", "WOOD")) {
+			for(String types : Arrays.asList("WOOL", "STAINED_CLAY", "CARPET", "STAINED_GLASS_PANE", "BANNER", "WOOD", "LOG", "LEAVES")) {
 				if(id.contains(types))
 					return get(types);
 			}

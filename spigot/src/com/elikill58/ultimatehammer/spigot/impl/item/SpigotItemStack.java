@@ -1,5 +1,8 @@
 package com.elikill58.ultimatehammer.spigot.impl.item;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.elikill58.ultimatehammer.api.item.Enchantment;
@@ -114,5 +117,19 @@ public class SpigotItemStack extends ItemStack {
             return;
         }
         item.setDurability(durability.shortValue());
+	}
+
+	@Override
+	public List<String> getLore() {
+		return item.hasItemMeta() && item.getItemMeta().hasLore() ? item.getItemMeta().getLore() : Collections.EMPTY_LIST;
+	}
+
+	@Override
+	public void setLore(List<String> lore) {
+		if(item.hasItemMeta()) {
+			ItemMeta meta = item.getItemMeta();
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+		}
 	}
 }

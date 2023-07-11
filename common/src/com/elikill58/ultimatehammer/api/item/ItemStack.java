@@ -1,6 +1,9 @@
 package com.elikill58.ultimatehammer.api.item;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.elikill58.ultimatehammer.api.UltimateHammerObject;
 import com.elikill58.ultimatehammer.api.yaml.Configuration;
@@ -52,6 +55,36 @@ public abstract class ItemStack implements UltimateHammerObject {
 	public abstract boolean isUnbreakable();
 	
 	public abstract void setCustomModelData(int data);
+	
+	public abstract List<String> getLore();
+	public void setLore(String... lore) {
+		setLore(Arrays.asList(lore));
+	}
+	public abstract void setLore(List<String> lore);
+	
+	public boolean hasNbtTag(String key, String val) {
+		return Adapter.getAdapter().getVersionAdapter().hasNbtTagValue(this, key, val);
+	}
+	
+	public int getNbtTagInt(String key, int def) {
+		String nbt = Adapter.getAdapter().getVersionAdapter().getNbtTagValue(this, key);
+		return nbt == null ? def : Integer.parseInt(nbt);
+	}
+	
+	public @Nullable String getNbtTag(String key) {
+		return Adapter.getAdapter().getVersionAdapter().getNbtTagValue(this, key);
+	}
+	
+	/**
+	 * Set nbt tag to another value and return the new item
+	 * 
+	 * @param key the key of nbt tag
+	 * @param val the value of nbt tag
+	 * @return the new item with nbt
+	 */
+	public ItemStack setNbtTag(String key, String val) {
+		return Adapter.getAdapter().getVersionAdapter().setNbtTag(this, key, val);
+	}
 
 	@Override
 	public String toString() {

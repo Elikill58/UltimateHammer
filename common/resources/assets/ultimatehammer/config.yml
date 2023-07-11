@@ -109,6 +109,7 @@ items:
     message: "&4&l>> &6&lUltimate Hammer &7: &cCan do everything &4&l<<"
     permission: "ultimatehammer.all"
     material: "STICK"
+    uses: 5
     name: "&cThe &4Ultimate &c&lHammer"
     lore:
     - "&7This stick can:"
@@ -116,6 +117,8 @@ items:
     - "Destroy tree"
     - "Plant seed"
     - "Stay with you after respawn"
+    - ""
+    - "&fUses: &a%uses%&f/&c5"
 
 region-bypass:
   enabled: false

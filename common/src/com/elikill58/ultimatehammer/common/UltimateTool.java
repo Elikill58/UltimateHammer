@@ -19,6 +19,7 @@ import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.UltimateHammer;
 import com.elikill58.ultimatehammer.universal.support.UsedActionManager;
 import com.elikill58.ultimatehammer.universal.support.UsedActionManagerProvider;
+import com.elikill58.ultimatehammer.universal.utils.UniversalUtils;
 
 public class UltimateTool {
 
@@ -71,7 +72,7 @@ public class UltimateTool {
 	// hammer config
 	private final List<Material> blacklistHammer;
 	// hoe config
-	private final int hoeSize, hammerSize, hammerLayerSize;
+	private final int hoeSize, hammerSize, hammerLayerSize, useAmount;
 	
 	public UltimateTool(Configuration section, String key) {
 		this.key = key;
@@ -82,6 +83,7 @@ public class UltimateTool {
 		this.message = Utils.coloredMessage(section.getString("message", ""));
 		this.permission = section.getString("permission");
 		this.types = section.getStringList("type");
+		this.useAmount = section.getInt("uses", -1);
 		
 		blacklistHammer = section.getStringList("hammer.blacklist").stream().map(s -> ItemRegistrar.getInstance().get(s)).collect(Collectors.toList());
 		blacklistHammer.add(Materials.BEDROCK);
@@ -108,6 +110,18 @@ public class UltimateTool {
 		return isEnabled;
 	}
 	
+	public ItemStack parseLore(ItemStack item) {
+		if(item.getLore().isEmpty())
+			return item;
+		int use = item.getNbtTagInt(UltimateTool.NBT_TAG_KEY + "-uses", 0);
+		List<String> lore = new ArrayList<>(item.getLore());
+		for(int i = 0; i < lore.size(); i++) {
+			lore.set(i, UniversalUtils.replacePlaceholders(lore.get(i), "%uses%", use));
+		}
+		item.setLore(lore);
+		return item;
+	}
+	
 	/**
 	 * Check if can rename this item
 	 * 
@@ -125,6 +139,10 @@ public class UltimateTool {
 		return section;
 	}
 	
+	public int getUseAmount() {
+		return useAmount;
+	}
+	
 	public List<Material> getBlacklistHammer() {
 		return blacklistHammer;
 	}
@@ -132,7 +150,7 @@ public class UltimateTool {
 	public boolean isItem(ItemStack inHand) {
 		if(inHand == null || inHand.getType().getId().contains("AIR"))
 			return false;
-		return Adapter.getAdapter().getVersionAdapter().hasNbtTag(inHand, NBT_TAG_KEY, key);
+		return inHand.hasNbtTag(NBT_TAG_KEY, key);
 	}
 
 	public boolean usedBreak(Player p, Block b) {
@@ -161,7 +179,7 @@ public class UltimateTool {
 	}
 	
 	public void addItem(Player p) {
-		p.getInventory().addItem(defaultItem.clone());
+		p.getInventory().addItem(parseLore(defaultItem.clone()));
 	}
 	
 	public ItemStack getItem() {

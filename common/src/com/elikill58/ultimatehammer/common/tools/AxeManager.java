@@ -14,10 +14,10 @@ import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.events.EventListener;
 import com.elikill58.ultimatehammer.api.events.Listeners;
 import com.elikill58.ultimatehammer.api.events.block.BlockBreakEvent;
-import com.elikill58.ultimatehammer.api.item.Enchantment;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.api.item.Material;
 import com.elikill58.ultimatehammer.api.item.Materials;
+import com.elikill58.ultimatehammer.api.utils.ItemUtils;
 import com.elikill58.ultimatehammer.common.UltimateTool;
 import com.elikill58.ultimatehammer.common.UltimateToolType;
 import com.elikill58.ultimatehammer.common.tools.axe.DetectedTree;
@@ -45,48 +45,20 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	}
 
 	public static boolean fellTree(UltimateTool tool, Block block, Player player, ItemStack axe) {
-		boolean unbreakable = axe.isUnbreakable();
 		DetectedTree detectedTree = detectTree(block, player, axe, (testTree) -> {
-			int durability = axe.getType().getMaxDurability() - axe.getDurability();
 			int total = toList(testTree.trunk).size();
-			int durabilityCost = total;
-			if (unbreakable)
-				durabilityCost = 0;
-			else {
-				durabilityCost /= (axe.getEnchantLevel(Enchantment.UNBREAKING) + 1);
-				if (durabilityCost < 1)
-					durabilityCost++;
+			int dura = axe.getDurability(), max = axe.getType().getMaxDurability();
+			int damage = ItemUtils.getAmountOfDamage(tool, player, axe, total);
+			if(damage > 0) {
+				testTree.damageApplied += damage;
+				return max <= dura + testTree.damageApplied; // false if should continue
 			}
-			if (axe.getType().getMaxDurability() == 0)
-				durabilityCost = 0;// there is no durability
-			if (player.getGameMode() == GameMode.CREATIVE)
-				durabilityCost = 0;// Don't cost durability
-			return durabilityCost > durability ? null : true;
+			return null; // continue
 		});
 		if (detectedTree == null)
 			return false;
-		int durability = axe.getType().getMaxDurability() - axe.getDurability();
 		int total = toList(detectedTree.trunk).size();
-		int durabilityCost = total;
-		if (unbreakable)
-			durabilityCost = 0;
-		else {
-			durabilityCost /= (axe.getEnchantLevel(Enchantment.UNBREAKING) + 1);
-			if (durabilityCost < 1)
-				durabilityCost++;
-			if (axe.getType().getMaxDurability() == 0)
-				durabilityCost = 0;// there is no durability
-			if (player.getGameMode() == GameMode.CREATIVE)
-				durabilityCost = 0;// Don't cost durability
-			else {
-				if (axe.getType().getMaxDurability() > 0) {
-					axe.setDurability((short) (axe.getDurability() + durabilityCost));
-					if (durability == durabilityCost) {
-						axe.setAmount(0);
-					}
-				}
-			}
-		}
+		ItemUtils.damage(tool, player, axe, player.getInventory().getHeldItemSlot(), total);
 		int lower = block.getY();
 		for (Block b : toList(detectedTree.trunk)) {
 			if (b.getY() < lower)
@@ -117,6 +89,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 		if (player != null && player.getGameMode() == GameMode.SPECTATOR)
 			return null;
 		Material material = block.getType();
+		int damage = 0;
 		for (Tree tree : Tree.values()) {
 			if (!tree.trunk.contains(material)) {
 				continue;
@@ -134,8 +107,9 @@ public class AxeManager extends UltimateToolType implements Listeners {
 			ArrayList<Block> everything = new ArrayList<>();
 			everything.addAll(toList(blocks));
 			everything.addAll(toList(allLeaves));
-			DetectedTree detected = new DetectedTree(tree, blocks, allLeaves);
+			DetectedTree detected = new DetectedTree(tree, blocks, allLeaves, damage);
 			Boolean result = checkFunc.apply(detected);
+			damage = detected.getDamageApplied();
 			if (result == null)
 				continue;
 			if (Objects.equals(result, false))

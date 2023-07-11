@@ -58,7 +58,7 @@ public abstract class Material implements UltimateHammerObject {
 		if (obj == null || !(obj instanceof Material))
 			return false;
 		Material to = (Material) obj;
-		return this.getId().equals(to.getId()) && this.isSolid() == to.isSolid()
+		return this.getId() != null && to.getId() != null && this.getId().equals(to.getId()) && this.isSolid() == to.isSolid()
 			&& this.isTransparent() == to.isTransparent();
 	}
 
