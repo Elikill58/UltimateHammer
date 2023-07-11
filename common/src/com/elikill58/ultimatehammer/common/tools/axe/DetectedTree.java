@@ -9,12 +9,10 @@ public class DetectedTree {
 
 	public final Tree tree;
 	public final HashMap<Integer, ArrayList<Block>> trunk;
-	public int damageApplied = 0;
 
-	public DetectedTree(Tree tree, HashMap<Integer, ArrayList<Block>> trunk, HashMap<Integer, ArrayList<Block>> leaves, int damageApplied) {
+	public DetectedTree(Tree tree, HashMap<Integer, ArrayList<Block>> trunk) {
 		this.tree = tree;
 		this.trunk = trunk;
-		this.damageApplied = damageApplied;
 	}
 
 	public Tree getTree() {
@@ -23,9 +21,5 @@ public class DetectedTree {
 
 	public HashMap<Integer, ArrayList<Block>> getTrunk() {
 		return trunk;
-	}
-	
-	public int getDamageApplied() {
-		return damageApplied;
 	}
 }

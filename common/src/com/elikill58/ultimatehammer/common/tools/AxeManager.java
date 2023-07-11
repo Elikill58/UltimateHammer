@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.function.Function;
 
 import com.elikill58.ultimatehammer.api.GameMode;
 import com.elikill58.ultimatehammer.api.block.Block;
@@ -32,20 +30,17 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	
 	@EventListener
 	public void onBlockBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
 		Player p = e.getPlayer();
 		getToolForHand(p).ifPresent(tool -> {
 			Block b = e.getBlock();
 			if (WorldRegionBypass.cannotBuild(p, tool, b.getLocation()))
 				return;
-			if (!fellTree(tool, b, p, p.getItemInHand()))
-				e.setCancelled(true);
+			fellTree(tool, b, p, p.getItemInHand());
 		});
 	}
 
 	public static boolean fellTree(UltimateTool tool, Block block, Player player, ItemStack axe) {
-		DetectedTree detectedTree = detectTree(block, player, axe, (testTree) -> {
+		DetectedTree detectedTree = detectTree(block, player, axe, ItemUtils.getDurabilityForItemAsTool(tool, player, axe)); /*(testTree) -> {
 			int total = toList(testTree.trunk).size();
 			int dura = axe.getDurability(), max = axe.getType().getMaxDurability();
 			int damage = ItemUtils.getAmountOfDamage(tool, player, axe, total);
@@ -54,7 +49,7 @@ public class AxeManager extends UltimateToolType implements Listeners {
 				return max <= dura + testTree.damageApplied; // false if should continue
 			}
 			return null; // continue
-		});
+		});*/
 		if (detectedTree == null)
 			return false;
 		int total = toList(detectedTree.trunk).size();
@@ -85,36 +80,24 @@ public class AxeManager extends UltimateToolType implements Listeners {
 	}
 
 	public static DetectedTree detectTree(Block block, Player player, ItemStack axe,
-			Function<DetectedTree, Boolean> checkFunc) {
+			int dura) {
 		if (player != null && player.getGameMode() == GameMode.SPECTATOR)
 			return null;
 		Material material = block.getType();
-		int damage = 0;
-		for (Tree tree : Tree.values()) {
+		for (Tree tree : Tree.getTreeForServer()) {
 			if (!tree.trunk.contains(material)) {
 				continue;
 			}
 			HashMap<Integer, ArrayList<Block>> blocks = getBlocks(tree.trunk, block, 256, true);
+			if(blocks.isEmpty())
+				continue;
 			int minY = block.getY();
 			for (int i : blocks.keySet()) {
 				for (Block b : blocks.get(i)) {
 					minY = Math.min(minY, b.getY());
 				}
 			}
-			ArrayList<Integer> distances = new ArrayList<>(blocks.keySet());
-			Collections.sort(distances);
-			HashMap<Integer, ArrayList<Block>> allLeaves = new HashMap<>();
-			ArrayList<Block> everything = new ArrayList<>();
-			everything.addAll(toList(blocks));
-			everything.addAll(toList(allLeaves));
-			DetectedTree detected = new DetectedTree(tree, blocks, allLeaves, damage);
-			Boolean result = checkFunc.apply(detected);
-			damage = detected.getDamageApplied();
-			if (result == null)
-				continue;
-			if (Objects.equals(result, false))
-				continue;
-			return detected;
+			return new DetectedTree(tree, blocks);
 		}
 		return null;
 	}

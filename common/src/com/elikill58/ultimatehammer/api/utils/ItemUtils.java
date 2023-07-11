@@ -76,4 +76,17 @@ public class ItemUtils {
 		}
 		return dam;
 	}
+	
+	public static int getDurabilityForItemAsTool(UltimateTool tool, Player p, ItemStack inHand) {
+		if(tool.getConfigSection().getBoolean("infinity", false) || inHand.isUnbreakable() || p.getGameMode().equals(GameMode.CREATIVE) || tool.getUseAmount() > 0)
+			return Integer.MAX_VALUE;
+		short dam = 0;
+		for(int i = 0; i < inHand.getDurability(); i++) {
+			boolean shouldDamage = !inHand.hasEnchant(Enchantment.UNBREAKING) || Math.random() < 1.0 / (inHand.getEnchantLevel(Enchantment.UNBREAKING) + 1);
+			if (shouldDamage) {
+				dam++;
+			}
+		}
+		return dam + inHand.getDurability();
+	}
 }

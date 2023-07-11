@@ -25,8 +25,6 @@ public class HammerManager extends UltimateToolType implements Listeners {
 
 	@EventListener
 	public void onBlockBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
 		Player p = e.getPlayer();
 		getToolForHand(p).ifPresent((tool) -> {
 			ItemStack inHand = p.getItemInHand();

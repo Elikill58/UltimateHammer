@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.elikill58.ultimatehammer.api.item.ItemRegistrar;
 import com.elikill58.ultimatehammer.api.item.Material;
+import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Version;
 
 public enum Tree {
@@ -70,5 +71,10 @@ public enum Tree {
 	
 	public boolean isDiagonalLeave() {
 		return diagonalLeave;
+	}
+	
+	public static List<Tree> getTreeForServer() {
+		Version v = Adapter.getAdapter().getServerVersion();
+		return Arrays.asList(values()).stream().filter(t -> v.isNewerOrEquals(t.getVersion())).collect(Collectors.toList());
 	}
 }
