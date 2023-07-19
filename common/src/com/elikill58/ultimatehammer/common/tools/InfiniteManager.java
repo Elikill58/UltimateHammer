@@ -1,5 +1,6 @@
 package com.elikill58.ultimatehammer.common.tools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -26,16 +27,18 @@ public class InfiniteManager extends UltimateToolType implements Listeners {
 	@EventListener
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getPlayer();
+		List<ItemStack> allInfiniteItems = new ArrayList<>();
 		getTool(p).forEach((tool) -> {
 			if(WorldRegionBypass.cannotBuild(p, tool, p.getLocation()))
 				return;
-			List<ItemStack> toRemove = e.getDrops().stream().filter(tool::isItem).collect(Collectors.toList());
-			
-			if(toRemove.isEmpty())
-				e.getDrops().removeAll(toRemove);
-			
-			respawn.put(p.getUniqueId(), toRemove);
+			allInfiniteItems.addAll(e.getDrops().stream().filter(tool::isItem).collect(Collectors.toList()));
 		});
+		if(allInfiniteItems.isEmpty())
+			return;
+		
+		e.getDrops().removeAll(allInfiniteItems);
+		
+		respawn.put(p.getUniqueId(), allInfiniteItems);
 	}
 
 	@EventListener

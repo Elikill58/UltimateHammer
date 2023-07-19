@@ -146,8 +146,10 @@ public class HoeManager extends UltimateToolType implements Listeners {
 						dirt.setType(Materials.SOIL);
 						count++;
 						Block up = dirt.getLocation().add(0, 1, 0).getBlock();
-						if (up.getType().isTransparent()) // upper is not full block
-							up.setType(Materials.AIR);
+						if (up.getType().isTransparent()) {// upper is not full block, it's like flower or something
+							if(!up.getType().equals(Materials.AIR))
+								up.breakNaturally();
+						}
 						continue;
 					} else if (dirt.getType().equals(Materials.SOIL)
 							&& dirt.getBlockData().getHumidity() != dirt.getBlockData().getMaximumHumidity()) {

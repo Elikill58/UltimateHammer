@@ -1,5 +1,7 @@
 package com.elikill58.ultimatehammer.spigot.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -9,7 +11,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -29,6 +30,7 @@ import com.elikill58.ultimatehammer.api.events.player.LoginEvent.Result;
 import com.elikill58.ultimatehammer.api.events.player.PlayerChatEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerConnectEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerDamagedByEntityEvent;
+import com.elikill58.ultimatehammer.api.events.player.PlayerDeathEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerInteractEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerInteractEvent.Action;
 import com.elikill58.ultimatehammer.api.events.player.PlayerLeaveEvent;
@@ -37,6 +39,7 @@ import com.elikill58.ultimatehammer.api.events.player.PlayerRegainHealthEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerTeleportEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerToggleActionEvent;
 import com.elikill58.ultimatehammer.api.events.player.PlayerToggleActionEvent.ToggleAction;
+import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.spigot.SpigotUltimateHammer;
 import com.elikill58.ultimatehammer.spigot.impl.block.SpigotBlock;
 import com.elikill58.ultimatehammer.spigot.impl.entity.SpigotEntityManager;
@@ -93,10 +96,14 @@ public class PlayersListeners implements Listener {
 	}
 	
 	@EventHandler
-	public void onDeath(PlayerDeathEvent e) {
+	public void onDeath(org.bukkit.event.entity.PlayerDeathEvent e) {
 		if(e.getEntity().hasMetadata("NPC"))
 			return;
-		EventManager.callEvent(new com.elikill58.ultimatehammer.api.events.player.PlayerDeathEvent(SpigotEntityManager.getPlayer(e.getEntity()), e.getDrops().stream().map(SpigotItemStack::new).collect(Collectors.toList())));
+		List<org.bukkit.inventory.ItemStack> items = e.getDrops();
+		PlayerDeathEvent next = new PlayerDeathEvent(SpigotEntityManager.getPlayer(e.getEntity()), new ArrayList<>(items.stream().map(SpigotItemStack::new).collect(Collectors.toList())));
+		EventManager.callEvent(next);
+		items.clear();
+		next.getDrops().stream().map(ItemStack::getDefault).map(org.bukkit.inventory.ItemStack.class::cast).forEach(items::add);
 	}
 	
 	@EventHandler
