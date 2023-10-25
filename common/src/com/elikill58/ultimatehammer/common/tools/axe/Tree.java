@@ -21,7 +21,8 @@ public enum Tree {
 	CRIMSON(Version.V1_16, Arrays.asList("CRIMSON_STEM", "CRIMSON_HYPHAE"), Arrays.asList("NETHER_WART_BLOCK", "SHROOMLIGHT"), true),
 	WARPED(Version.V1_16, Arrays.asList("WARPED_STEM", "WARPED_HYPHAE"), Arrays.asList("NETHER_WART_BLOCK", "SHROOMLIGHT"), true),
 	AZALEA(Version.V1_17, Arrays.asList("OAK_LOG", "OAK_WOOD"), Arrays.asList("AZALEA_LEAVES", "FLOWERING_AZALEA_LEAVES")),
-	MANGROVE(Version.V1_19, Arrays.asList("MANGROVE_LOG", "MANGROVE_WOOD"), Arrays.asList("MANGROVE_ROOTS", "MANGROVE_LEAVES"));
+	MANGROVE(Version.V1_19, Arrays.asList("MANGROVE_LOG", "MANGROVE_WOOD"), Arrays.asList("MANGROVE_ROOTS", "MANGROVE_LEAVES")),
+	CHERRY(Version.V1_20, Arrays.asList("CHERRY_LOG", "CHERRY_WOOD"), Arrays.asList("CHERRY_LEAVES"));
 
 	public final Version minVersion;
 	public final List<Material> trunk, leaves;
