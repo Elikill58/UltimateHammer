@@ -3,6 +3,7 @@ package com.elikill58.ultimatehammer.spigot.nms;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Repairable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -32,15 +33,13 @@ public class Paper1_21Version extends SpigotVersionAdapter {
 	}
 
 	@Override
-	public ItemStack setNbtTag(ItemStack item, String key, int tagVal) {
-		/*org.bukkit.inventory.ItemStack it = ((org.bukkit.inventory.ItemStack) item.getDefault());
-		ItemMeta meta = it.getItemMeta();
-		PersistentDataContainer pdc = it.getItemMeta().getPersistentDataContainer();
-		pdc.set(NamespacedKey.minecraft(key), PersistentDataType.INTEGER, tagVal);
-		it.setItemMeta(meta);
-		return new SpigotItemStack(it);*/
-		// TODO fix and be able to change real nbt tag
-		return item;
+	public ItemStack setRepairCost(ItemStack item, int tagVal) {
+		org.bukkit.inventory.ItemStack it = ((org.bukkit.inventory.ItemStack) item.getDefault());
+		if(it.getItemMeta() instanceof Repairable repair) {
+			repair.setRepairCost(tagVal);
+			it.setItemMeta(repair);
+		}
+		return new SpigotItemStack(it);
 	}
 
 	@Override

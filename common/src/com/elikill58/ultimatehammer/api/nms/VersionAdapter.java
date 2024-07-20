@@ -22,7 +22,7 @@ public abstract class VersionAdapter<R> {
 	
 	public abstract ItemStack setNbtTag(ItemStack item, String key, String val);
 	
-	public abstract ItemStack setNbtTag(ItemStack item, String key, int val);
+	public abstract ItemStack setRepairCost(ItemStack item, int val);
 
 	/**
 	 * Check if the given item has key/val as nbt tag

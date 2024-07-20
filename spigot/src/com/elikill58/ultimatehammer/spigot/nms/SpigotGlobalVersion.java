@@ -74,11 +74,11 @@ public class SpigotGlobalVersion extends SpigotVersionAdapter {
 	}
 
 	@Override
-	public ItemStack setNbtTag(ItemStack item, String key, int tagVal) {
+	public ItemStack setRepairCost(ItemStack item, int tagVal) {
 		try {
 			Object nmsItem = toNMSItem(item);
 			Object comp = getNBTTagCompoundFromNMSItem(nmsItem);
-			setInt.invoke(comp, key, tagVal);
+			setInt.invoke(comp, "RepairCost", tagVal);
 			saveNbt.invoke(nmsItem, comp);
 			return new SpigotItemStack((org.bukkit.inventory.ItemStack) craftItemStackClass.getDeclaredMethod("asBukkitCopy", nmsItemStackClass).invoke(null, nmsItem));
 		} catch (Exception e) {

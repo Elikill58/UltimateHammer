@@ -96,7 +96,7 @@ public class UltimateTool {
 			VersionAdapter<?> va = Adapter.getAdapter().getVersionAdapter();
 			ItemStack basicItem = va.setNbtTag(ItemStack.getItem(section), NBT_TAG_KEY, key);
 			if(!isRenamable())
-				basicItem = va.setNbtTag(basicItem, "RepairCost", 100); // 100 more than 40 -> "too expensive"
+				basicItem = va.setRepairCost(basicItem, 100); // 100 more than 40 -> "too expensive"
 			this.item = basicItem;
 			this.defaultItem = basicItem.clone();
 		}
