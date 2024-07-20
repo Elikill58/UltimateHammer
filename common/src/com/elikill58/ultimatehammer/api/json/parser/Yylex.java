@@ -379,6 +379,7 @@ class Yylex {
 	 * @exception java.io.IOException
 	 *                if any I/O-Error occurs
 	 */
+	@SuppressWarnings("removal")
 	public Yytoken yylex() throws java.io.IOException, ParseException {
 		int zzInput;
 		int zzAction;

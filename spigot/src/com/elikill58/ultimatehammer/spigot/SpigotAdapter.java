@@ -47,6 +47,7 @@ import com.elikill58.ultimatehammer.universal.translation.TranslationProviderFac
 import com.elikill58.ultimatehammer.universal.translation.UltimateHammerTranslationProviderFactory;
 import com.elikill58.ultimatehammer.universal.utils.UniversalUtils;
 
+@SuppressWarnings("deprecation")
 public class SpigotAdapter extends Adapter {
 
 	private final JavaPlugin pl;
@@ -193,7 +194,6 @@ public class SpigotAdapter extends Adapter {
 		return SpigotEntityManager.getPlayer(Bukkit.getPlayer(uuid));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public @Nullable OfflinePlayer getOfflinePlayer(String name) {
 		Player online = getPlayer(name);

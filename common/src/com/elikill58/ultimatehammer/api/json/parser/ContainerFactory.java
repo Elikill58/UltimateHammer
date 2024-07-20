@@ -10,7 +10,6 @@ import java.util.Map;
  * 
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-@SuppressWarnings("rawtypes")
 public interface ContainerFactory {
 	/**
 	 * @return A Map instance to store JSON object, or null if you want to use org.json.JSONObject.

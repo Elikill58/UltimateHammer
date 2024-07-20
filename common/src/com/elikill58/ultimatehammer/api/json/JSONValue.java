@@ -5,8 +5,6 @@
 package com.elikill58.ultimatehammer.api.json;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
@@ -14,56 +12,10 @@ import java.util.List;
 // import java.util.List;
 import java.util.Map;
 
-import com.elikill58.ultimatehammer.api.json.parser.JSONParser;
-
 /**
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-@SuppressWarnings("rawtypes")
 public class JSONValue {
-	/**
-	 * Parse JSON text into java object from the input source. Please use
-	 * parseWithException() if you don't want to ignore the exception.
-	 * 
-	 * @see com.elikill58.ultimatehammer.api.json.parser.JSONParser#parse(Reader)
-	 * @see #parseWithException(Reader)
-	 * 
-	 * @param in
-	 * @return Instance of the following: org.json.JSONObject, org.json.JSONArray,
-	 *         java.lang.String, java.lang.Number, java.lang.Boolean, null
-	 * 
-	 * @deprecated this method may throw an {@code Error} instead of returning
-	 *             {@code null}; please use
-	 *             {@link JSONValue#parseWithException(Reader)} instead
-	 */
-	public static Object parse(Reader in) {
-		try {
-			JSONParser parser = new JSONParser();
-			return parser.parse(in);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Parse JSON text into java object from the given string. Please use
-	 * parseWithException() if you don't want to ignore the exception.
-	 * 
-	 * @see com.elikill58.ultimatehammer.api.json.parser.JSONParser#parse(Reader)
-	 * @see #parseWithException(Reader)
-	 * 
-	 * @param s
-	 * @return Instance of the following: org.json.JSONObject, org.json.JSONArray,
-	 *         java.lang.String, java.lang.Number, java.lang.Boolean, null
-	 * 
-	 * @deprecated this method may throw an {@code Error} instead of returning
-	 *             {@code null}; please use
-	 *             {@link JSONValue#parseWithException(String)} instead
-	 */
-	public static Object parse(String s) {
-		StringReader in = new StringReader(s);
-		return parse(in);
-	}
 
 	/**
 	 * Encode an object into JSON text and write it to out.

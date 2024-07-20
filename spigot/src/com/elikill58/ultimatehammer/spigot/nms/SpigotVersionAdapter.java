@@ -11,9 +11,15 @@ public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 		super(version);
 	}
 	
-	private static SpigotGlobalVersion instance = new SpigotGlobalVersion(Adapter.getAdapter().getVersion());
+	private static SpigotVersionAdapter instance;
 
-	public static SpigotGlobalVersion getVersionAdapter() {
+	public static SpigotVersionAdapter getVersionAdapter() {
+		if(instance == null) {
+			if(Adapter.getAdapter().getVersion() == "")
+				instance = new Paper1_21Version();
+			else
+				instance = new SpigotGlobalVersion(Adapter.getAdapter().getVersion());;
+		}
 		return instance;
 	}
 }

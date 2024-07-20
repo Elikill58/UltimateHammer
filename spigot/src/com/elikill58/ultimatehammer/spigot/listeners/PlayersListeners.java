@@ -48,6 +48,7 @@ import com.elikill58.ultimatehammer.spigot.impl.item.SpigotItemStack;
 import com.elikill58.ultimatehammer.spigot.impl.location.SpigotLocation;
 import com.elikill58.ultimatehammer.universal.Version;
 
+@SuppressWarnings("deprecation")
 public class PlayersListeners implements Listener {
 	
 	@EventHandler

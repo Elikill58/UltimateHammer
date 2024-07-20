@@ -14,6 +14,7 @@ import com.elikill58.ultimatehammer.api.block.Block;
 import com.elikill58.ultimatehammer.api.entity.Player;
 import com.elikill58.ultimatehammer.api.item.ItemStack;
 import com.elikill58.ultimatehammer.common.UltimateTool;
+import com.elikill58.ultimatehammer.spigot.impl.item.SpigotEnchants;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.PluginDependentExtension;
 import com.elikill58.ultimatehammer.universal.support.UsedActionManager;
@@ -52,7 +53,7 @@ public class SlimefunUsedAction implements UsedActionManager {
     private void doubleTalismanDrops(BlockBreakEvent e, SlimefunItemStack talismanItemStack, SlimefunTag tag, Material type, ItemMeta meta) {
         if (tag.isTagged(type)) {
             if (Talisman.trigger(e, talismanItemStack, false)) { // event not really called, just with cancel & player info
-                int dropAmount = getAmountWithFortune(type, meta.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
+                int dropAmount = getAmountWithFortune(type, meta.getEnchantLevel(SpigotEnchants.getEnchant(com.elikill58.ultimatehammer.api.item.Enchantment.LOOTING)));
 
                 // Keep track of whether we actually doubled the drops or not
                 boolean doubledDrops = false;

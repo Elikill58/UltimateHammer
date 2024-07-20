@@ -28,6 +28,7 @@ public class SpigotInventory extends Inventory {
 		this.inv = inv;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public SpigotInventory(String inventoryName, int size, UltimateHammerHolder holder) {
 		this.inventoryName = inventoryName;
 		this.size = size;

@@ -309,7 +309,7 @@ public class SpigotPlayer extends SpigotEntity<org.bukkit.entity.Player> impleme
 
 	@Override
 	public void closeInventory() {
-		Bukkit.getScheduler().runTask(SpigotUltimateHammer.getInstance(), entity::closeInventory);
+		Bukkit.getScheduler().runTask(SpigotUltimateHammer.getInstance(), (Runnable) entity::closeInventory);
 	}
 
 	@Override
