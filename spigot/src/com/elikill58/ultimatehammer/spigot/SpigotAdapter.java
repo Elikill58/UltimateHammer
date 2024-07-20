@@ -101,7 +101,10 @@ public class SpigotAdapter extends Adapter {
 
 	@Override
 	public String getVersion() {
-		return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+		String[] parts = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",");
+		if(parts.length > 3)
+			return parts[3];
+		return "";
 	}
 	
 	@Override

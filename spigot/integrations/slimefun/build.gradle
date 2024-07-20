@@ -1,12 +1,14 @@
-apply plugin: 'eclipse'
+plugins {
+    id 'eclipse'
+}
+
+evaluationDependsOn(':spigot')
 
 eclipse {
     project {
         name = 'UHv2-smilefun'
     }
 }
-
-evaluationDependsOn(':spigot')
 
 sourceSets {
     main {
@@ -21,9 +23,8 @@ repositories {
     }
 }
 
-
 dependencies {
     compileOnly 'com.github.Slimefun:Slimefun4:RC-32'
     api(project(':spigot'))
-    compileOnly(project(path: ':spigot', configuration: 'spigot'))
+    //compileOnly(project(path: ':spigot', configuration: 'spigot'))
 }

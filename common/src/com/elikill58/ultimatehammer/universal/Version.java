@@ -17,7 +17,8 @@ public enum Version {
 	V1_17("1.17", 17, 100, 755, 756),
 	V1_18("1.18", 18, 100, 757, 758),
 	V1_19("1.19", 19, 100, 759, 762),
-	V1_20("1.20", 20, 100, 763, 1000),
+	V1_20("1.20", 20, 100, 763, 763),
+	V1_21("1.21", 21, 100, 764, 1000),
 	HIGHER("higher", 42, 100, 1000, 1000);
 
 	private final int power, timeBetweenRegen, firstProtocolNumber, lastProtocolNumber;
@@ -142,6 +143,8 @@ public enum Version {
 	 * @return the founded version or {@link #HIGHER}
 	 */
 	public static Version getVersion(String version) {
+		if(version == "")
+			return V1_21;
 		for (Version v : Version.values())
 			if (version.toLowerCase(Locale.ROOT).startsWith(v.name().toLowerCase(Locale.ROOT)))
 				return v;

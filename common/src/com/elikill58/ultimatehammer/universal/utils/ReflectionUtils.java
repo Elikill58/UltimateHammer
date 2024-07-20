@@ -71,6 +71,17 @@ public class ReflectionUtils {
 			return null;
 		}
 	}
+	
+	public static Method getMethodNamed(Class<?> source, String methodName) {
+		try {
+			for(Method m : source.getDeclaredMethods())
+				if(m.getName().equalsIgnoreCase(methodName))
+					return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * Get the first field which have the searching for class type

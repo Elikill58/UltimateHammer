@@ -4,4 +4,7 @@ rootProject.name = 'UltimateHammer'
 include 'common'
 
 // spigot
-include 'spigot', 'spigot:integrations:quests', 'spigot:integrations:aureliumskills', 'spigot:integrations:slimefun'
+include 'spigot'
+
+include 'spigot:integrations:quests', 'spigot:integrations:slimefun'
+// include 'spigot:integrations:aureliumskills'

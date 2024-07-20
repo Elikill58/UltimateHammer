@@ -1,7 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'eclipse'
+plugins {
+    id 'io.github.goooler.shadow'
+    id 'eclipse'
+}
+
+evaluationDependsOn(':common')
 
 sourceSets {
     main {
@@ -16,7 +20,7 @@ eclipse {
     }
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 configurations {
     spigot
@@ -26,7 +30,8 @@ configurations {
 dependencies {
     api project(':common')
 
-	spigot compileOnly('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
+	//spigot compileOnly('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
+	compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
 }
 
 processResources {
@@ -39,7 +44,7 @@ processResources {
 }
 
 compileJava.javaCompiler.set(
-        javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(8) }
+        javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(21) }
 )
 
 shadowJar {
@@ -49,9 +54,9 @@ shadowJar {
 
     mergeServiceFiles()
     
-	from(project(':common').jar.outputs.files,
+    from(project(':common').tasks.shadowJar,
 	    	project('integrations:quests').jar.outputs.files,
-	    	project('integrations:aureliumskills').jar.outputs.files,
+	    	//project('integrations:aureliumskills').jar.outputs.files,
 	    	project('integrations:slimefun').jar.outputs.files)
 }
 
@@ -89,5 +94,5 @@ subprojects {
 	        url 'https://oss.sonatype.org/content/repositories/snapshots/'
 	    }
     }
-    java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 }

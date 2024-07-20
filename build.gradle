@@ -1,6 +1,6 @@
 plugins {
     id 'java-library'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'io.github.goooler.shadow' version '8.1.7'
     id 'eclipse'
 }
 
@@ -16,6 +16,8 @@ eclipse {
         name = 'UltimateHammerV2'
     }
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 task prepareServer(type: Copy) {
     from shadowJar.outputs
@@ -57,6 +59,10 @@ subprojects {
             name 'eliapp'
             url 'https://repo.eliapp.fr:8081/repository/internal/'
         }
+	    maven {
+	    	name = 'papermc'
+	    	url = 'https://papermc.io/repo/repository/maven-public/'
+	    }
     }
 
     dependencies {
@@ -64,7 +70,7 @@ subprojects {
         compileOnly 'org.checkerframework:checker-qual:3.7.0'
     }
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'

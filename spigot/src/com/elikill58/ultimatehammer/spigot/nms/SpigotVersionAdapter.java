@@ -1,10 +1,9 @@
 package com.elikill58.ultimatehammer.spigot.nms;
 
-import static com.elikill58.ultimatehammer.spigot.utils.Utils.VERSION;
-
 import org.bukkit.entity.Player;
 
 import com.elikill58.ultimatehammer.api.nms.VersionAdapter;
+import com.elikill58.ultimatehammer.universal.Adapter;
 
 public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 
@@ -12,7 +11,7 @@ public abstract class SpigotVersionAdapter extends VersionAdapter<Player> {
 		super(version);
 	}
 	
-	private static SpigotGlobalVersion instance = new SpigotGlobalVersion(VERSION);
+	private static SpigotGlobalVersion instance = new SpigotGlobalVersion(Adapter.getAdapter().getVersion());
 
 	public static SpigotGlobalVersion getVersionAdapter() {
 		return instance;

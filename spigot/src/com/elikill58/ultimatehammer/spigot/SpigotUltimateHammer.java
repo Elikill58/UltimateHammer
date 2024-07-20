@@ -15,7 +15,6 @@ import com.elikill58.ultimatehammer.spigot.listeners.InventoryListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.PlayersListeners;
 import com.elikill58.ultimatehammer.spigot.listeners.version.Listener9Upper;
 import com.elikill58.ultimatehammer.spigot.nms.SpigotVersionAdapter;
-import com.elikill58.ultimatehammer.spigot.utils.Utils;
 import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.UltimateHammer;
 import com.elikill58.ultimatehammer.universal.Version;
@@ -46,12 +45,13 @@ public class SpigotUltimateHammer extends JavaPlugin {
 		if (Adapter.getAdapter() == null)
 			Adapter.setAdapter(new SpigotAdapter(this));
 		
-		Version v = Version.getVersion(Utils.VERSION);
+		String version = Adapter.getAdapter().getVersion();
+		Version v = Version.getVersion(version);
 		if (v.equals(Version.HIGHER))
-			getLogger().warning("Unknow server version " + Utils.VERSION + " ! Some problems can appears.");
+			getLogger().warning("Unknow server version " + version + " ! Some problems can appears.");
 		else {
 			SpigotVersionAdapter.getVersionAdapter();
-			getLogger().info("Detected server version: " + v.name().toLowerCase(Locale.ROOT) + " (" + Utils.VERSION + ")");
+			getLogger().info("Detected server version: " + v.name().toLowerCase(Locale.ROOT) + (version != "" ? " (" + version + ")" : ""));
 		}
 		
 		try {

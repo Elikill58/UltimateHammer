@@ -10,14 +10,14 @@ import com.elikill58.ultimatehammer.universal.Adapter;
 import com.elikill58.ultimatehammer.universal.Version;
 import com.elikill58.ultimatehammer.universal.utils.ReflectionUtils;
 
-public class SpigotGlobalVersion extends SpigotVersionAdapter {
+public class Paper1_21Version extends SpigotVersionAdapter {
 
 	protected final Class<?> nbtTabClass = PacketUtils.getNmsClass("NBTTagCompound", "nbt."), craftItemStackClass = PacketUtils.getObcClass("inventory.CraftItemStack"),
 			nmsItemStackClass = PacketUtils.getNmsClass("ItemStack", "world.item.");
 	protected final Method setString, setInt, getString, hasKey, getTag, saveNbt;
 	protected Object[] getTagParams = new Object[0];
 
-	public SpigotGlobalVersion(String version) {
+	public Paper1_21Version(String version) {
 		super(version);
 		Version v = Version.getVersion();
 		if (v.isNewerOrEquals(Version.V1_18)) {
