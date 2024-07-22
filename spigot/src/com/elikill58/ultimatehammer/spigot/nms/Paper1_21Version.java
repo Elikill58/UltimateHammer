@@ -18,14 +18,14 @@ public class Paper1_21Version extends SpigotVersionAdapter {
 	}
 
 	private NamespacedKey getKey(String key) {
-		return NamespacedKey.fromString(key, SpigotUltimateHammer.getInstance());
+		return new NamespacedKey(SpigotUltimateHammer.getInstance(), key);
 	}
 	
 	@Override
 	public ItemStack setNbtTag(ItemStack item, String key, String tagVal) {
 		org.bukkit.inventory.ItemStack it = ((org.bukkit.inventory.ItemStack) item.getDefault());
 		ItemMeta meta = it.getItemMeta();
-		PersistentDataContainer pdc = it.getItemMeta().getPersistentDataContainer();
+		PersistentDataContainer pdc = meta.getPersistentDataContainer();
 		NamespacedKey nk = getKey(key);
 		pdc.set(nk, PersistentDataType.STRING, tagVal);
 		it.setItemMeta(meta);
